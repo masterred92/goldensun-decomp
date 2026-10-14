@@ -6,8 +6,8 @@ Index of Golden Sun (USA) functions matched by Kenny (masterred92) for
 C and header source only: no ROM data, assets or original assembly.
 
 To use one: `git fetch https://github.com/masterred92/goldensun-decomp <branch>`
-and merge or cherry-pick it onto upstream `main`. Branches marked "on #34/#35"
-build on that PR's branch. All branches were merge-tested together on upstream
+and merge or cherry-pick it onto upstream `main`. Branches marked "on ..."
+build on that PR or branch. All branches were merge-tested together on upstream
 `main` (2e5c504c) with a passing full compare.
 
 | Function | Area (TU) | Address | Branch | Commit | PR |
@@ -40,5 +40,15 @@ build on that PR's branch. All branches were merge-tested together on upstream
 | `Func_80ad69c` | `src/party_menu/party_menu.c` | 0x080ad69c | [`kenny/party-menu-batch2`](https://github.com/masterred92/goldensun-decomp/tree/kenny/party-menu-batch2) (on #35) | [`77d55c7b`](https://github.com/masterred92/goldensun-decomp/commit/77d55c7b) | not yet opened |
 | `Func_80b26cc` | `src/shop/shop.c` | 0x080b26cc | [`kenny/shop-batch1`](https://github.com/masterred92/goldensun-decomp/tree/kenny/shop-batch1) | [`5c492528`](https://github.com/masterred92/goldensun-decomp/commit/5c492528) | not yet opened |
 | `Func_80b2720` | `src/shop/shop.c` | 0x080b2720 | [`kenny/shop-batch1`](https://github.com/masterred92/goldensun-decomp/tree/kenny/shop-batch1) | [`5c492528`](https://github.com/masterred92/goldensun-decomp/commit/5c492528) | not yet opened |
+| `Func_80a3d9c` | `src/party_menu/party_menu.c` | 0x080a3d9c | [`kenny/party-menu-batch3`](https://github.com/masterred92/goldensun-decomp/tree/kenny/party-menu-batch3) (on party-menu-batch2) | [`c4d08823`](https://github.com/masterred92/goldensun-decomp/commit/c4d08823) | not yet opened |
+| `InitSpriteLayer` | `src/field_engine/sprite/sprite.c` | 0x0800b868 | [`kenny/sprite-batch1`](https://github.com/masterred92/goldensun-decomp/tree/kenny/sprite-batch1) | [`20051eb2`](https://github.com/masterred92/goldensun-decomp/commit/20051eb2) | not yet opened |
+| `DeleteSprite` | `src/field_engine/sprite/sprite.c` | 0x0800bdd4 | [`kenny/sprite-batch1`](https://github.com/masterred92/goldensun-decomp/tree/kenny/sprite-batch1) | [`20051eb2`](https://github.com/masterred92/goldensun-decomp/commit/20051eb2) | not yet opened |
+| `Func_801a778` | `src/ui/menu.c` | 0x0801a778 | [`kenny/ui-batch1`](https://github.com/masterred92/goldensun-decomp/tree/kenny/ui-batch1) | [`d7346bd0`](https://github.com/masterred92/goldensun-decomp/commit/d7346bd0) | not yet opened |
+| `Func_801b36c` | `src/ui/menu.c` | 0x0801b36c | [`kenny/ui-batch1`](https://github.com/masterred92/goldensun-decomp/tree/kenny/ui-batch1) | [`d7346bd0`](https://github.com/masterred92/goldensun-decomp/commit/d7346bd0) | not yet opened |
+| `Func_801c46c` | `src/ui/menu.c` | 0x0801c46c | [`kenny/ui-batch1`](https://github.com/masterred92/goldensun-decomp/tree/kenny/ui-batch1) | [`d7346bd0`](https://github.com/masterred92/goldensun-decomp/commit/d7346bd0) | not yet opened |
+| `Func_80108c4` | `src/field_engine/field/map_data.c` | 0x080108c4 | [`kenny/field-batch3`](https://github.com/masterred92/goldensun-decomp/tree/kenny/field-batch3) (on field-batch2) | [`896e4cff`](https://github.com/masterred92/goldensun-decomp/commit/896e4cff) | not yet opened |
+| `HeightTile_3` | `src/field_engine/field/map_data.c` | 0x08011d34 | [`kenny/field-batch3`](https://github.com/masterred92/goldensun-decomp/tree/kenny/field-batch3) (on field-batch2) | [`896e4cff`](https://github.com/masterred92/goldensun-decomp/commit/896e4cff) | not yet opened |
+| `HeightTile_4` | `src/field_engine/field/map_data.c` | 0x08011d60 | [`kenny/field-batch3`](https://github.com/masterred92/goldensun-decomp/tree/kenny/field-batch3) (on field-batch2) | [`896e4cff`](https://github.com/masterred92/goldensun-decomp/commit/896e4cff) | not yet opened |
+| `HeightTile_5` | `src/field_engine/field/map_data.c` | 0x08011d94 | [`kenny/field-batch3`](https://github.com/masterred92/goldensun-decomp/tree/kenny/field-batch3) (on field-batch2) | [`896e4cff`](https://github.com/masterred92/goldensun-decomp/commit/896e4cff) | not yet opened |
 
-Total: 28 functions.
+Total: 38 functions.
