@@ -20,7 +20,21 @@ void Func_801a778(void)
     *(unsigned short *)(base + 0x3a0) = 0;
     *(unsigned short *)(base + 0x394) = 0;
 }
-INCLUDE_ASM("asm/ui/menu/Func_801a7c0.s");
+void Func_801a7c0(int a, int b)
+{
+    unsigned char *base = (unsigned char *)iwram_3001e98;
+    unsigned short *n = (unsigned short *)(base + 0x394);
+    unsigned short c = *n;
+
+    if (c != 0x10) {
+        int i = c << 1;
+        int o = 0x354;
+        *(short *)(base + (o + i)) = a;
+        o = 0x374;
+        *(short *)(base + (o + i)) = b;
+        *n += 1;
+    }
+}
 INCLUDE_ASM("asm/ui/menu/Func_801a7f4.s");
 
 void Func_801a90c(void) {}
