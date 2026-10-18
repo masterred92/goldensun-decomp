@@ -250,7 +250,17 @@ void Func_80b17e4(int unit, int item, int count)
 }
 INCLUDE_ASM("asm/shop/shop/Func_80b1868.s");
 INCLUDE_ASM("asm/shop/shop/Func_80b196c.s");
-INCLUDE_ASM("asm/shop/shop/Func_80b19cc.s");
+int Func_80b19cc(unsigned int item)
+{
+    int price = *(short *)_GetItemInfo__s(item);
+    if (((unsigned char *)_GetItemInfo__s(item))[3] & 8)
+        price = 0;
+    else if (item & 0x400)
+        price = price / 2;
+    else
+        price = price * 3 / 4;
+    return price;
+}
 INCLUDE_ASM("asm/shop/shop/Func_80b1a14.s");
 INCLUDE_ASM("asm/shop/shop/Func_80b1bd0.s");
 INCLUDE_ASM("asm/shop/shop/Func_80b1dec.s");
