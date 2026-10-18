@@ -749,7 +749,16 @@ unsigned int Func_80a63dc(void) {
 void Func_80a63e0(void) {}
 
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a63e4.s");
-INCLUDE_ASM("asm/party_menu/party_menu/Func_80a65e4.s");
+extern unsigned short gState_s65e4[] __asm__("gState");
+int Func_80a65e4(int a, int b, int c)
+{
+    int v = (a << 10) | (b & 0x3fff);
+    if (c == 0)
+        gState_s65e4[0x110] = v;
+    else
+        gState_s65e4[0x111] = v;
+    return 1;
+}
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a6614.s");
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a6794.s");
 
