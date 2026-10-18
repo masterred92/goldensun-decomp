@@ -2,7 +2,6 @@
 
 #include "nonmatching.h"
 #include "api.h"
-#include "dma.h"
 
 
 void OvlFunc_common1_0(void)
@@ -310,32 +309,7 @@ void OvlFunc_common1_850(unsigned int arg0, unsigned int arg1)
     }
 }
 
-extern short Lc1_10_ __asm__(".Lc1_10");
-extern unsigned char Lc1_1_[] __asm__(".Lc1_1");
-extern unsigned char _FILE_e7[];
-void OvlFunc_common1_88c(int idx)
-{
-    extern unsigned char *__alloc_ewram(int);
-    extern int __AllocSpriteSlot(void);
-    extern void *__GetFile(int);
-    extern void __DecompressLZ(void *, void *);
-    extern void __UploadSpriteGFX(int, int, void *);
-    extern void __free(void *);
-    unsigned char *buf = __alloc_ewram(0x1ca0);
-    int pal;
-
-    if (Lc1_10_ == -1)
-        Lc1_10_ = __AllocSpriteSlot();
-    pal = Lc1_1_[idx];
-    if (idx == 8)
-        idx = 4;
-    __DecompressLZ(__GetFile((int)_FILE_e7), buf);
-    DMA3_SET(buf + pal, (void *)0x50003e0, 0x84000008);
-    __UploadSpriteGFX(Lc1_10_, 0x400, buf + (idx << 10) + 0xa0);
-    WaitForDma3();
-    __free(buf);
-}
-
+INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_88c.s");
 INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_920.s");
 INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_e10.s");
 INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_ea0.s");
