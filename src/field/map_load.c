@@ -57,7 +57,34 @@ void PlayMapMusic(void) {
 }
 
 INCLUDE_ASM("asm/field/map_load/InitEncounters.s");
-INCLUDE_ASM("asm/field/map_load/Func_808adf0.s");
+struct WorldMapEncounter {
+    short tile;
+    short area;
+    short flag;
+    short group;
+};
+extern struct WorldMapEncounter gWorldMapEncounters[];
+extern int _Func_80122c8(void *, int *);
+
+int Func_808adf0(void *pos)
+{
+    struct WorldMapEncounter *p = gWorldMapEncounters;
+    int result;
+    int tile;
+    int area = _Func_80122c8(pos, &tile);
+
+    result = 0;
+
+    for (; p->tile != -1; p++) {
+        if (p->tile == tile && (p->area == -1 || p->area == area)
+            && (p->flag == -1 || !_GetFlag(p->flag))) {
+            result = p->group;
+            break;
+        }
+    }
+    Func_808b2b0(area);
+    return result;
+}
 INCLUDE_ASM("asm/field/map_load/Func_808ae74.s");
 
 #include "gba/types.h"
@@ -78,11 +105,10 @@ u32 Func_808b02c(s32 arg0) {
     Func_808ae74(unk[arg0]);
 }
 
-extern s32 Func_808adf0(void);
 extern s32 Func_808ae74(s32, s32);
 
 s32 Func_808b048(s32 *arg1, s32 arg2) {
-    s32 foo = Func_808adf0();
+    s32 foo = Func_808adf0(arg1);
     Func_808ae74(foo, arg2);
 }
 
