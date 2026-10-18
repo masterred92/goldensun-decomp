@@ -280,7 +280,6 @@ int Func_8079d1c(unsigned char *unit)
 {
     extern unsigned char *Func_807882c(unsigned char *unit, int type);
     extern int CheckEquipmentCritBoost(unsigned char *unit);
-    extern int __divsi3(int, int);
     extern int RPGRandom_i(void) __asm__("RPGRandom");
     unsigned char *item;
     int chance;
