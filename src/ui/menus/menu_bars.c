@@ -135,7 +135,23 @@ unsigned int SanctumMenu(unsigned int r0)
     return r5;
 }
 
-INCLUDE_ASM("asm/ui/menus/menu_bars/YesNoMenu.s");
+int YesNoMenu(int a, int b, int c, int d)
+{
+    int x = 0;
+    Func_80284dc();
+    if (c == 0)
+        c = 3;
+    if (a)
+        x = 0x11;
+    AddMenuBarOption(5);
+    AddMenuBarOption(6);
+    Func_8028808(x, c, b);
+    d = Func_8028574(d);
+    Func_802851c();
+    if (d == -1)
+        d = 1;
+    return d;
+}
 
 extern void Func_80288a8(int, int, int, int);
 extern unsigned char Lyn_24[] __asm__(".Lyn_24");
