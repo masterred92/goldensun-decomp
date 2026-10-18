@@ -99,7 +99,34 @@ void *Func_801b36c(unsigned char *menu)
         node = (unsigned int **)node[1];
     return node;
 }
-INCLUDE_ASM("asm/ui/menu/Func_801b398.s");
+int Func_801b398(int a)
+{
+    extern unsigned char *iwram_3001e98__b398 __asm__("iwram_3001e98");
+    extern volatile int gKeyPress, gKeyRepeat;
+    extern void WaitFrames(unsigned int);
+    extern void Func_801b9ec(void *, int);
+    extern void Func_801b664(void *);
+    extern void Func_801b810(void *);
+    extern int Func_801be80(void *);
+    unsigned char *base = iwram_3001e98__b398;
+
+    Func_801b9ec(base, 0);
+    for (;;) {
+        WaitFrames(1);
+        if (*(unsigned short *)(base + 0x3a0))
+            continue;
+        if (a != 999) {
+            if (gKeyRepeat & 0x10)
+                Func_801b664(base);
+            else if (gKeyRepeat & 0x20)
+                Func_801b810(base);
+            else if (gKeyPress & 1)
+                return Func_801be80(base);
+        }
+        if (a && (gKeyPress & 2))
+            return -1;
+    }
+}
 INCLUDE_ASM("asm/ui/menu/Func_801b424.s");
 INCLUDE_ASM("asm/ui/menu/Func_801b4ec.s");
 INCLUDE_ASM("asm/ui/menu/Func_801b5c0.s");
