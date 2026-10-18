@@ -383,7 +383,23 @@ void Func_801789c(void) {
     Func_80191cc();
 }
 INCLUDE_ASM("asm/ui/ui/DrawMsgGlyph.s");
-INCLUDE_ASM("asm/ui/ui/Func_8017a64.s");
+extern unsigned char Data_32224[];
+int Func_8017a64(unsigned short *s)
+{
+    int w = 0;
+    unsigned int c = *s++;
+    while (c != 0) {
+        if (c == 0x20)
+            w += 4;
+        else if (c <= 0xff) {
+            if (c - 0xde > 1)
+                w += *(unsigned short *)(Data_32224 + (c - 0x20) * 32);
+        } else
+            w += 10;
+        c = *s++;
+    }
+    return w;
+}
 INCLUDE_ASM("asm/ui/ui/Func_8017aa4.s");
 INCLUDE_ASM("asm/ui/ui/Func_8017c1c.s");
 INCLUDE_ASM("asm/ui/ui/Func_8017c8c.s");
