@@ -1648,7 +1648,33 @@ void OvlFunc_959_200a718(void) {
 
 INCLUDE_ASM("asm/maps/lunpa_fortress/OvlFunc_959_200a7b0.s");
 INCLUDE_ASM("asm/maps/lunpa_fortress/OvlFunc_959_200b054.s");
-INCLUDE_ASM("asm/maps/lunpa_fortress/OvlFunc_959_200c638.s");
+extern int L5fa4 __asm__(".Lm959_5fa4");
+void OvlFunc_959_200c638(void) {
+    int msg;
+    switch (L5fa4) {
+    case 0: msg = 0x2414; goto show;
+    case 1: msg = 0x2415; goto show;
+    case 2: msg = 0x2416; goto show;
+    case 3: msg = 0x2417; goto show;
+    case 4: msg = 0x2418; goto show;
+    case 6: msg = 0x241a; goto show;
+    case 7: msg = 0x241b;
+    show:
+        API_MessageID(msg);
+        API_ActorMessage(0x15, 0);
+        break;
+    case 5:
+        API_Func_8092adc(0x15, 0xd000, 0);
+        API_CutsceneWait(0x32);
+        API_Func_8092adc(0x15, 0xb000, 0);
+        API_CutsceneWait(0x32);
+        API_Func_8092adc(0x15, 0x5000, 0);
+        API_CutsceneWait(0x32);
+        API_MessageID(0x2419);
+        API_ActorMessage(0x15, 0);
+        break;
+    }
+}
 
 extern unsigned char Lconst_2411[] __asm__(".Lconst_2411");
 __asm__(".equ .Lconst_2411, 0x2411");
