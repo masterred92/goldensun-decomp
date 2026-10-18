@@ -126,7 +126,39 @@ void Func_801ba34(unsigned int base) {
 }
 
 INCLUDE_ASM("asm/ui/menu/Func_801ba68.s");
-INCLUDE_ASM("asm/ui/menu/UploadIcon.s");
+int UploadIcon(int type, int id)
+{
+    extern void LoadOldUIIcon(int, int, int *, int *, int);
+    extern int AllocSpriteSlot(void);
+    extern void LoadInventoryIcon(int, int, int);
+    extern void LoadUIBanner(int, int, int);
+    extern void LoadMoveIcon(int, int, int *, int *, int);
+    int tmp;
+    int slot = -1;
+
+    switch (type) {
+    case 1:
+    case 6:
+        LoadOldUIIcon(id, 0, &slot, &tmp, 0);
+        break;
+    case 2:
+        slot = AllocSpriteSlot();
+        if (slot == 0x60)
+            return -1;
+        LoadInventoryIcon(id, 0x1a, slot);
+        break;
+    case 9:
+        slot = AllocSpriteSlot();
+        if (slot == 0x60)
+            return -1;
+        LoadUIBanner(id, 0, slot);
+        break;
+    case 4:
+        LoadMoveIcon(id, 1, &slot, &tmp, 0);
+        break;
+    }
+    return slot;
+}
 INCLUDE_ASM("asm/ui/menu/Func_801bcd4.s");
 INCLUDE_ASM("asm/ui/menu/Func_801bd98.s");
 INCLUDE_ASM("asm/ui/menu/Func_801be80.s");
