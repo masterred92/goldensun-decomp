@@ -1215,7 +1215,37 @@ unsigned int Func_80aa544(unsigned int arg0)
 
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80aa56c.s");
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80aa768.s");
-INCLUDE_ASM("asm/party_menu/party_menu/Func_80aac84.s");
+void Func_80aac84(int d)
+{
+    int k;
+    int row = 0xf;
+
+    for (k = 0; k <= 2; k++) {
+        int j;
+        for (j = 0; j <= 0xf; j++) {
+            int idx = (row << 4) + j;
+            unsigned int c = ((unsigned short *)0x5000000)[idx];
+            int b = (0x1f & (c >> 10));
+            int g = (0x1f & (c >> 5));
+            int r = (0x1f & c);
+            b += d; g += d; r += d;
+            if (b > 0x1f) b = 0x1f;
+            if (g > 0x1f) g = 0x1f;
+            if (r > 0x1f) r = 0x1f;
+            if (b < 0) b = 0;
+            if (g < 0) g = 0;
+            if (r < 0) r = 0;
+            c = (b << 10) | (g << 5) | r;
+            /* written one palette row (16 colours) below the source */
+            ((unsigned short *)0x4ffffe0)[idx] = c;
+        }
+        row = 5;
+        if (k != 0) {
+            row = 7;
+            d = -12;
+        }
+    }
+}
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80aad10.s");
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80aae14.s");
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80aaf58.s");
