@@ -179,7 +179,52 @@ void Func_801c21c(void) {
     }
 }
 
-INCLUDE_ASM("asm/ui/menu/Func_801c244.s");
+int Func_801c244(void)
+{
+    extern unsigned char *iwram_3001ebc__c244 __asm__("iwram_3001ebc");
+    extern void Func_801c2d0(void);
+    extern void Func_801c2e4(void);
+    extern int Func_8028920(int);
+    extern int _Func_808ce74(void);
+    extern int _Func_80a5b94(void);
+    extern int _Func_80aa56c(void);
+    extern int _Func_80a24d0(void);
+    extern int _Func_80a7478(void);
+    unsigned char *base = iwram_3001ebc__c244;
+    int sel = 0;
+    int r;
+
+    for (;;) {
+        Func_801c2d0();
+        sel = Func_8028920(sel);
+        Func_801c2e4();
+        switch (sel) {
+        case 0:
+            r = _Func_808ce74();
+            if (r == 0)
+                r = 0xff;
+            *(unsigned short *)(base + 0x17a) = r;
+            break;
+        case 1:
+            if (_Func_80a5b94() == -1)
+                continue;
+            break;
+        case 2:
+            if (_Func_80aa56c() != 0)
+                continue;
+            break;
+        case 3:
+            if (_Func_80a24d0() == -1)
+                continue;
+            break;
+        case 4:
+            if (_Func_80a7478() == -1)
+                continue;
+            break;
+        }
+        break;
+    }
+}
 
 extern void Func_801ef08(int);
 extern void WaitFrames(unsigned int);
