@@ -527,7 +527,42 @@ INCLUDE_ASM("asm/ui/ui/Func_8018a50.s");
 
 INCLUDE_ASM("asm/ui/ui/DrawText.s");
 INCLUDE_ASM("asm/ui/ui/Func_8018efc.s");
-INCLUDE_ASM("asm/ui/ui/Func_8019000.s");
+void Func_8019000(unsigned short *box, unsigned int tile, unsigned int x, unsigned int y, unsigned int mode)
+{
+    extern unsigned short *iwram_3001e8c__9000 __asm__("iwram_3001e8c");
+    unsigned char *map = (unsigned char *)iwram_3001e8c__9000;
+    unsigned int pal;
+    unsigned int idx;
+
+    y++;
+    x++;
+    if (y > box[5] - 1u)
+        return;
+    if (x > box[4] - 1u)
+        return;
+    switch (mode) {
+    case 3: pal = 0xf000; break;
+    case 2: pal = 0xe000; break;
+    case 4: pal = 0x1000; break;
+    default: pal = 0; break;
+    }
+    switch (mode) {
+    case 1:
+        break;
+    case 2:
+    case 3:
+    case 4:
+        idx = (box[7] + y) * 32 + (box[6] + x);
+        if (idx < 0x280)
+            *(unsigned short *)(map + (idx << 1)) = tile | pal;
+        break;
+    default:
+        idx = (box[7] + y) * 32 + (box[6] + x);
+        if (idx < 0x280)
+            *(unsigned short *)(map + (idx << 1)) = tile;
+        break;
+    }
+}
 INCLUDE_ASM("asm/ui/ui/Func_801908c.s");
 
 INCLUDE_ASM("asm/ui/ui/Func_80191cc.s");
