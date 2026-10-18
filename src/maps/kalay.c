@@ -387,7 +387,38 @@ void OvlFunc_936_2009610(void)
   __Func_8091a58(0xb5, 0);
 }
 
-INCLUDE_ASM("asm/maps/kalay/Kalay_MapInit.s");
+extern unsigned char Lm936_ev63[] __asm__(".Lm936_ev63");
+extern unsigned char Lm936_ev66[] __asm__(".Lm936_ev66");
+extern unsigned char Lm936_ev99[] __asm__(".Lm936_ev99");
+extern unsigned char Lm936_ev9b[] __asm__(".Lm936_ev9b");
+extern unsigned char Lm936_ev9c[] __asm__(".Lm936_ev9c");
+__asm__(".equ .Lm936_ev63, 0x63\n.equ .Lm936_ev66, 0x66\n.equ .Lm936_ev99, 0x99\n.equ .Lm936_ev9b, 0x9b\n.equ .Lm936_ev9c, 0x9c");
+int Kalay_MapInit(void)
+{
+    extern void OvlFunc_936_20096bc(void);
+    extern void OvlFunc_936_20097e8(void);
+    extern void OvlFunc_936_2009858(void);
+    extern void OvlFunc_936_20098a4(void);
+    extern void OvlFunc_936_2009930(void);
+    int room;
+
+    API_SetFlag(0x87a);
+    {
+        extern short gState_s936[] __asm__("gState");
+        room = gState_s936[0xe0];
+    }
+    if (room == (int)Lm936_ev63)
+        OvlFunc_936_20096bc();
+    else if (room == (int)Lm936_ev66)
+        OvlFunc_936_20097e8();
+    else if (room == (int)Lm936_ev99)
+        OvlFunc_936_2009858();
+    else if (room == (int)Lm936_ev9b)
+        OvlFunc_936_20098a4();
+    else if (room == (int)Lm936_ev9c)
+        OvlFunc_936_2009930();
+    return 0;
+}
 INCLUDE_ASM("asm/maps/kalay/OvlFunc_936_20096bc.s");
 
 void OvlFunc_936_20097e8(void) {
