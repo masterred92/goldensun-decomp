@@ -916,7 +916,25 @@ void OvlFunc_924_20094cc(void) {
     __Func_8010560(Lm924_6010, 9, 7);
     __CutsceneEnd();
 }
-INCLUDE_ASM("asm/maps/mercury_lighthouse/OvlFunc_924_2009568.s");
+void OvlFunc_924_2009568(void)
+{
+    extern unsigned char Lm924_603a[] __asm__(".Lm924_603a");
+    extern void __Func_8010560(void *, int, int);
+    struct Actor *a;
+
+    if (API_GetFlag(0x256)) {
+        API_CutsceneStart();
+        API_ClearFlag(0x256);
+        ((struct Actor *)__MapActor_GetActor(0))->pos.y += 0x20000;
+        a = (struct Actor *)__MapActor_GetActor(0);
+        a->prevPos.y = ((struct Actor *)__MapActor_GetActor(0))->pos.y;
+        API_CutsceneWait(5);
+        API_CopyMapTiles(7, 2, 5, 0xb, 1, 1);
+        API_PlaySound(0xd9);
+        __Func_8010560(Lm924_603a, 9, 7);
+        API_CutsceneEnd();
+    }
+}
 void OvlFunc_924_20095e0(int arg0, unsigned int start, unsigned int end)
 {
 
