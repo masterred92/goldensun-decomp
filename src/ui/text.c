@@ -171,7 +171,41 @@ int Func_801ec24(unsigned int arg0, unsigned int arg1, unsigned int arg2, unsign
 }
 
 INCLUDE_ASM("asm/ui/text/Func_801ec6c.s");
-INCLUDE_ASM("asm/ui/text/Func_801ed40.s");
+struct TextState801ed40 {
+    unsigned char pad[0x12ec];
+    unsigned short portrait[2];
+    unsigned short pos[2];
+};
+extern int _GetFlag(int);
+extern int GetPortrait(int);
+extern void LoadPortrait(int, int, int *, int *, int, int);
+void Func_801ed40(unsigned int slot, int id, int win)
+{
+    struct TextState801ed40 *b = *(struct TextState801ed40 **)&iwram_3001e8c;
+    int portrait;
+    int pos;
+    int dummy;
+
+    if (_GetFlag(0x20)) {
+        if (id == 0)
+            id = 0x12;
+        if (id == 1)
+            id = 0x13;
+    }
+    portrait = GetPortrait(id);
+    if (portrait == -1)
+        return;
+    if (slot > 1) {
+        if (b->portrait[1] == portrait)
+            slot = 1;
+        else if (b->portrait[0] == portrait)
+            slot = 0;
+        else
+            return;
+    }
+    pos = b->pos[slot];
+    LoadPortrait(portrait, win, &pos, &dummy, slot + 0xe, 1);
+}
 
 void Func_801edcc(unsigned int arg0, int arg1)
 {
