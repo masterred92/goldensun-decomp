@@ -8,7 +8,7 @@ C and header source only: no ROM data, assets or original assembly.
 To use one: `git fetch https://github.com/masterred92/goldensun-decomp <branch>`
 and merge or cherry-pick it onto upstream `main`. Every branch is based directly
 on upstream `main`. All branches were merge-tested together on upstream
-`main` (2e5c504c) with a passing full compare (merge-test9, PRs #32-#59 and #61-#68).
+`main` (2e5c504c) with a passing full compare (merge-test9, PRs #32-#59 and #61-#65).
 
 | Function | Area (TU) | Address | Branch | Commit | PR |
 |---|---|---|---|---|---|
@@ -254,5 +254,7 @@ on upstream `main`. All branches were merge-tested together on upstream
 | `Func_8077348` | `src/rpg/party.c` | 0x08077348 | [`kenny/nearmiss-1`](https://github.com/masterred92/goldensun-decomp/tree/kenny/nearmiss-1) | [`384b13da`](https://github.com/masterred92/goldensun-decomp/commit/384b13da) | [#68](https://github.com/Coaltergeist/goldensun-decomp/pull/68) (open) |
 | `YesNoMenu2` | `src/ui/menus/menu_bars.c` | 0x08028e54 | [`kenny/nearmiss-1`](https://github.com/masterred92/goldensun-decomp/tree/kenny/nearmiss-1) | [`384b13da`](https://github.com/masterred92/goldensun-decomp/commit/384b13da) | [#68](https://github.com/Coaltergeist/goldensun-decomp/pull/68) (open) |
 | `Func_801e3c8` | `src/ui/text.c` | 0x0801e3c8 | [`kenny/nearmiss-1`](https://github.com/masterred92/goldensun-decomp/tree/kenny/nearmiss-1) | [`384b13da`](https://github.com/masterred92/goldensun-decomp/commit/384b13da) | [#68](https://github.com/Coaltergeist/goldensun-decomp/pull/68) (open) |
+| `Func_80f037c` | `src/ending/ending.c` | 0x080f037c | [`kenny/nearmiss-2`](https://github.com/masterred92/goldensun-decomp/tree/kenny/nearmiss-2) | [`17b97ff5`](https://github.com/masterred92/goldensun-decomp/commit/17b97ff5) | [#69](https://github.com/Coaltergeist/goldensun-decomp/pull/69) (open) |
+| `OvlFunc_883_20090d8` | `src/maps/vale_river.c` | ovl 883 @0x020090d8 | [`kenny/nearmiss-2`](https://github.com/masterred92/goldensun-decomp/tree/kenny/nearmiss-2) | [`17b97ff5`](https://github.com/masterred92/goldensun-decomp/commit/17b97ff5) | [#69](https://github.com/Coaltergeist/goldensun-decomp/pull/69) (open) |
 
-Total: 242 functions.
+Total: 244 functions.
