@@ -275,7 +275,27 @@ int Func_8079c8c(unsigned int pc)
         return *(int *)(item + 0x14);
     return 4;
 }
-INCLUDE_ASM_SECTION("asm/rpg/pc/CheckEquipmentCritBoost.s", ".text.rpg_pc_3");
+int CheckEquipmentCritBoost(unsigned char *unit)
+{
+    extern unsigned char *GetItemInfo(int item);
+    int total = 0;
+    int i, j, off;
+    unsigned char *e;
+
+    for (i = 0; i < 15; i++) {
+        off = 0xd8 + i * 2;
+        if (*(unsigned short *)(unit + off) & 0x200) {
+            e = GetItemInfo(*(unsigned short *)(unit + off)) + 0x18;
+            for (j = 0; j < 4; j++, e += 4) {
+                if (e[0] == 0x17)
+                    total += (signed char)e[1];
+            }
+        }
+    }
+    if (total < 0)
+        total = 0;
+    return total;
+}
 int Func_8079d1c(unsigned char *unit)
 {
     extern unsigned char *Func_807882c(unsigned char *unit, int type);
