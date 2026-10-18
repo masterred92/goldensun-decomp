@@ -256,5 +256,6 @@ on upstream `main`. All branches were merge-tested together on upstream
 | `Func_801e3c8` | `src/ui/text.c` | 0x0801e3c8 | [`kenny/nearmiss-1`](https://github.com/masterred92/goldensun-decomp/tree/kenny/nearmiss-1) | [`384b13da`](https://github.com/masterred92/goldensun-decomp/commit/384b13da) | [#68](https://github.com/Coaltergeist/goldensun-decomp/pull/68) (open) |
 | `Func_80f037c` | `src/ending/ending.c` | 0x080f037c | [`kenny/nearmiss-2`](https://github.com/masterred92/goldensun-decomp/tree/kenny/nearmiss-2) | [`17b97ff5`](https://github.com/masterred92/goldensun-decomp/commit/17b97ff5) | [#69](https://github.com/Coaltergeist/goldensun-decomp/pull/69) (open) |
 | `OvlFunc_883_20090d8` | `src/maps/vale_river.c` | ovl 883 @0x020090d8 | [`kenny/nearmiss-2`](https://github.com/masterred92/goldensun-decomp/tree/kenny/nearmiss-2) | [`17b97ff5`](https://github.com/masterred92/goldensun-decomp/commit/17b97ff5) | [#69](https://github.com/Coaltergeist/goldensun-decomp/pull/69) (open) |
+| `OvlFunc_924_200ae6c` | `src/maps/mercury_lighthouse.c` | ovl 924 @0x0200ae6c | [`kenny/nearmiss-3`](https://github.com/masterred92/goldensun-decomp/tree/kenny/nearmiss-3) | [`ad1e5de9`](https://github.com/masterred92/goldensun-decomp/commit/ad1e5de9) | [#70](https://github.com/Coaltergeist/goldensun-decomp/pull/70) (open) |
 
-Total: 244 functions.
+Total: 245 functions.
