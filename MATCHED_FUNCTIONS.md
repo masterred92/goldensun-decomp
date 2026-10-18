@@ -8,7 +8,7 @@ C and header source only: no ROM data, assets or original assembly.
 To use one: `git fetch https://github.com/masterred92/goldensun-decomp <branch>`
 and merge or cherry-pick it onto upstream `main`. Every branch is based directly
 on upstream `main`. All branches were merge-tested together on upstream
-`main` (2e5c504c) with a passing full compare (merge-test9 + vol-work3m, PRs #32-#59 and #61-#83).
+`main` (2e5c504c) with a passing full compare (merge-test9 + vol-work3m, PRs #32-#59 and #61-#84).
 
 | Function | Area (TU) | Address | Branch | Commit | PR |
 |---|---|---|---|---|---|
@@ -300,5 +300,8 @@ on upstream `main`. All branches were merge-tested together on upstream
 | `Func_809233c` | `src/field/map_actor.c` | 0x0809233c | [`kenny/vol-batch16`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch16) | [`0f56b342`](https://github.com/masterred92/goldensun-decomp/commit/0f56b342) | [#83](https://github.com/Coaltergeist/goldensun-decomp/pull/83) (open) |
 | `OvlFunc_954_20081a8` | `src/maps/colosseum_final_1.c` | ovl 954 @0x020081a8 | [`kenny/vol-batch16`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch16) | [`0f56b342`](https://github.com/masterred92/goldensun-decomp/commit/0f56b342) | [#83](https://github.com/Coaltergeist/goldensun-decomp/pull/83) (open) |
 | `StartMenu_AddOption` | `src/ui/save_menu.c` | 0x080216e8 | [`kenny/vol-batch16`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch16) | [`0f56b342`](https://github.com/masterred92/goldensun-decomp/commit/0f56b342) | [#83](https://github.com/Coaltergeist/goldensun-decomp/pull/83) (open) |
+| `OvlFunc_946_200a700` | `src/maps/crossbone_isle.c` | ovl 946 @0x0200a700 | [`kenny/vol-batch17`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch17) | [`2478c6ee`](https://github.com/masterred92/goldensun-decomp/commit/2478c6ee) | [#84](https://github.com/Coaltergeist/goldensun-decomp/pull/84) (open) |
+| `OvlFunc_883_200d950` | `src/maps/vale_river.c` | ovl 883 @0x0200d950 | [`kenny/vol-batch17`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch17) | [`2478c6ee`](https://github.com/masterred92/goldensun-decomp/commit/2478c6ee) | [#84](https://github.com/Coaltergeist/goldensun-decomp/pull/84) (open) |
+| `SetDjinni` | `src/rpg/djinni.c` | 0x0807a2e4 | [`kenny/vol-batch17`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch17) | [`2478c6ee`](https://github.com/masterred92/goldensun-decomp/commit/2478c6ee) | [#84](https://github.com/Coaltergeist/goldensun-decomp/pull/84) (open) |
 
-Total: 288 functions.
+Total: 291 functions.
