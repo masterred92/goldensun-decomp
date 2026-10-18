@@ -279,5 +279,6 @@ on upstream `main`. All branches were merge-tested together on upstream
 | `OvlFunc_925_200b4bc` | `src/maps/mercury_lighthouse_aerie.c` | ovl 925 @0x0200b4bc | [`kenny/vol-batch10`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch10) | [`37b361be`](https://github.com/masterred92/goldensun-decomp/commit/37b361be) | [#76](https://github.com/Coaltergeist/goldensun-decomp/pull/76) (open) |
 | `OvlFunc_927_2008e18` | `src/maps/mogall_forest.c` | ovl 927 @0x02008e18 | [`kenny/vol-batch10`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch10) | [`37b361be`](https://github.com/masterred92/goldensun-decomp/commit/37b361be) | [#76](https://github.com/Coaltergeist/goldensun-decomp/pull/76) (open) |
 | `OvlFunc_968_2008b08` | `src/maps/venus_lighthouse.c` | ovl 968 @0x02008b08 | [`kenny/vol-batch10`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch10) | [`37b361be`](https://github.com/masterred92/goldensun-decomp/commit/37b361be) | [#76](https://github.com/Coaltergeist/goldensun-decomp/pull/76) (open) |
+| `OvlFunc_895_2008420` | `src/maps/sol.c` | ovl 895 @0x02008420 | [`kenny/sol-2008420`](https://github.com/masterred92/goldensun-decomp/tree/kenny/sol-2008420) | [`a366fa70`](https://github.com/masterred92/goldensun-decomp/commit/a366fa70) | [#77](https://github.com/Coaltergeist/goldensun-decomp/pull/77) (open) |
 
-Total: 267 functions.
+Total: 268 functions.
