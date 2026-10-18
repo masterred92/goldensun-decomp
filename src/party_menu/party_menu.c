@@ -368,7 +368,30 @@ void Func_80a24c4(void) {
 
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a24d0.s");
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a2680.s");
-INCLUDE_ASM("asm/party_menu/party_menu/Func_80a32b8.s");
+extern int Func_80a9e48(int, int, int);
+extern void _Func_80164ac(int);
+extern void Func_80a1d08(int, int, int);
+extern void Func_80aa448__a(int) __asm__("Func_80aa448");
+extern void _CalcStats(int);
+struct V80a32b8 { char pad[0x222]; unsigned short flag; };
+int Func_80a32b8(void)
+{
+    unsigned char *b = (unsigned char *)iwram_3001f2c;
+    unsigned char *p1, *p2;
+    int r;
+    r = Func_80a9e48(*(unsigned short *)(b + 0x174), *(p1 = b + 0x21a), *(p2 = b + 0x21b));
+    if (r == -1) {
+        _PlaySound(0x72);
+        _Func_80164ac(*(int *)(b + 0x2c));
+        Func_80a1d08(*(short *)(b + 0x25a) + 0xbef, r, r);
+        ((struct V80a32b8 *)b)->flag = 1;
+        return r;
+    }
+    Func_80aa448__a(*(unsigned short *)(b + 0x178) & 0x1ff);
+    _CalcStats(*p1);
+    _CalcStats(*p2);
+    return 1;
+}
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a3354.s");
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a33d4.s");
 
