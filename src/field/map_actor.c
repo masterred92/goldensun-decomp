@@ -75,6 +75,7 @@ void Func_808c30c(int amount, int pct)
     extern void _PlaySound(int);
     extern unsigned char *_GetUnit(int);
     extern void _ModifyHP(int, int);
+    extern unsigned char gState[];
     int n;
     int i;
     int v;
