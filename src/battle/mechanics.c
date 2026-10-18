@@ -329,7 +329,33 @@ void Func_80b9b2c(void) {}
 
 INCLUDE_ASM("asm/battle/mechanics/Func_80b9b30.s");
 
-INCLUDE_ASM("asm/battle/mechanics/InitAnimContext.s");
+/* int return type but no value returned: the original falls off the end (pop {r1}). */
+int InitAnimContext(unsigned char *src, int *ctx)
+{
+    extern unsigned char *_GetUnit__iac(int) __asm__("_GetUnit");
+    int n = 0;
+    int i;
+    unsigned int v;
+
+    ctx[7] = 0;
+    v = *(unsigned int *)(src + 0x58);
+    ctx[0] = v & 0xfff;
+    ctx[6] = (v & 0x3000) >> 12;
+    ctx[2] = src[0];
+    for (i = 0; i < (signed char)src[1]; i++) {
+        unsigned char *id = src + 2;
+        if (*(short *)(_GetUnit__iac(id[i]) + 0x38) != 0
+            || (*(unsigned int *)(src + 0x58) & 0x10000))
+            ((unsigned short *)(ctx + 9))[n++] = id[i];
+    }
+    if (n == 0) {
+        *(unsigned short *)(ctx + 9) = src[2];
+        n = 1;
+    }
+    ctx[3] = src[2];
+    ctx[5] = n;
+    ctx[4] = 1;
+}
 
 INCLUDE_ASM("asm/battle/mechanics/Func_80b9dc4.s");
 
