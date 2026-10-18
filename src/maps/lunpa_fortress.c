@@ -607,6 +607,8 @@ void OvlFunc_959_2008ce0(void) {
     }
 }
 extern int L773c[][2] __asm__(".Lm959_773c");
+extern int L773c[][2] __asm__(".Lm959_773c");
+
 void OvlFunc_959_2008d54(int idx) {
     int x = L773c[idx][0];
     int y = L773c[idx][1];
@@ -1503,9 +1505,10 @@ void OvlFunc_959_200a308(void) {
 
 extern void __Func_801776c(int, int);
 extern void OvlFunc_959_200a2a0(void);
-void OvlFunc_959_200a38c(void) {
-    if (*(short *)(*(unsigned int *)iwram_3001ebc + 0xcb8) != 0 && API_GetFlag(0x948) == 0) {
-        __Func_801776c(0x1528, 1);
+void OvlFunc_959_200a38c(void)
+{
+    if (*(short *)(iwram_3001ebc__a1 + 0xcb8) != 0 && API_GetFlag(0x948) == 0) {
+        API_Func_801776c(0x1528, 1);
         API_PlaySound(0xbc);
         API_CutsceneWait(1);
         API_Func_80105d4(6, 0x4d, 1, 2, 3, 0x37);
