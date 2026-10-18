@@ -843,7 +843,34 @@ unsigned int Func_80a9a58(void) {
     return 1;
 }
 
-INCLUDE_ASM("asm/party_menu/party_menu/Func_80a9a5c.s");
+extern void Func_80a9aec();
+extern void Func_80a9c18();
+extern unsigned char Lc_b24[] __asm__(".Lc_b24");
+__asm__(".equ .Lc_b24, 0xb24");
+void Func_80a9a5c(unsigned int win, unsigned int unit, int flag)
+{
+    extern void _Func_801e7c0(unsigned int msg, unsigned int arg1, int arg2, int arg3);
+    unsigned char *base = (unsigned char *)iwram_3001f2c;
+    int m;
+    unsigned char *p;
+
+    _GetUnit(unit);
+    Func_80a9cbc();
+    Func_80a345c();
+    m = (int)Lc_b24;
+    _Func_801e7c0(m, win, 0, 0);
+    _Func_801e7c0(m + 1, win, 0, 0x20);
+    _Func_801e7c0(m + 2, win, 0, 0x10);
+    m += 3;
+    _Func_801e7c0(m, win, 0, 0x30);
+    p = base + 0x1c8;
+    Func_80a9aec(win, p);
+    if (flag == 0) {
+        WaitFrames(1);
+        Func_80a3e28((unsigned short *)p, 1);
+        Func_80a9c18(p);
+    }
+}
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a9aec.s");
 void Func_80a9b94(int arg0, int arg1, int arg2)
 {

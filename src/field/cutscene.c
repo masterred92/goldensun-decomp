@@ -146,7 +146,31 @@ void Func_8091858(void) {
 }
 
 INCLUDE_ASM("asm/field/cutscene/Func_8091890.s");
-INCLUDE_ASM("asm/field/cutscene/Func_80919d8.s");
+extern int _GetPartySize(void);
+extern int _Func_8078af8(int, int);
+extern void _Func_8019908(unsigned int, unsigned int);
+extern void _Func_801776c(unsigned int, unsigned int);
+extern unsigned char Lc_97d[] __asm__(".Lc_97d");
+__asm__(".equ .Lc_97d, 0x97d");
+int Func_80919d8(int arg)
+{
+    int sum = 0;
+    int n = _GetPartySize();
+    int i;
+    int m;
+    for (i = 0; i < n; i++)
+        sum += _Func_8078af8(gState[0x1f8 + i], arg);
+    if (sum >= n * 30) {
+        _Func_8019908(arg, 2);
+        m = (int)Lc_97d;
+        _Func_801776c(m, 1);
+        m++;
+        _Func_8019908(arg, 2);
+        _Func_801776c(m, 1);
+        return -1;
+    }
+    return 0;
+}
 INCLUDE_ASM("asm/field/cutscene/Func_8091a58.s");
 
 extern int _GiveItemTo(unsigned int unit, unsigned int item);
