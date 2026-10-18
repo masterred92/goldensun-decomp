@@ -40,7 +40,37 @@ extern void Func_801789c();
 extern unsigned int Func_8017364();
 
 INCLUDE_ASM("asm/ui/ui/ClearUIRegion.s");
-INCLUDE_ASM("asm/ui/ui/Func_8016230.s");
+extern void FillUIRegion__v(int a, int b, int c, int d) __asm__("FillUIRegion");
+extern void Func_8017248(int a, int b, int c, int d, int e);
+extern void *Func_80008d8(void *dst, unsigned int size, unsigned int value);
+static inline void Fill_80008d8(void *dst, unsigned int size, unsigned int value)
+{
+    void *(*fill)(void *, unsigned int, unsigned int) = Func_80008d8;
+    fill(dst, size, value);
+}
+void Func_8016230(struct UIBox *box)
+{
+    unsigned char *b = *(unsigned char **)iwram_3001e8c__a5;
+    int x, y, w, h;
+
+    h = box->h;
+    box->f1a = 0;
+    x = box->x;
+    y = box->y;
+    w = box->w;
+    if (box->flags & 8) {
+        if (box->flags & 0x20) {
+            FillUIRegion__v(x, y, w, h);
+            Fill_80008d8((void *)0x6002500, 0xf00, 0x44444444);
+        } else {
+            Fill_80008d8((void *)0x6002500, 0xf00, 0);
+        }
+        Func_8017248(x, y, w, h, 0);
+    } else {
+        FillUIRegion__v(x, y, w, h);
+    }
+    b[0xea3] = 1;
+}
 INCLUDE_ASM("asm/ui/ui/CreateUIBox.s");
 
 extern void WaitFrames(unsigned int nframes);
