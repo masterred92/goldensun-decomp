@@ -349,7 +349,24 @@ void Func_80b28d4(unsigned int arg0)
     WaitFrames(1);
 }
 
-INCLUDE_ASM("asm/shop/shop/Func_80b2928.s");
+void Func_80b2928(unsigned int arg0)
+{
+    unsigned char *r5 = *(unsigned char **)iwram_3001f2c__a4;
+    unsigned int voice;
+    unsigned char saved;
+    unsigned char **pp = (unsigned char **)(r5 + (0xe0 << 2));
+
+    saved = (*pp)[5];
+    voice = _GetSpriteVoice(*(unsigned short *)(r5 + (0xe9 << 2)));
+    arg0 = Func_80b2884(arg0);
+    (*pp)[5] = 0xd;
+    _Func_8019a54();
+    _Func_8017658(arg0, 5, 0, (voice << 16) | 0x22);
+    while (_Func_8017364() == 0)
+        WaitFrames(1);
+    WaitFrames(1);
+    (*(unsigned char **)(r5 + (0xe0 << 2)))[5] = saved;
+}
 INCLUDE_ASM("asm/shop/shop/UI_Sanctum.s");
 INCLUDE_ASM("asm/shop/shop/Func_80b2b10.s");
 INCLUDE_ASM("asm/shop/shop/Func_80b2da8.s");
