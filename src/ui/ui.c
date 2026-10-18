@@ -517,7 +517,47 @@ int *Func_80197b4(int *p) {
     return p;
 }
 
-INCLUDE_ASM("asm/ui/ui/Func_80197c4.s");
+extern void CloseUIBox(void *, int);
+void Func_80197c4(void)
+{
+    unsigned char *b = *(unsigned char **)iwram_3001e8c__a5;
+    struct UISlot *s;
+    struct UIBox *o;
+    struct UIBox *box;
+    int i;
+    int done;
+
+    s = (struct UISlot *)(b + 0x620);
+    box = (struct UIBox *)(b + 0x500);
+    for (i = 0; i != 3; i++, s++) {
+        o = (struct UIBox *)s->obj;
+        if (o != 0 && o->flags != 0)
+            CloseUIBox(o, 0);
+    }
+    for (;;) {
+        done = 1;
+        s = (struct UISlot *)(b + 0x620);
+        for (i = 0; i != 3; i++, s++) {
+            struct UIBox *q = (struct UIBox *)s->obj;
+            if (q != 0) {
+                if (*(int *)&q->f18 == 0 && q->flags == 0)
+                    s->obj = 0;
+                else
+                    done = 0;
+            }
+        }
+        if (done)
+            break;
+        WaitFrames(1);
+    }
+    i = 0;
+    while (i != 8) {
+        if (box->flags != 0)
+            CloseUIBox(box, 0);
+        box++;
+        i++;
+    }
+}
 INCLUDE_ASM("asm/ui/ui/Func_8019854.s");
 INCLUDE_ASM("asm/ui/ui/Func_80198dc.s");
 struct UiSlots8019908 {
