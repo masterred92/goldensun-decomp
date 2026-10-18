@@ -1,5 +1,6 @@
 // fakematch
 #include "nonmatching.h"
+#include "dma.h"
 
 extern void Func_80b00f4();
 
@@ -136,7 +137,16 @@ void Func_80b06c0(int count, int arg1, int arg2)
 }
 INCLUDE_ASM("asm/shop/shop/Func_80b06ec.s");
 INCLUDE_ASM("asm/shop/shop/Func_80b0744.s");
-INCLUDE_ASM("asm/shop/shop/Func_80b0840.s");
+extern unsigned char *iwram_3001ebc__s[] __asm__("iwram_3001ebc");
+void Func_80b0840(int a)
+{
+    unsigned char *w = iwram_3001ebc__s[5];
+    unsigned char *b = iwram_3001ebc__s[0];
+    DMA3_SET(w + 0xe00, b + 0x236, 0x84000150);
+    DMA3_SET(w + 0xe00, w + 0x380, 0x840002a0);
+    _Func_8091200(a, 1);
+    _Func_8091254(0x10);
+}
 
 extern unsigned int iwram_3001ebc;
 
