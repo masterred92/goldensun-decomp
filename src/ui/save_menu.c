@@ -508,7 +508,22 @@ void *Func_80284dc(void) {
     return p;
 }
 
-INCLUDE_ASM("asm/ui/save_menu/Func_802851c.s");
+extern unsigned char *iwram_3001f38;
+extern void Func_8028194(void);
+extern void CloseUIBox(void *, int);
+extern void Func_8003f3c(int);
+void Func_802851c(void)
+{
+    unsigned char *b = iwram_3001f38;
+    int i;
+    StopTask(Func_8028194);
+    if (*(void **)(b + 0x78) != 0)
+        CloseUIBox(*(void **)(b + 0x78), 2);
+    for (i = 0; i < *(short *)(b + 0x8e); i++)
+        Func_8003f3c(*(unsigned short *)(b + 0x12 + i * 0x14));
+    gfree(0x3a);
+    WaitFrames(1);
+}
 
 INCLUDE_ASM("asm/ui/save_menu/Func_8028574.s");
 
