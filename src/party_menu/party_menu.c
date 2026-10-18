@@ -481,7 +481,17 @@ void Func_80a38a8(unsigned int arg0) {
 
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a38d0.s");
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a3c08.s");
-INCLUDE_ASM("asm/party_menu/party_menu/Func_80a3c98.s");
+extern void _Sprite_SetAnim(unsigned char *sprite, unsigned int animID);
+extern void Func_80a3c08(void);
+void Func_80a3c98(void)
+{
+    unsigned char *base = (unsigned char *)iwram_3001f2c;
+    signed char i;
+
+    for (i = 0; i < base[0x219]; i++)
+        { int off = (i << 2) + 0x114; _Sprite_SetAnim(*(unsigned char **)(base + off), 1); }
+    StopTask(Func_80a3c08);
+}
 unsigned int Func_80a3ce4(int x)
 {
 	switch (x) {
