@@ -8,7 +8,7 @@ C and header source only: no ROM data, assets or original assembly.
 To use one: `git fetch https://github.com/masterred92/goldensun-decomp <branch>`
 and merge or cherry-pick it onto upstream `main`. Every branch is based directly
 on upstream `main`. All branches were merge-tested together on upstream
-`main` (2e5c504c) with a passing full compare (merge-test9 + vol-work3m, PRs #32-#59 and #61-#87).
+`main` (2e5c504c) with a passing full compare (merge-test9 + vol-work3m, PRs #32-#59 and #61-#88).
 
 | Function | Area (TU) | Address | Branch | Commit | PR |
 |---|---|---|---|---|---|
@@ -322,5 +322,9 @@ on upstream `main`. All branches were merge-tested together on upstream
 | `OvlFunc_common2_41c` | `src/maps/common/common2.c` | ovl (common2) | [`kenny/common2-fpbit`](https://github.com/masterred92/goldensun-decomp/tree/kenny/common2-fpbit) | [`167a58d4`](https://github.com/masterred92/goldensun-decomp/commit/167a58d4) | [#87](https://github.com/Coaltergeist/goldensun-decomp/pull/87) (open) |
 | `OvlFunc_common2_44c` | `src/maps/common/common2.c` | 0x7ff | [`kenny/common2-fpbit`](https://github.com/masterred92/goldensun-decomp/tree/kenny/common2-fpbit) | [`167a58d4`](https://github.com/masterred92/goldensun-decomp/commit/167a58d4) | [#87](https://github.com/Coaltergeist/goldensun-decomp/pull/87) (open) |
 | `OvlFunc_common2_618` | `src/maps/common/common2.c` | ovl (common2) | [`kenny/common2-fpbit`](https://github.com/masterred92/goldensun-decomp/tree/kenny/common2-fpbit) | [`167a58d4`](https://github.com/masterred92/goldensun-decomp/commit/167a58d4) | [#87](https://github.com/Coaltergeist/goldensun-decomp/pull/87) (open) |
+| `Func_8099920` | `src/field/moves/douse.c` | 0x08099920 | [`kenny/vol-batch19`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch19) | [`7afe1247`](https://github.com/masterred92/goldensun-decomp/commit/7afe1247) | [#88](https://github.com/Coaltergeist/goldensun-decomp/pull/88) (open) |
+| `OvlFunc_943_200b558` | `src/maps/tolbi_bound_ship_deck.c` | ovl 943 @0x0200b558 | [`kenny/vol-batch19`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch19) | [`7afe1247`](https://github.com/masterred92/goldensun-decomp/commit/7afe1247) | [#88](https://github.com/Coaltergeist/goldensun-decomp/pull/88) (open) |
+| `Func_80a3c08` | `src/party_menu/party_menu.c` | 0x080a3c08 | [`kenny/vol-batch19`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch19) | [`7afe1247`](https://github.com/masterred92/goldensun-decomp/commit/7afe1247) | [#88](https://github.com/Coaltergeist/goldensun-decomp/pull/88) (open) |
+| `Func_80b04dc` | `src/shop/shop.c` | 0x080b04dc | [`kenny/vol-batch19`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch19) | [`7afe1247`](https://github.com/masterred92/goldensun-decomp/commit/7afe1247) | [#88](https://github.com/Coaltergeist/goldensun-decomp/pull/88) (open) |
 
-Total: 310 functions.
+Total: 314 functions.
