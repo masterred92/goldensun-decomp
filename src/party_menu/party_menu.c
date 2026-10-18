@@ -942,7 +942,43 @@ void Func_80a8034(void)
 }
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a8088.s");
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a8114.s");
-INCLUDE_ASM("asm/party_menu/party_menu/Func_80a847c.s");
+extern unsigned char Laf2fc[] __asm__(".Laf2fc");
+extern void Func_80a2268(void *w, int x, int y, int wd, int ht, int pri);
+void Func_80a847c(int mode, int idx, unsigned char *flags, int sel)
+{
+    unsigned char *m = (unsigned char *)iwram_3001f2c;
+    int x, y, wd;
+    int i, n;
+
+    if (mode == 0) {
+        y = idx * 2 + 5;
+        x = 0;
+        wd = 5;
+        n = 0;
+        for (i = 0; i <= 4; i++) {
+            if (flags[i] != 0) {
+                if (idx == n) {
+                    wd = Laf2fc[i];
+                    break;
+                }
+                n++;
+            }
+        }
+    } else if (idx <= 3) {
+        y = idx;
+        x = 5;
+        wd = 0xd;
+    } else {
+        y = idx + 4;
+        x = 8;
+        wd = 0x14;
+    }
+    {
+        int ne = sel != 1;
+        int pri = 0xf - ne;
+        Func_80a2268(*(void **)(m + 0x24), x, y, wd, 1, pri);
+    }
+}
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a8508.s");
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a8578.s");
 
