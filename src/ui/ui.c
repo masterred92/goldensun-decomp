@@ -513,8 +513,10 @@ int Func_801999c(struct V199c *m)
     }
     return 0;
 }
-int Func_80199ec(struct V199c *m)
+struct V19ec { char pad[0x14]; unsigned short t; };
+int Func_80199ec(struct V19ec *m)
 {
+    extern int _Func_80f954c(void);
     extern unsigned int iwram_3001af8;
     extern unsigned int gKeyPress;
     unsigned char *b = *(unsigned char **)iwram_3001e8c__a5;
