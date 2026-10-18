@@ -308,7 +308,41 @@ int Func_80b19cc(unsigned int item)
 }
 INCLUDE_ASM("asm/shop/shop/Func_80b1a14.s");
 INCLUDE_ASM("asm/shop/shop/Func_80b1bd0.s");
-INCLUDE_ASM("asm/shop/shop/Func_80b1dec.s");
+struct Unit80b1dec { unsigned char pad[0xd8]; unsigned short items[15]; };
+void Func_80b1dec(int box, int pc)
+{
+    extern unsigned char *_GetUnit(unsigned int unitID);
+    extern void _Func_8016478(int);
+    extern int _FindEmptyInventorySlot(int);
+    extern void _DrawSmallText(int, int, int, int);
+    extern unsigned char *_Func_801eb90(int, int, int, int, int);
+    unsigned char *u;
+    int i, x, y;
+
+    u = _GetUnit(pc);
+    x = 8;
+    y = 0;
+    if (box == 0)
+        return;
+    _Func_8016478(box);
+    if (_FindEmptyInventorySlot(pc) == 0) {
+        _DrawSmallText(0xc91, box, 8, 0x14);
+        return;
+    }
+    for (i = 0; i <= 14; i++) {
+        if (((struct Unit80b1dec *)u)->items[i] != 0)
+            _Func_801eb90(((struct Unit80b1dec *)u)->items[i], 0x1b, box, x, y)[0xf] = 0xfc;
+        x += 0x10;
+        if (i == 4) {
+            x = 8;
+            y += 0x10;
+        }
+        if (i == 9) {
+            x = 8;
+            y += 0x10;
+        }
+    }
+}
 INCLUDE_ASM("asm/shop/shop/Func_80b1e80.s");
 INCLUDE_ASM("asm/shop/shop/Func_80b1f4c.s");
 
