@@ -512,7 +512,24 @@ void OvlFunc_957_2008b24(void) {
 }
 
 INCLUDE_ASM("asm/maps/altmiller_cave/OvlFunc_957_2008b30.s");
-INCLUDE_ASM("asm/maps/altmiller_cave/OvlFunc_957_2008bc8.s");
+extern void __Func_8092950(int, int);
+extern char Lbc8_92[] __asm__(".Lbc8_92");
+__asm__(".equ .Lbc8_92, 0x92");
+
+void OvlFunc_957_2008bc8(void)
+{
+    if (gState_s957[0xe0] == (int)Lbc8_92) {
+        int c = 0x1000;
+        REG_BLDALPHA = c;
+    }
+    if (gState_s957[0xe0] == (int)Lc957_97) {
+        __Func_8092950(0x10, 1);
+        __Func_8092950(0x11, 4);
+        __Func_8092950(0x12, 0xb);
+        __Func_8092950(0x13, 2);
+        __Func_8092950(0x14, 3);
+    }
+}
 extern unsigned char iwram_3001f30__c[] __asm__("iwram_3001f30");
 extern void OvlFunc_957_2008b30();
 void OvlFunc_957_2008c2c(void)
