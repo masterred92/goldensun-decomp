@@ -8,7 +8,7 @@ C and header source only: no ROM data, assets or original assembly.
 To use one: `git fetch https://github.com/masterred92/goldensun-decomp <branch>`
 and merge or cherry-pick it onto upstream `main`. Every branch is based directly
 on upstream `main`. All branches were merge-tested together on upstream
-`main` (2e5c504c) with a passing full compare (merge-test9, PRs #32-#59 and #61-#67).
+`main` (2e5c504c) with a passing full compare (merge-test9, PRs #32-#59 and #61-#68).
 
 | Function | Area (TU) | Address | Branch | Commit | PR |
 |---|---|---|---|---|---|
@@ -245,5 +245,14 @@ on upstream `main`. All branches were merge-tested together on upstream
 | `Func_802851c` | `src/ui/save_menu.c` | 0x0802851c | [`kenny/vol-batch7`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch7) | [`4ae9f0b8`](https://github.com/masterred92/goldensun-decomp/commit/4ae9f0b8) | [#67](https://github.com/Coaltergeist/goldensun-decomp/pull/67) (open) |
 | `Func_801ebd8` | `src/ui/text.c` | 0x0801ebd8 | [`kenny/vol-batch7`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch7) | [`4ae9f0b8`](https://github.com/masterred92/goldensun-decomp/commit/4ae9f0b8) | [#67](https://github.com/Coaltergeist/goldensun-decomp/pull/67) (open) |
 | `Func_8019a54` | `src/ui/ui.c` | 0x08019a54 | [`kenny/vol-batch7`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch7) | [`4ae9f0b8`](https://github.com/masterred92/goldensun-decomp/commit/4ae9f0b8) | [#67](https://github.com/Coaltergeist/goldensun-decomp/pull/67) (open) |
+| `Func_808e5d8` | `src/field/map.c` | 0x0808e5d8 | [`kenny/nearmiss-1`](https://github.com/masterred92/goldensun-decomp/tree/kenny/nearmiss-1) | [`384b13da`](https://github.com/masterred92/goldensun-decomp/commit/384b13da) | [#68](https://github.com/Coaltergeist/goldensun-decomp/pull/68) (open) |
+| `Func_8092504` | `src/field/map_actor.c` | 0x08092504 | [`kenny/nearmiss-1`](https://github.com/masterred92/goldensun-decomp/tree/kenny/nearmiss-1) | [`384b13da`](https://github.com/masterred92/goldensun-decomp/commit/384b13da) | [#68](https://github.com/Coaltergeist/goldensun-decomp/pull/68) (open) |
+| `Func_8093304` | `src/field/map_actor.c` | 0x08093304 | [`kenny/nearmiss-1`](https://github.com/masterred92/goldensun-decomp/tree/kenny/nearmiss-1) | [`384b13da`](https://github.com/masterred92/goldensun-decomp/commit/384b13da) | [#68](https://github.com/Coaltergeist/goldensun-decomp/pull/68) (open) |
+| `OvlFunc_957_2008bc8` | `src/maps/altmiller_cave.c` | ovl 957 @0x02008bc8 | [`kenny/nearmiss-1`](https://github.com/masterred92/goldensun-decomp/tree/kenny/nearmiss-1) | [`384b13da`](https://github.com/masterred92/goldensun-decomp/commit/384b13da) | [#68](https://github.com/Coaltergeist/goldensun-decomp/pull/68) (open) |
+| `OvlFunc_881_200813c` | `src/maps/world_map_cutscenes.c` | ovl 881 @0x0200813c | [`kenny/nearmiss-1`](https://github.com/masterred92/goldensun-decomp/tree/kenny/nearmiss-1) | [`384b13da`](https://github.com/masterred92/goldensun-decomp/commit/384b13da) | [#68](https://github.com/Coaltergeist/goldensun-decomp/pull/68) (open) |
+| `GetItemEquipSlot` | `src/rpg/item.c` | 0x08078480 | [`kenny/nearmiss-1`](https://github.com/masterred92/goldensun-decomp/tree/kenny/nearmiss-1) | [`384b13da`](https://github.com/masterred92/goldensun-decomp/commit/384b13da) | [#68](https://github.com/Coaltergeist/goldensun-decomp/pull/68) (open) |
+| `Func_8077348` | `src/rpg/party.c` | 0x08077348 | [`kenny/nearmiss-1`](https://github.com/masterred92/goldensun-decomp/tree/kenny/nearmiss-1) | [`384b13da`](https://github.com/masterred92/goldensun-decomp/commit/384b13da) | [#68](https://github.com/Coaltergeist/goldensun-decomp/pull/68) (open) |
+| `YesNoMenu2` | `src/ui/menus/menu_bars.c` | 0x08028e54 | [`kenny/nearmiss-1`](https://github.com/masterred92/goldensun-decomp/tree/kenny/nearmiss-1) | [`384b13da`](https://github.com/masterred92/goldensun-decomp/commit/384b13da) | [#68](https://github.com/Coaltergeist/goldensun-decomp/pull/68) (open) |
+| `Func_801e3c8` | `src/ui/text.c` | 0x0801e3c8 | [`kenny/nearmiss-1`](https://github.com/masterred92/goldensun-decomp/tree/kenny/nearmiss-1) | [`384b13da`](https://github.com/masterred92/goldensun-decomp/commit/384b13da) | [#68](https://github.com/Coaltergeist/goldensun-decomp/pull/68) (open) |
 
-Total: 233 functions.
+Total: 242 functions.
