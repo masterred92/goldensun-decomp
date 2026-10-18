@@ -513,7 +513,26 @@ int Func_801999c(struct V199c *m)
     }
     return 0;
 }
-INCLUDE_ASM("asm/ui/ui/Func_80199ec.s");
+int Func_80199ec(struct V199c *m)
+{
+    extern unsigned int iwram_3001af8;
+    extern unsigned int gKeyPress;
+    unsigned char *b = *(unsigned char **)iwram_3001e8c__a5;
+    int f = 0;
+    unsigned int k;
+    if (b[0x12f9] != 0 && _Func_80f954c() == 0)
+        f = 1;
+    k = gKeyPress;
+    if (b[0xea4] != 0)
+        k = iwram_3001af8;
+    if (k & 0x303)
+        f = 1;
+    if (f) {
+        m->t = 0;
+        return 1;
+    }
+    return 0;
+}
 extern void CloseUIBox__u(void *, unsigned short) __asm__("CloseUIBox");
 void Func_8019a54(void)
 {
