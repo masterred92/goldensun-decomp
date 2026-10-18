@@ -47,7 +47,20 @@ void Func_80a1090(void) {
     base[0x113] = 1;
 }
 
-INCLUDE_ASM("asm/party_menu/party_menu/Func_80a10d0.s");
+extern void _Func_8016498(unsigned int);
+extern unsigned int _CreateUIBox(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int);
+int Func_80a10d0(unsigned int a0, unsigned int a1, unsigned int a2, unsigned int a3, unsigned int a4, unsigned int flags)
+{
+    unsigned int *box = (unsigned int *)a0;
+    if (*box != 0) {
+        if (flags & 0x100)
+            return 0;
+        _Func_8016498(*box);
+        return 0;
+    }
+    *box = _CreateUIBox(a1, a2, a3, a4, flags & 0xff);
+    return 1;
+}
 
 extern void _CloseUIBox();
 
@@ -151,7 +164,7 @@ void Func_80a1804(void) {
     _Func_801ed40(0, unset, 0);
 }
 
-extern void Func_80a10d0(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int);
+extern int Func_80a10d0(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int);
 
 unsigned int Func_80a1814(unsigned int arg0)
 {
