@@ -911,7 +911,39 @@ void Func_80a68a8(unsigned short *ids)
     Func_80a3d24(ids);
 }
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a68ec.s");
-INCLUDE_ASM("asm/party_menu/party_menu/Func_80a6a00.s");
+struct S80a6a00 {
+    unsigned char pad0[0x218];
+    unsigned char count;
+    unsigned char pad219;
+    unsigned char list[0x46];
+    signed char cursor[1];
+};
+
+int Func_80a6a00(int *out, int idx)
+{
+    extern struct S80a6a00 *iwram_3001f2c__6a00 __asm__("iwram_3001f2c");
+    extern unsigned char *_GetUnit__6a00(int) __asm__("_GetUnit");
+    struct S80a6a00 *s = iwram_3001f2c__6a00;
+    unsigned char *u = _GetUnit__6a00(s->list[idx]);
+    int total = s->count;
+    int sel = s->cursor[s->list[idx]];
+    int row, col, pages;
+
+    if (sel + 1 > total)
+        sel = total - 1;
+    row = sel / 5;
+    col = sel % 5;
+    pages = total / 5;
+    if (total % 5 != 0)
+        pages++;
+    out[0] = (int)u;
+    out[2] = row;
+    out[3] = pages;
+    out[4] = col;
+    out[5] = total;
+    out[6] = sel;
+    return 1;
+}
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a6a98.s");
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a6b64.s");
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a6ccc.s");
