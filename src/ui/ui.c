@@ -497,7 +497,22 @@ void Func_8019908(int value, int id)
     }
 }
 INCLUDE_ASM("asm/ui/ui/Func_8019944.s");
-INCLUDE_ASM("asm/ui/ui/Func_801999c.s");
+extern int _Func_80f954c(void);
+extern unsigned int gKeyHeld;
+struct V199c { char pad[0x14]; unsigned short t; };
+int Func_801999c(struct V199c *m)
+{
+    int f = 0;
+    if ((*(unsigned char **)iwram_3001e8c__a5)[0x12f9] != 0 && _Func_80f954c() == 0)
+        f = 1;
+    if (gKeyHeld & 0x303)
+        f = 1;
+    if (f) {
+        m->t = 0;
+        return 1;
+    }
+    return 0;
+}
 INCLUDE_ASM("asm/ui/ui/Func_80199ec.s");
 INCLUDE_ASM("asm/ui/ui/Func_8019a54.s");
 INCLUDE_ASM("asm/ui/ui/Func_8019aa0.s");
