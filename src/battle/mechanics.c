@@ -241,7 +241,25 @@ short Func_80b9a44(unsigned int arg0)
     return *(short *)(base + off);
 }
 
-INCLUDE_ASM("asm/battle/mechanics/Func_80b9a70.s");
+struct S80b9a70 { char pad[0x58]; short a[7]; short b[1]; };
+int Func_80b9a70(int id)
+{
+    struct S80b9a70 *s = *(struct S80b9a70 **)&iwram_3001e74;
+    int i, v;
+    if ((unsigned int)id <= 7) {
+        for (i = 0; ; i++) {
+            v = s->a[i];
+            if (v == 0xff) return -1;
+            if (v != 0xfe && v == id) return i | 0x100;
+        }
+    } else {
+        for (i = 0; ; i++) {
+            v = s->b[i];
+            if (v == 0xff) return -1;
+            if (v != 0xfe && v == id) return i | 0x180;
+        }
+    }
+}
 
 void Func_80b9acc(void)
 {

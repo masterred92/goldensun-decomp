@@ -366,7 +366,20 @@ void Func_801ce6c(unsigned char *p)
 }
 
 INCLUDE_ASM("asm/ui/menu/Func_801ce90.s");
-INCLUDE_ASM("asm/ui/menu/Func_801cee0.s");
+void Func_801cee0(unsigned char *p)
+{
+    switch (*(unsigned short *)(p + 0x574)) {
+    case 0:
+        if (gState[0x20c] <= 1) gState[0x20c]++;
+        break;
+    case 1:
+        if (gState[0x205] <= 0x17) gState[0x205]++;
+        break;
+    case 2:
+        if (gState[0x206] <= 0xe) gState[0x206]++;
+        break;
+    }
+}
 
 void Func_801cf44(void) {}
 
