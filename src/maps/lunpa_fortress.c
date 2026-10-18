@@ -606,7 +606,16 @@ void OvlFunc_959_2008ce0(void) {
         }
     }
 }
-INCLUDE_ASM("asm/maps/lunpa_fortress/OvlFunc_959_2008d54.s");
+extern int L773c[][2] __asm__(".Lm959_773c");
+void OvlFunc_959_2008d54(int idx) {
+    int x = L773c[idx][0];
+    int y = L773c[idx][1];
+    API_Func_80105d4(0, 0x4d, 1, 3, x, y);
+    API_Func_80105d4(1, 0x4d, 1, 1, x + 1, y);
+    API_Func_8010704(x, y - 0x2d, 1, 1, x, y - 0x2c);
+    if (idx == 1)
+        API_Func_8010704(x, y - 0x2c, 1, 1, x, y - 0x2b);
+}
 extern void OvlFunc_959_2008d54(int index);
 void OvlFunc_959_2008dcc(void) {
     unsigned int r5;
@@ -1492,7 +1501,21 @@ void OvlFunc_959_200a308(void) {
     }
 }
 
-INCLUDE_ASM("asm/maps/lunpa_fortress/OvlFunc_959_200a38c.s");
+extern void __Func_801776c(int, int);
+extern void OvlFunc_959_200a2a0(void);
+void OvlFunc_959_200a38c(void) {
+    if (*(short *)(*(unsigned int *)iwram_3001ebc + 0xcb8) != 0 && API_GetFlag(0x948) == 0) {
+        __Func_801776c(0x1528, 1);
+        API_PlaySound(0xbc);
+        API_CutsceneWait(1);
+        API_Func_80105d4(6, 0x4d, 1, 2, 3, 0x37);
+        API_CutsceneWait(5);
+        API_Func_80105d4(7, 0x4d, 1, 2, 3, 0x37);
+        API_CutsceneWait(1);
+        OvlFunc_959_200a2a0();
+        API_SetFlag(0x948);
+    }
+}
 void OvlFunc_959_200a410(void)
 {
   int a;
