@@ -212,7 +212,32 @@ INCLUDE_ASM("asm/shop/shop/Func_80b1260.s");
 INCLUDE_ASM("asm/shop/shop/Func_80b1470.s");
 INCLUDE_ASM("asm/shop/shop/Func_80b153c.s");
 INCLUDE_ASM("asm/shop/shop/Func_80b1614.s");
-INCLUDE_ASM("asm/shop/shop/Func_80b17e4.s");
+extern void *_GetItemInfo__s(unsigned int) __asm__("_GetItemInfo");
+extern int _GetEquippedItem(int, int);
+extern void _PlaySound(int);
+extern int _GiveItemTo(int, int);
+extern void _AddCoins(int);
+extern void _AddCoinsSpent(int);
+extern void Func_80b0574(int);
+extern int Func_80b1868(int, int);
+extern void Func_80b196c(int, int);
+void Func_80b17e4(int unit, int item, int count)
+{
+    short *info = _GetItemInfo__s(item);
+    int slot = 0;
+    int eq = _GetEquippedItem(unit, ((unsigned char *)info)[2]);
+    int i;
+    _PlaySound(0x65);
+    for (i = 0; i < count; i++) {
+        slot = _GiveItemTo(unit, item);
+        _AddCoins(-info[0]);
+        _AddCoinsSpent(info[0]);
+        Func_80b10cc();
+    }
+    Func_80b0574(0xca1);
+    if (Func_80b1868(unit, slot))
+        Func_80b196c(unit, eq);
+}
 INCLUDE_ASM("asm/shop/shop/Func_80b1868.s");
 INCLUDE_ASM("asm/shop/shop/Func_80b196c.s");
 INCLUDE_ASM("asm/shop/shop/Func_80b19cc.s");
