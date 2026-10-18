@@ -162,7 +162,29 @@ void Func_808b2b0(int x)
     }
     gState_s2b0[0xeb] = v;
 }
-INCLUDE_ASM("asm/field/map_load/Func_808b320.s");
+extern int _GetFlag(int arg0);
+extern short gEnemyBattleMusic[];
+void Func_808b320(int a, int b)
+{
+    short key = a * 16 + b;
+    short *p = gEnemyBattleMusic;
+    unsigned short v;
+    int music;
+
+    if (_GetFlag(0x16c)) {
+        music = 0x12;
+    } else {
+        for (;;) {
+            v = *p;
+            p++;
+            if (v == 0 || v == (unsigned short)key)
+                break;
+            if (v & 0x8000)
+                music = v & 0xfff;
+        }
+    }
+    gState__a2[0xf7] = music;
+}
 
 extern int _GetFlag(int arg0);
 
