@@ -514,4 +514,39 @@ void Func_801fd98(void) {
     StopTask(Func_801fd34);
 }
 
-INCLUDE_ASM("asm/ui/text/Func_801fda8.s");
+struct Win801fda8 { char pad[0xc]; unsigned short x; unsigned short y; };
+void Func_801fda8(struct Win801fda8 *w, int x, int y, int wd, int ht)
+{
+    unsigned int b = iwram_3001e8c;
+    unsigned short *p;
+    int off;
+    int n;
+
+    x = x + w->x + 1;
+    y = y + w->y + 1;
+    if (x < 0) {
+        wd += x;
+        x = 0;
+    }
+    if (x + wd > 0x1d)
+        wd = 0x1e - x;
+    if (y < 0) {
+        ht += y;
+        y = 0;
+    }
+    if (y + ht > 0x1d)
+        ht = 0x14 - y;
+    if (wd > 0 && ht > 0) {
+        off = (y << 6) + (x << 1);
+        do {
+            p = (unsigned short *)(off + b);
+            n = wd;
+            while (n != 0) {
+                n--;
+                *p++ = 0xe006;
+            }
+            off += 0x40;
+        } while (--ht != 0);
+        *(unsigned char *)(b + 0xea3) = 1;
+    }
+}
