@@ -643,7 +643,19 @@ INCLUDE_ASM("asm/party_menu/party_menu/Func_80a414c.s");
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a448c.s");
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a45cc.s");
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a46b4.s");
-INCLUDE_ASM("asm/party_menu/party_menu/Func_80a4754.s");
+extern unsigned char *_GetItemInfo__b(int) __asm__("_GetItemInfo");
+extern unsigned int Random(void);
+extern void _BreakItem(int, int);
+extern void Func_80a1d08(int, int, int);
+void Func_80a4754(void)
+{
+    unsigned char *b = (unsigned char *)iwram_3001f2c;
+    if (_GetItemInfo__b(*(unsigned short *)(b + 0x178) & 0x1ff)[0xc] == 2 && Random() < 0x2000) {
+        _BreakItem(b[0x21a], *(unsigned short *)(b + 0x174));
+        _PlaySound(0x8a);
+        Func_80a1d08(0xb86, 0, -1);
+    }
+}
 
 extern void Func_80a4924(unsigned int, unsigned int);
 int Func_80a47b4(int idx)
