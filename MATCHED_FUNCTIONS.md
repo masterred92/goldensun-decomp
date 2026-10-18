@@ -8,7 +8,7 @@ C and header source only: no ROM data, assets or original assembly.
 To use one: `git fetch https://github.com/masterred92/goldensun-decomp <branch>`
 and merge or cherry-pick it onto upstream `main`. Every branch is based directly
 on upstream `main`. All branches were merge-tested together on upstream
-`main` (2e5c504c) with a passing full compare (merge-test9, PRs #32-#59 and #61-#65).
+`main` (2e5c504c) with a passing full compare (merge-test9, PRs #32-#59 and #61-#66).
 
 | Function | Area (TU) | Address | Branch | Commit | PR |
 |---|---|---|---|---|---|
@@ -218,5 +218,19 @@ on upstream `main`. All branches were merge-tested together on upstream
 | `Func_801f730` | `src/ui/text.c` | 0x0801f730 | [`kenny/vol-batch5`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch5) | [`708b8e41`](https://github.com/masterred92/goldensun-decomp/commit/708b8e41) | [#65](https://github.com/Coaltergeist/goldensun-decomp/pull/65) (open) |
 | `Func_8017a64` | `src/ui/ui.c` | 0x08017a64 | [`kenny/vol-batch5`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch5) | [`708b8e41`](https://github.com/masterred92/goldensun-decomp/commit/708b8e41) | [#65](https://github.com/Coaltergeist/goldensun-decomp/pull/65) (open) |
 | `Func_801999c` | `src/ui/ui.c` | 0x0801999c | [`kenny/vol-batch5`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch5) | [`708b8e41`](https://github.com/masterred92/goldensun-decomp/commit/708b8e41) | [#65](https://github.com/Coaltergeist/goldensun-decomp/pull/65) (open) |
+| `Func_80be070` | `src/battle/mechanics.c` | 0x080be070 | [`kenny/vol-batch6`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch6) | [`1aea8baa`](https://github.com/masterred92/goldensun-decomp/commit/1aea8baa) | [#66](https://github.com/Coaltergeist/goldensun-decomp/pull/66) (open) |
+| `Func_80925e0` | `src/field/map_actor.c` | 0x080925e0 | [`kenny/vol-batch6`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch6) | [`1aea8baa`](https://github.com/masterred92/goldensun-decomp/commit/1aea8baa) | [#66](https://github.com/Coaltergeist/goldensun-decomp/pull/66) (open) |
+| `Actor_SetBehavior` | `src/field/map_actor.c` | 0x08093a6c | [`kenny/vol-batch6`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch6) | [`1aea8baa`](https://github.com/masterred92/goldensun-decomp/commit/1aea8baa) | [#66](https://github.com/Coaltergeist/goldensun-decomp/pull/66) (open) |
+| `Field_Growth_Target` | `src/field/moves/growth.c` | 0x080985a8 | [`kenny/vol-batch6`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch6) | [`1aea8baa`](https://github.com/masterred92/goldensun-decomp/commit/1aea8baa) | [#66](https://github.com/Coaltergeist/goldensun-decomp/pull/66) (open) |
+| `Func_809ade8` | `src/field/moves/halt.c` | 0x0809ade8 | [`kenny/vol-batch6`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch6) | [`1aea8baa`](https://github.com/masterred92/goldensun-decomp/commit/1aea8baa) | [#66](https://github.com/Coaltergeist/goldensun-decomp/pull/66) (open) |
+| `Func_8098294` | `src/field/moves/reveal.c` | 0x08098294 | [`kenny/vol-batch6`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch6) | [`1aea8baa`](https://github.com/masterred92/goldensun-decomp/commit/1aea8baa) | [#66](https://github.com/Coaltergeist/goldensun-decomp/pull/66) (open) |
+| `Func_80a10d0` | `src/party_menu/party_menu.c` | 0x080a10d0 | [`kenny/vol-batch6`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch6) | [`1aea8baa`](https://github.com/masterred92/goldensun-decomp/commit/1aea8baa) | [#66](https://github.com/Coaltergeist/goldensun-decomp/pull/66) (open) |
+| `Func_80a47b4` | `src/party_menu/party_menu.c` | 0x080a47b4 | [`kenny/vol-batch6`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch6) | [`1aea8baa`](https://github.com/masterred92/goldensun-decomp/commit/1aea8baa) | [#66](https://github.com/Coaltergeist/goldensun-decomp/pull/66) (open) |
+| `Func_80aa460` | `src/party_menu/party_menu.c` | 0x080aa460 | [`kenny/vol-batch6`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch6) | [`1aea8baa`](https://github.com/masterred92/goldensun-decomp/commit/1aea8baa) | [#66](https://github.com/Coaltergeist/goldensun-decomp/pull/66) (open) |
+| `AddPartyMember` | `src/rpg/pc.c` | 0x0807961c | [`kenny/vol-batch6`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch6) | [`1aea8baa`](https://github.com/masterred92/goldensun-decomp/commit/1aea8baa) | [#66](https://github.com/Coaltergeist/goldensun-decomp/pull/66) (open) |
+| `LoadInventoryIcon` | `src/ui/icon.c` | 0x0801a2a4 | [`kenny/vol-batch6`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch6) | [`1aea8baa`](https://github.com/masterred92/goldensun-decomp/commit/1aea8baa) | [#66](https://github.com/Coaltergeist/goldensun-decomp/pull/66) (open) |
+| `Func_801ce90` | `src/ui/menu.c` | 0x0801ce90 | [`kenny/vol-batch6`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch6) | [`1aea8baa`](https://github.com/masterred92/goldensun-decomp/commit/1aea8baa) | [#66](https://github.com/Coaltergeist/goldensun-decomp/pull/66) (open) |
+| `LoadUIIcon` | `src/ui/menus/menu_bars.c` | 0x0802875c | [`kenny/vol-batch6`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch6) | [`1aea8baa`](https://github.com/masterred92/goldensun-decomp/commit/1aea8baa) | [#66](https://github.com/Coaltergeist/goldensun-decomp/pull/66) (open) |
+| `Func_8021b80` | `src/ui/save_menu.c` | 0x08021b80 | [`kenny/vol-batch6`](https://github.com/masterred92/goldensun-decomp/tree/kenny/vol-batch6) | [`1aea8baa`](https://github.com/masterred92/goldensun-decomp/commit/1aea8baa) | [#66](https://github.com/Coaltergeist/goldensun-decomp/pull/66) (open) |
 
-Total: 206 functions.
+Total: 220 functions.
