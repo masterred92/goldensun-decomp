@@ -1889,7 +1889,32 @@ void OvlFunc_924_200bb24(unsigned int a, int b, int c)
         OvlFunc_common0_10c(a, b, c, dx, dy, phase, 0x90000, &data);
     }
 }
-INCLUDE_ASM("asm/maps/mercury_lighthouse/OvlFunc_924_200bbd4.s");
+void OvlFunc_924_200bbd4(int x, int y, int z)
+{
+    struct {
+        int unk0;
+        int unk4;
+        int unk8;
+        int unkc;
+        int unk10;
+        int unk14;
+        int unk18;
+        int unk1c;
+        int unk20;
+        int unk24;
+    } data;
+    extern void OvlFunc_common0_10c(int, int, int, int, int, int, int, void *);
+
+    data.unk4 = 7;
+    data.unk0 = 1;
+    data.unk8 = 0xb333;
+    data.unkc = 0xb333;
+    x += ((__Random() << 4) >> 16) << 16;
+    x -= 0x80000;
+    z += ((__Random() << 3) >> 16) << 16;
+    z -= 0x40000;
+    OvlFunc_common0_10c(x, y, z, 0, 0, 0, 0xb0 << 12, &data);
+}
 void OvlFunc_924_200bc48(int x, int y, int z, int angle)
 {
     extern void __vec3_translate(int, int, vec3_t *);
