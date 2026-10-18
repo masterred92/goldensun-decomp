@@ -265,5 +265,7 @@ on upstream `main`. All branches were merge-tested together on upstream
 | `OvlFunc_968_20085e4` | `src/maps/venus_lighthouse.c` | ovl 968 @0x020085e4 | [`kenny/nearmiss-4`](https://github.com/masterred92/goldensun-decomp/tree/kenny/nearmiss-4) | [`7aa6058a`](https://github.com/masterred92/goldensun-decomp/commit/7aa6058a) | [#71](https://github.com/Coaltergeist/goldensun-decomp/pull/71) (open) |
 | `OvlFunc_911_2008050` | `src/maps/kolima.c` | ovl 911 @0x02008050 | [`kenny/nearmiss-5`](https://github.com/masterred92/goldensun-decomp/tree/kenny/nearmiss-5) | [`3428146e`](https://github.com/masterred92/goldensun-decomp/commit/3428146e) | [#72](https://github.com/Coaltergeist/goldensun-decomp/pull/72) (open) |
 | `OvlFunc_911_2008230` | `src/maps/kolima.c` | ovl 911 @0x02008230 | [`kenny/nearmiss-5`](https://github.com/masterred92/goldensun-decomp/tree/kenny/nearmiss-5) | [`3428146e`](https://github.com/masterred92/goldensun-decomp/commit/3428146e) | [#72](https://github.com/Coaltergeist/goldensun-decomp/pull/72) (open) |
+| `VenusLighthouseAerie_MapInit` | `src/maps/venus_lighthouse_aerie.c` | ovl (venus_lighthouse_aerie) | [`kenny/nearmiss-6`](https://github.com/masterred92/goldensun-decomp/tree/kenny/nearmiss-6) | [`e7f20cbe`](https://github.com/masterred92/goldensun-decomp/commit/e7f20cbe) | [#73](https://github.com/Coaltergeist/goldensun-decomp/pull/73) (open) |
+| `OvlFunc_881_200b95c` | `src/maps/world_map_cutscenes.c` | ovl 881 @0x0200b95c | [`kenny/nearmiss-6`](https://github.com/masterred92/goldensun-decomp/tree/kenny/nearmiss-6) | [`e7f20cbe`](https://github.com/masterred92/goldensun-decomp/commit/e7f20cbe) | [#73](https://github.com/Coaltergeist/goldensun-decomp/pull/73) (open) |
 
-Total: 253 functions.
+Total: 255 functions.
