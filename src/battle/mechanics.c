@@ -48,7 +48,31 @@ extern int Func_80b8808();
 #define REG_BG0VOFS (*(volatile unsigned short *)0x04000012)
 #define REG_BLDCNT (*(volatile unsigned short *)0x04000050)
 
-INCLUDE_ASM("asm/battle/mechanics/SetBattleActorKnockback.s");
+extern int Lc59a4[] __asm__(".Lc59a4");
+extern int Lc59c4[] __asm__(".Lc59c4");
+extern int Lc59e4[] __asm__(".Lc59e4");
+extern int Lc5a04[] __asm__(".Lc5a04");
+extern void _Actor_TravelTo(void *, int, int, int);
+void SetBattleActorKnockback(int id, int dir)
+{
+    int *ba;
+    unsigned char *a;
+
+    ba = (int *)GetBattleActor(id);
+    a = (unsigned char *)ba[0];
+    if (_GetUnit(id)[0x128] != 0x94) {
+        *(int *)(a + 0x34) = Lc59a4[dir];
+        *(int *)(a + 0x30) = Lc59c4[dir];
+        if (*(int *)(a + 0xc) == 0 || dir > 4)
+            *(int *)(a + 0x28) = Lc59e4[dir];
+        *(int *)(a + 0x48) = 0x9999;
+        *(int *)(a + 0x44) = 0;
+        a[0x5a] = 0;
+        _Actor_Stop(a);
+        _Actor_TravelTo(a, ba[3] * Lc5a04[dir] / 100, 0, ba[4]);
+    }
+    _Actor_SetAnim(a, 5);
+}
 
 INCLUDE_ASM("asm/battle/mechanics/Func_80b82c4.s");
 
