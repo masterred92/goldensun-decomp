@@ -420,7 +420,17 @@ void Func_80925cc(unsigned int arg0)
 	MapActor_WaitScript(arg0);
 }
 
-INCLUDE_ASM_SECTION("asm/field/map_actor/Func_80925e0.s", ".text.map_actor_2");
+void Func_80925e0(int *a)
+{
+    int vx = a[0xc];
+    int vz;
+    a[0xe] = a[2] += vx;
+    vz = a[0xd];
+    a[0x10] = a[4] += vz;
+    a[0xf] = a[3] += 0x400;
+    a[0xc] = vx - vx / 18;
+    a[0xd] = vz - vz / 16;
+}
 INCLUDE_ASM_SECTION("asm/field/map_actor/Func_8092624.s", ".text.map_actor_2");
 INCLUDE_ASM_SECTION("asm/field/map_actor/Func_8092708.s", ".text.map_actor_2");
 
