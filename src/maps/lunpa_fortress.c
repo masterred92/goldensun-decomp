@@ -1020,7 +1020,18 @@ int OvlFunc_959_200981c(unsigned int arg0)
         return 1;
     return 0;
 }
-INCLUDE_ASM("asm/maps/lunpa_fortress/OvlFunc_959_2009880.s");
+int OvlFunc_959_2009880(unsigned int arg0)
+{
+    struct Actor *actor = (struct Actor *)__MapActor_GetActor(arg0);
+    struct Actor *leader = (struct Actor *)__MapActor_GetActor(0);
+    int az = actor->pos.z / 0x100000;
+    int ax = actor->pos.x / 0x100000;
+    int lz = leader->pos.z / 0x100000;
+    int lx = leader->pos.x / 0x100000;
+    if ((unsigned int)(ax - lx + 6) > 12) return 0;
+    if (az - 2 < lz && az + 2 > lz) return 1;
+    return 0;
+}
 
 extern int OvlFunc_959_2009980(unsigned int);
 extern int OvlFunc_959_200981c(unsigned int arg0);
@@ -1037,8 +1048,40 @@ unsigned int OvlFunc_959_20098e4(unsigned int arg0)
 	return (unsigned int)(-v | v) >> 31;
 }
 
-INCLUDE_ASM("asm/maps/lunpa_fortress/OvlFunc_959_2009918.s");
-INCLUDE_ASM("asm/maps/lunpa_fortress/OvlFunc_959_2009980.s");
+int OvlFunc_959_2009918(unsigned int arg0)
+{
+    struct Actor *actor = (struct Actor *)__MapActor_GetActor(arg0);
+    struct Actor *leader = (struct Actor *)__MapActor_GetActor(0);
+    int az = actor->pos.z / 0x100000;
+    int ax = actor->pos.x / 0x100000;
+    int lz = leader->pos.z / 0x100000;
+    int lx = leader->pos.x / 0x100000;
+    int dx, dz;
+    az++;
+    dx = ax - lx;
+    if (dx < 0) dx = -dx;
+    dz = az - lz;
+    if (dz < 0) dz = -dz;
+    if (dx + dz <= 4) return 1;
+    return 0;
+}
+extern struct Actor *__Func_8093554(void);
+extern struct Actor *__Func_8093554(void);
+int OvlFunc_959_2009980(unsigned int arg0)
+{
+    struct Actor *actor = (struct Actor *)__MapActor_GetActor(arg0);
+    struct Actor *o = __Func_8093554();
+    int ax = actor->pos.x / 0x100000;
+    int az = actor->pos.z / 0x100000;
+    int ox = o->pos.x / 0x100000;
+    int oz = o->pos.z / 0x100000;
+    int dx = ax - ox, dz;
+    if (dx < 0) dx = -dx;
+    dz = az - oz;
+    if (dz < 0) dz = -dz;
+    if (dx > 7 || dz > 5) return 0;
+    return 1;
+}
 
 extern void OvlFunc_959_2008f30(void);
 extern unsigned int iwram_3001ebc__a8 __asm__("iwram_3001ebc");
@@ -1060,7 +1103,23 @@ void OvlFunc_959_20099e8(void) {
     }
 }
 
-INCLUDE_ASM("asm/maps/lunpa_fortress/OvlFunc_959_2009a44.s");
+extern void OvlFunc_959_2008e80(void);
+void OvlFunc_959_2009a44(void) {
+    struct Actor *actor;
+    int x, z;
+
+    actor = (struct Actor *)__MapActor_GetActor(0);
+    if (__GetFlag(0x358) == 0) {
+        x = actor->pos.x / 0x100000;
+        z = actor->pos.z / 0x100000;
+        if (x == 0x10 && z > 0x37 && z <= 0x3a && (actor->facing == 0xc000 || actor->facing == 0x4000)) {
+            unsigned short *q = (unsigned short *)(iwram_3001ebc__a8 + (0xb6 << 1));
+            int v = 0x28;
+            *q = v;
+            OvlFunc_959_2008e80();
+        }
+    }
+}
 extern void __MessageID(int);
 extern void __ActorMessage(int, int);
 extern void __MapActor_SetBehavior(int, int);
