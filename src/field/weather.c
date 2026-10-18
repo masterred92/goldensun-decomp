@@ -89,7 +89,29 @@ INCLUDE_ASM("asm/field/weather/Task_Snow.s");
 INCLUDE_ASM("asm/field/weather/StartSnow.s");
 INCLUDE_ASM("asm/field/weather/Task_Earthquake.s");
 INCLUDE_ASM("asm/field/weather/StartEarthquake.s");
-INCLUDE_ASM("asm/field/weather/StartThunder.s");
+extern void *galloc_ewram(int index, unsigned int size);
+extern unsigned int iwram_3001ed0;
+extern int Func_8090a5c(unsigned int, unsigned int, unsigned int, unsigned int);
+extern void Func_809088c(unsigned char *a, unsigned char *b, unsigned char *c, unsigned int d);
+extern void Task_Thunder(void);
+extern int StartTask(void *task, int priority);
+struct Thunder8095160 { unsigned char pad[0x1f80]; unsigned short timer; unsigned short active; };
+void StartThunder(void)
+{
+    unsigned char *base = (unsigned char *)galloc_ewram(0x1e, 0x1f88);
+    unsigned int src = iwram_3001ed0;
+    vu32 tmp;
+
+    tmp = 0;
+    DMA3_SET((void *)&tmp, base, 0x850007e2);
+    Func_8090a5c(0x10003, src, (unsigned int)base, 1);
+    Func_8090a5c(0x10005, src, (unsigned int)(base + 0xa80), 1);
+    Func_809088c(base + 0xa80, base, base + 0x1500, 0xc);
+    Func_8090a5c((unsigned int)base, 0, src + 0xe00, 1);
+    ((struct Thunder8095160 *)base)->timer = 0x258;
+    ((struct Thunder8095160 *)base)->active = 1;
+    StartTask(Task_Thunder, 0xc80);
+}
 
 extern void *galloc_ewram(int index, unsigned int size);
 
