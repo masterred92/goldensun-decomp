@@ -549,6 +549,7 @@ struct PM80a3c08 {
 void Func_80a3c08(void)
 {
     extern int _CanEquipItem(int, int);
+    extern void _Sprite_SetAnim(unsigned char *sprite, unsigned int animID);
     extern unsigned int iwram_3001e40;
     struct PM80a3c08 *s = (struct PM80a3c08 *)iwram_3001f2c;
     signed char i;
