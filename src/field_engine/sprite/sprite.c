@@ -74,7 +74,21 @@ void InitSpriteLayer(struct SpriteLayer *layer)
 }
 INCLUDE_ASM("asm/field_engine/sprite/sprite/Sprite_AddLayer.s");
 INCLUDE_ASM("asm/field_engine/sprite/sprite/Sprite_DeleteLayer.s");
-INCLUDE_ASM("asm/field_engine/sprite/sprite/Sprite_DeleteLayerIndex.s");
+void DeleteSpriteLayer(struct SpriteLayer *layer);
+void Sprite_DeleteLayerIndex(struct Sprite *sprite, u32 idx)
+{
+    u32 i;
+    int n;
+    if (sprite == NULL || idx > 3) return;
+    if (sprite->layers[idx] == NULL) return;
+    DeleteSpriteLayer(sprite->layers[idx]);
+    sprite->layers[idx] = NULL;
+    n = 0;
+    for (i = idx + 1; i <= 3; i++) {
+        if (sprite->layers[i] != NULL) n++;
+    }
+    if (n == 0) sprite->numLayers = idx;
+}
 
 extern void *_GetSpriteInfo(int id);
 
