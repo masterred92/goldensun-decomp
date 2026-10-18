@@ -351,7 +351,22 @@ unsigned int Func_80b27b0(unsigned int arg0, unsigned int arg1)
 }
 
 INCLUDE_ASM("asm/shop/shop/Func_80b280c.s");
-INCLUDE_ASM("asm/shop/shop/Func_80b2884.s");
+extern unsigned char Ls_d24[] __asm__(".Ls_d24");
+extern unsigned char Ls_d2e[] __asm__(".Ls_d2e");
+extern unsigned char Ls_d38[] __asm__(".Ls_d38");
+extern unsigned char Ls_d42[] __asm__(".Ls_d42");
+__asm__(".equ .Ls_d24, 0xd24\n.equ .Ls_d2e, 0xd2e\n.equ .Ls_d38, 0xd38\n.equ .Ls_d42, 0xd42");
+unsigned int Func_80b2884(unsigned int m)
+{
+    signed char t = (*(unsigned char **)iwram_3001f2c__a1)[0x3aa];
+    if (t == 1)
+        m += (int)Ls_d2e - (int)Ls_d24;
+    if (t == 2)
+        m += (int)Ls_d38 - (int)Ls_d24;
+    if (t == 3)
+        m += (int)Ls_d42 - (int)Ls_d24;
+    return m;
+}
 
 extern unsigned char iwram_3001f2c__a4[] __asm__("iwram_3001f2c");
 extern unsigned int _GetSpriteVoice(unsigned short id);
