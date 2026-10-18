@@ -1041,7 +1041,32 @@ void Func_80aa448(void) {
     Func_80aa460(*(unsigned short *)(p + 0x28) & 0x3fff);
 }
 
-INCLUDE_ASM("asm/party_menu/party_menu/Func_80aa460.s");
+extern unsigned char *_GetMoveInfo(int);
+extern void Func_80a2438__a(int) __asm__("Func_80a2438");
+void Func_80aa460(int id)
+{
+    unsigned char *m = _GetMoveInfo(id);
+    switch (m[1] & 0xf) {
+    case 1:
+        Func_80a2438__a(0x7e);
+    case 0xb:
+        Func_80a2438__a(0x7e);
+        return;
+    }
+    switch (m[3]) {
+    case 1: case 2: case 31: case 32:
+        break;
+    case 5:
+        Func_80a2438__a(0x52);
+        break;
+    case 3:
+        Func_80a2438__a(0x54);
+        break;
+    default:
+        Func_80a2438__a(0x5b);
+        break;
+    }
+}
 
 int Func_80aa534(void) { return 0; }
 
