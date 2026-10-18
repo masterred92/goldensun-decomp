@@ -608,7 +608,43 @@ int Func_80b3210(int priceIndex)
 }
 
 INCLUDE_ASM("asm/shop/shop/Func_80b3284.s");
-INCLUDE_ASM("asm/shop/shop/InnHeal.s");
+void InnHeal(int cost)
+{
+    extern int _Func_80796c4(short *);
+    extern void _UpdateStatBarPercent(int);
+    extern void _MapTransitionOut(void);
+    extern void _MapTransitionIn(void);
+    extern void _WaitMapTransition(void);
+    extern unsigned char *iwram_3001ebc__inn __asm__("iwram_3001ebc");
+    short party[8];
+    int n = _Func_80796c4(party);
+    int i;
+
+    _AddCoins(-cost);
+    for (i = 0; i < n; i++) {
+        unsigned char *u = _GetUnit(party[i]);
+        if (*(short *)(u + 0x38) != 0) {
+            *(unsigned short *)(u + 0x38) = *(unsigned short *)(u + 0x34);
+            *(unsigned short *)(u + 0x3a) = *(unsigned short *)(u + 0x36);
+            _UpdateStatBarPercent(party[i]);
+        }
+    }
+    {
+        unsigned char *b = iwram_3001ebc__inn;
+        *(int *)(b + 0x1c0) = 0x209;
+        *(int *)(b + 0x1c8) = 0x3c;
+    }
+    WaitFrames(0x14);
+    _MapTransitionOut();
+    _WaitMapTransition();
+    _PlaySound(0x56);
+    Func_80b04c4();
+    WaitFrames(10);
+    _MapTransitionIn();
+    _WaitMapTransition();
+    WaitFrames(0x1e);
+    *(int *)(iwram_3001ebc__inn + 0x1c8) = 0x10;
+}
 INCLUDE_ASM("asm/shop/shop/UI_SellMenu.s");
 INCLUDE_ASM("asm/shop/shop/Func_80b362c.s");
 INCLUDE_ASM("asm/shop/shop/Func_80b386c.s");
