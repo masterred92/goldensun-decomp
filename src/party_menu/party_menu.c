@@ -645,7 +645,20 @@ INCLUDE_ASM("asm/party_menu/party_menu/Func_80a45cc.s");
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a46b4.s");
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a4754.s");
 
-INCLUDE_ASM("asm/party_menu/party_menu/Func_80a47b4.s");
+extern void Func_80a4924(unsigned int, unsigned int);
+int Func_80a47b4(int idx)
+{
+    unsigned char *b = (unsigned char *)iwram_3001f2c;
+    unsigned int *box = (unsigned int *)(b + 0x30);
+    int off;
+    unsigned short v;
+    Func_80a10d0((unsigned int)box, 0, 0, 0xd, 0xa, 2);
+    Func_80a22f4();
+    off = (idx << 1) + 0x178;
+    if (*(unsigned short *)(b + off) != 0)
+        Func_80a4924(*box, *(unsigned short *)(b + off));
+    return 1;
+}
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a4800.s");
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a4924.s");
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a4db4.s");
