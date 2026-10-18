@@ -244,7 +244,16 @@ void Func_80a1c2c(unsigned char **pp, int idx, int arg2, int arg3, int arg4)
     Func_80a17c4((struct MenuCursor *)p);
 }
 
-INCLUDE_ASM("asm/party_menu/party_menu/Func_a1c6c.s");
+void Func_a1c6c(unsigned char **o, int i, int x, int y, int cols)
+{
+    unsigned char *w;
+    if (i > 15)
+        i = 0;
+    w = *o;
+    *(unsigned short *)(w + 8) = (i / cols) * 16 + y;
+    *(unsigned short *)(w + 6) = (i % cols) * 24 + x;
+    Func_80a17c4((struct MenuCursor *)w);
+}
 extern void Func_a1c6c();
 void Func_80a1cb0(unsigned int mode)
 {
