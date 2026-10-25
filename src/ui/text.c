@@ -551,11 +551,4 @@ void Func_801fda8(struct Win801fda8 *w, int x, int y, int wd, int ht)
     }
 }
 /* Read-only data that follows Func_801fda8 in the ROM (used by Func_801de5c and Func_801ef68). */
-__asm__(".section .rodata\n"
-        "\t.global .L371c4\n"
-        "\t.global .L371b4\n"
-        ".L371b4:\n"
-        "\t.incbin \"baserom.gba\", 0x371b4, 0x10\n"
-        ".L371c4:\n"
-        "\t.incbin \"baserom.gba\", 0x371c4, 0x1c\n"
-        "\t.text\n");
+INCLUDE_ASM("asm/ui/text/rodata_371b4.s");

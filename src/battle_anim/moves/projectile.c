@@ -114,29 +114,4 @@ void Func_80df9d0(unsigned char *src, unsigned char *dst, int stride)
             dst[y * stride / 2 + x / 2] = src[y * stride + x];
 }
 /* Read-only data that follows Func_80df9d0 in the ROM (bytes come from baserom.gba). */
-__asm__(".section .rodata\n"
-        "\t.global .Leebe9\n"
-        "\t.global .Leebec\n"
-        "\t.global gVFX_SlashHit_LongDims\n"
-        "\t.global gVFX_SlashHit_ShortDims\n"
-        "\t.global .Leec36\n"
-        "\t.global .Leec3d\n"
-        "\t.global gVFX_SlashHit_Offsets\n"
-        "\t.global .Leec52\n"
-        ".Leebe9:\n"
-        "\t.incbin \"baserom.gba\", 0xeebe9, 0x3\n"
-        ".Leebec:\n"
-        "\t.incbin \"baserom.gba\", 0xeebec, 0x3c\n"
-        "gVFX_SlashHit_LongDims:\n"
-        "\t.incbin \"baserom.gba\", 0xeec28, 0x7\n"
-        "gVFX_SlashHit_ShortDims:\n"
-        "\t.incbin \"baserom.gba\", 0xeec2f, 0x7\n"
-        ".Leec36:\n"
-        "\t.incbin \"baserom.gba\", 0xeec36, 0x7\n"
-        ".Leec3d:\n"
-        "\t.incbin \"baserom.gba\", 0xeec3d, 0x7\n"
-        "gVFX_SlashHit_Offsets:\n"
-        "\t.incbin \"baserom.gba\", 0xeec44, 0xe\n"
-        ".Leec52:\n"
-        "\t.incbin \"baserom.gba\", 0xeec52, 0x8\n"
-        "\t.text\n");
+INCLUDE_ASM("asm/battle_anim/moves/projectile/rodata_eebe9.s");
