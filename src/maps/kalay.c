@@ -409,12 +409,13 @@ void OvlFunc_936_2009610(void)
   __Func_8091a58(0xb5, 0);
 }
 
-extern unsigned char Lm936_ev63[] __asm__(".Lm936_ev63");
-extern unsigned char Lm936_ev66[] __asm__(".Lm936_ev66");
-extern unsigned char Lm936_ev99[] __asm__(".Lm936_ev99");
-extern unsigned char Lm936_ev9b[] __asm__(".Lm936_ev9b");
-extern unsigned char Lm936_ev9c[] __asm__(".Lm936_ev9c");
-__asm__(".equ .Lm936_ev63, 0x63\n.equ .Lm936_ev66, 0x66\n.equ .Lm936_ev99, 0x99\n.equ .Lm936_ev9b, 0x9b\n.equ .Lm936_ev9c, 0x9c");
+extern unsigned char Lconst_63[] __asm__(".Lconst_63");
+extern unsigned char Lconst_66[] __asm__(".Lconst_66");
+extern unsigned char Lconst_99[] __asm__(".Lconst_99");
+extern unsigned char Lconst_9b[] __asm__(".Lconst_9b");
+extern unsigned char Lconst_9c[] __asm__(".Lconst_9c");
+/* pooled literal (ldr rN, =0x63, =0x66, =0x99, =0x9b, =0x9c in the original); .Lconst_<hex> naming as upstream map TUs, e.g. alpine_crossing.c */
+__asm__(".equ .Lconst_63, 0x63\n.equ .Lconst_66, 0x66\n.equ .Lconst_99, 0x99\n.equ .Lconst_9b, 0x9b\n.equ .Lconst_9c, 0x9c");
 int Kalay_MapInit(void)
 {
     extern void OvlFunc_936_20096bc(void);
@@ -429,15 +430,15 @@ int Kalay_MapInit(void)
         extern short gState_s936[] __asm__("gState");
         room = gState_s936[0xe0];
     }
-    if (room == (int)Lm936_ev63)
+    if (room == (int)Lconst_63)
         OvlFunc_936_20096bc();
-    else if (room == (int)Lm936_ev66)
+    else if (room == (int)Lconst_66)
         OvlFunc_936_20097e8();
-    else if (room == (int)Lm936_ev99)
+    else if (room == (int)Lconst_99)
         OvlFunc_936_2009858();
-    else if (room == (int)Lm936_ev9b)
+    else if (room == (int)Lconst_9b)
         OvlFunc_936_20098a4();
-    else if (room == (int)Lm936_ev9c)
+    else if (room == (int)Lconst_9c)
         OvlFunc_936_2009930();
     return 0;
 }

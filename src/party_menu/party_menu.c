@@ -330,11 +330,12 @@ INCLUDE_ASM("asm/party_menu/party_menu/Func_80a1fd4.s");
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a2144.s");
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a21b0.s");
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a2268.s");
-__asm__(".equ .Lpm_80000001, 0x80000001");
-extern unsigned char PmDmaCnt2[] __asm__(".Lpm_80000001");
+/* pooled literal (ldr rN, =0x80000001 in the original); .Lconst_<hex> naming as upstream map TUs, e.g. alpine_crossing.c */
+__asm__(".equ .Lconst_80000001, 0x80000001");
+extern unsigned char Lconst_80000001[] __asm__(".Lconst_80000001");
 void Func_80a22f4(void) {
     DMA3_SET((void *)0x5000200, (void *)0x50001c0, 0x80000010);
-    DMA3_SET((void *)0x50001e8, (void *)(0x50001c0 + 0x1c), (u32)PmDmaCnt2);
+    DMA3_SET((void *)0x50001e8, (void *)(0x50001c0 + 0x1c), (u32)Lconst_80000001);
 }
 INCLUDE_ASM("asm/party_menu/party_menu/Func_80a2324.s");
 
@@ -1098,8 +1099,9 @@ unsigned int Func_80a9a58(void) {
 
 extern void Func_80a9aec();
 extern void Func_80a9c18();
-extern unsigned char Lc_b24[] __asm__(".Lc_b24");
-__asm__(".equ .Lc_b24, 0xb24");
+extern unsigned char Lconst_b24[] __asm__(".Lconst_b24");
+/* pooled literal (ldr rN, =0xb24 in the original); .Lconst_<hex> naming as upstream map TUs, e.g. alpine_crossing.c */
+__asm__(".equ .Lconst_b24, 0xb24");
 void Func_80a9a5c(unsigned int win, unsigned int unit, int flag)
 {
     extern void _Func_801e7c0(unsigned int msg, unsigned int arg1, int arg2, int arg3);
@@ -1110,7 +1112,7 @@ void Func_80a9a5c(unsigned int win, unsigned int unit, int flag)
     _GetUnit(unit);
     Func_80a9cbc();
     Func_80a345c();
-    m = (int)Lc_b24;
+    m = (int)Lconst_b24;
     _Func_801e7c0(m, win, 0, 0);
     _Func_801e7c0(m + 1, win, 0, 0x20);
     _Func_801e7c0(m + 2, win, 0, 0x10);

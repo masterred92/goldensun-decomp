@@ -196,8 +196,9 @@ void OvlFunc_895_20083bc(void)
     __CutsceneEnd();
 }
 
-extern unsigned char L895_1032[] __asm__(".L895_1032");
-__asm__(".equ .L895_1032, 0x1032");
+extern unsigned char Lconst_1032[] __asm__(".Lconst_1032");
+/* pooled literal (ldr rN, =0x1032 in the original); .Lconst_<hex> naming as upstream map TUs, e.g. alpine_crossing.c */
+__asm__(".equ .Lconst_1032, 0x1032");
 void OvlFunc_895_2008420(void)
 {
     int r8;
@@ -209,7 +210,7 @@ void OvlFunc_895_2008420(void)
         API_CopyMapTiles(0, 0x47, 0x64, 0x47, 1, 1);
         __Func_800fe9c();
         API_CutsceneWait(0x28);
-        r8 = (int)L895_1032;
+        r8 = (int)Lconst_1032;
         API_Func_801776c(r8, 1);
         API_CutsceneWait(0x14);
         API_PlaySound(0xb7);

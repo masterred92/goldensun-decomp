@@ -157,8 +157,9 @@ void OvlFunc_901_200856c(void)
   OvlFunc_901_20084b4(0xd);
 }
 
-extern unsigned char MSG_1cb1_[] __asm__(".Lmsg_1cb1");
-__asm__(".equ .Lmsg_1cb1, 0x1cb1");
+extern unsigned char Lconst_1cb1[] __asm__(".Lconst_1cb1");
+/* pooled literal (ldr rN, =0x1cb1 in the original); .Lconst_<hex> naming as upstream map TUs, e.g. alpine_crossing.c */
+__asm__(".equ .Lconst_1cb1, 0x1cb1");
 struct A200858c { char pad[6]; short facing; char pad2[0x64 - 8]; unsigned short flags; };
 void OvlFunc_901_200858c(void)
 {
@@ -170,7 +171,7 @@ void OvlFunc_901_200858c(void)
     dir = *(short *)(a + 6);
     ((struct A200858c *)a)->flags |= 2;
     __CutsceneStart();
-    msg = (int)MSG_1cb1_;
+    msg = (int)Lconst_1cb1;
     API_MessageID(msg);
     API_MapActor_SetAnim(0xe, 0);
     API_MapActor_TurnToFaceActor(0xe, 0, 2);

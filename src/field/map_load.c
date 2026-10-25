@@ -173,18 +173,19 @@ void Func_808b25c(void)
     gState_s25c[0xeb] = v;
 }
 extern unsigned short gState_s2b0[] __asm__("gState");
-extern unsigned char Lm36[] __asm__(".Lm36"), Lm37[] __asm__(".Lm37"), Lm38[] __asm__(".Lm38"), Lm39[] __asm__(".Lm39"), Lm3a[] __asm__(".Lm3a"), Lm3c[] __asm__(".Lm3c");
-__asm__(".equ .Lm36, 0x36\n.equ .Lm37, 0x37\n.equ .Lm38, 0x38\n.equ .Lm39, 0x39\n.equ .Lm3a, 0x3a\n.equ .Lm3c, 0x3c");
+extern unsigned char Lconst_36[] __asm__(".Lconst_36"), Lconst_37[] __asm__(".Lconst_37"), Lconst_38[] __asm__(".Lconst_38"), Lconst_39[] __asm__(".Lconst_39"), Lconst_3a[] __asm__(".Lconst_3a"), Lconst_3c[] __asm__(".Lconst_3c");
+/* pooled literal (ldr rN, =0x36, =0x37, =0x38, =0x39, =0x3a, =0x3c in the original); .Lconst_<hex> naming as upstream map TUs, e.g. alpine_crossing.c */
+__asm__(".equ .Lconst_36, 0x36\n.equ .Lconst_37, 0x37\n.equ .Lconst_38, 0x38\n.equ .Lconst_39, 0x39\n.equ .Lconst_3a, 0x3a\n.equ .Lconst_3c, 0x3c");
 void Func_808b2b0(int x)
 {
     int v;
     switch (x) {
-    case 1: v = (int)Lm38; break;
-    case 2: v = (int)Lm3a; break;
-    case 3: v = (int)Lm3c; break;
-    case 4: case 7: v = (int)Lm36; break;
-    case 5: case 6: v = (int)Lm37; break;
-    default: v = (int)Lm39; break;
+    case 1: v = (int)Lconst_38; break;
+    case 2: v = (int)Lconst_3a; break;
+    case 3: v = (int)Lconst_3c; break;
+    case 4: case 7: v = (int)Lconst_36; break;
+    case 5: case 6: v = (int)Lconst_37; break;
+    default: v = (int)Lconst_39; break;
     }
     gState_s2b0[0xeb] = v;
 }

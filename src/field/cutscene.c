@@ -195,8 +195,9 @@ extern int _GetPartySize(void);
 extern int _Func_8078af8(int, int);
 extern void _Func_8019908(unsigned int, unsigned int);
 extern void _Func_801776c(unsigned int, unsigned int);
-extern unsigned char Lc_97d[] __asm__(".Lc_97d");
-__asm__(".equ .Lc_97d, 0x97d");
+extern unsigned char Lconst_97d[] __asm__(".Lconst_97d");
+/* pooled literal (ldr rN, =0x97d in the original); .Lconst_<hex> naming as upstream map TUs, e.g. alpine_crossing.c */
+__asm__(".equ .Lconst_97d, 0x97d");
 int Func_80919d8(int arg)
 {
     int sum = 0;
@@ -207,7 +208,7 @@ int Func_80919d8(int arg)
         sum += _Func_8078af8(gState[0x1f8 + i], arg);
     if (sum >= n * 30) {
         _Func_8019908(arg, 2);
-        m = (int)Lc_97d;
+        m = (int)Lconst_97d;
         _Func_801776c(m, 1);
         m++;
         _Func_8019908(arg, 2);

@@ -9,8 +9,9 @@
 extern unsigned int Lm957_3eb4[] __asm__(".Lm957_3eb4");
 
 INCLUDE_ASM("asm/maps/altmiller_cave/exports.s");
-extern unsigned char Lc957_97[] __asm__(".Lc957_97");
-__asm__(".equ .Lc957_97, 0x97");
+extern unsigned char Lconst_97[] __asm__(".Lconst_97");
+/* pooled literal (ldr rN, =0x97 in the original); .Lconst_<hex> naming as upstream map TUs, e.g. alpine_crossing.c */
+__asm__(".equ .Lconst_97, 0x97");
 extern short gState_s957[] __asm__("gState");
 static inline void API_Func_8092950(int a, int b) { extern void __Func_8092950(int, int); __Func_8092950(a, b); }
 
@@ -514,17 +515,17 @@ void OvlFunc_957_2008b24(void) {
 INCLUDE_ASM("asm/maps/altmiller_cave/OvlFunc_957_2008b30.s");
 extern void __Func_8092950(int, int);
 extern short gState_sbc8[] __asm__("gState");
-extern char Lbc8_92[] __asm__(".Lbc8_92");
-extern char Lbc8_97[] __asm__(".Lbc8_97");
-__asm__(".equ .Lbc8_92, 0x92\n.equ .Lbc8_97, 0x97");
+extern unsigned char Lconst_92[] __asm__(".Lconst_92");
+/* pooled literal (ldr rN, =0x92 in the original); .Lconst_<hex> naming as upstream map TUs, e.g. alpine_crossing.c */
+__asm__(".equ .Lconst_92, 0x92");
 
 void OvlFunc_957_2008bc8(void)
 {
-    if (gState_sbc8[0xe0] == (int)Lbc8_92) {
+    if (gState_sbc8[0xe0] == (int)Lconst_92) {
         int c = 0x1000;
         REG_BLDALPHA = c;
     }
-    if (gState_sbc8[0xe0] == (int)Lbc8_97) {
+    if (gState_sbc8[0xe0] == (int)Lconst_97) {
         __Func_8092950(0x10, 1);
         __Func_8092950(0x11, 4);
         __Func_8092950(0x12, 0xb);
@@ -542,7 +543,7 @@ void OvlFunc_957_2008c2c(void)
         OvlFunc_957_2008b30();
         p[0x34] = 1;
     }
-    if (gState_s957[0xe0] == (int)Lc957_97) {
+    if (gState_s957[0xe0] == (int)Lconst_97) {
         API_Func_8092950(0x10, 6);
         API_Func_8092950(0x11, 6);
         API_Func_8092950(0x12, 6);

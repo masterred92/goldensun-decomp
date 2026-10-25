@@ -154,11 +154,12 @@ int YesNoMenu(int a, int b, int c, int d)
 }
 
 extern void Func_80288a8(int, int, int, int);
-extern unsigned char Lyn_24[] __asm__(".Lyn_24");
-__asm__(".equ .Lyn_24, 0x24");
+extern unsigned char Lconst_24[] __asm__(".Lconst_24");
+/* pooled literal (ldr rN, =0x24 in the original); .Lconst_<hex> naming as upstream map TUs, e.g. alpine_crossing.c */
+__asm__(".equ .Lconst_24, 0x24");
 int YesNoMenu2(int a, int b, int c)
 {
-    int k = (int)Lyn_24;
+    int k = (int)Lconst_24;
     Func_80284dc();
     AddMenuBarOption(5);
     AddMenuBarOption(6);

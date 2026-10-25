@@ -1100,8 +1100,9 @@ void OvlFunc_881_200b7d8(void)
     actor[0x55] = 2;
 }
 
-__asm__(".equ .Lm881_map2, 2");
-extern unsigned char Lm881_map2[] __asm__(".Lm881_map2");
+/* pooled literal (ldr rN, =2 in the original); .Lconst_<hex> naming as upstream map TUs, e.g. alpine_crossing.c */
+__asm__(".equ .Lconst_2, 2");
+extern unsigned char Lconst_2[] __asm__(".Lconst_2");
 void OvlFunc_881_200b84c(void)
 {
     extern unsigned char gStateBytes[] __asm__("gState");
@@ -1136,7 +1137,7 @@ void OvlFunc_881_200b84c(void)
     API_WaitMapTransition();
     API_CutsceneEnd();
     API_SetFlag(0x122);
-    __SetDestMap((int)Lm881_map2, 0x1b);
+    __SetDestMap((int)Lconst_2, 0x1b);
 }
 void OvlFunc_881_200b8fc(void)
 {

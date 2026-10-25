@@ -66,11 +66,12 @@ void Func_80b04c4(void)
 		WaitFrames(1);
 }
 
-extern unsigned char Lmsg_c9b[] __asm__(".Lmsg_c9b");
-extern unsigned char Lmsg_cc6[] __asm__(".Lmsg_cc6");
-extern unsigned char Lmsg_cf1[] __asm__(".Lmsg_cf1");
-extern unsigned char Lmsg_d4c[] __asm__(".Lmsg_d4c");
-__asm__(".equ .Lmsg_c9b, 0xc9b\n.equ .Lmsg_cc6, 0xcc6\n.equ .Lmsg_cf1, 0xcf1\n.equ .Lmsg_d4c, 0xd4c");
+extern unsigned char Lconst_c9b[] __asm__(".Lconst_c9b");
+extern unsigned char Lconst_cc6[] __asm__(".Lconst_cc6");
+extern unsigned char Lconst_cf1[] __asm__(".Lconst_cf1");
+extern unsigned char Lconst_d4c[] __asm__(".Lconst_d4c");
+/* pooled literal (ldr rN, =0xc9b, =0xcc6, =0xcf1, =0xd4c in the original); .Lconst_<hex> naming as upstream map TUs, e.g. alpine_crossing.c */
+__asm__(".equ .Lconst_c9b, 0xc9b\n.equ .Lconst_cc6, 0xcc6\n.equ .Lconst_cf1, 0xcf1\n.equ .Lconst_d4c, 0xd4c");
 void Func_80b04dc(int msg)
 {
     extern int _GetSpriteVoice(int);
@@ -83,11 +84,11 @@ void Func_80b04dc(int msg)
     _Func_8019a54();
     kind = *(signed char *)(base + 0x3a9);
     if (kind == 2)
-        msg += (int)Lmsg_cc6 - (int)Lmsg_c9b;
+        msg += (int)Lconst_cc6 - (int)Lconst_c9b;
     if (kind == 0)
-        msg += (int)Lmsg_cf1 - (int)Lmsg_c9b;
+        msg += (int)Lconst_cf1 - (int)Lconst_c9b;
     if (*(signed char *)(base + 0x3ac))
-        msg += (int)Lmsg_d4c - (int)Lmsg_c9b;
+        msg += (int)Lconst_d4c - (int)Lconst_c9b;
     _Func_8017658(msg, 5, 0, (voice << 16) | 0x22);
     while (!_Func_8017364())
         WaitFrames(1);
@@ -450,20 +451,21 @@ unsigned int Func_80b27b0(unsigned int arg0, unsigned int arg1)
 }
 
 INCLUDE_ASM("asm/shop/shop/Func_80b280c.s");
-extern unsigned char Ls_d24[] __asm__(".Ls_d24");
-extern unsigned char Ls_d2e[] __asm__(".Ls_d2e");
-extern unsigned char Ls_d38[] __asm__(".Ls_d38");
-extern unsigned char Ls_d42[] __asm__(".Ls_d42");
-__asm__(".equ .Ls_d24, 0xd24\n.equ .Ls_d2e, 0xd2e\n.equ .Ls_d38, 0xd38\n.equ .Ls_d42, 0xd42");
+extern unsigned char Lconst_d24[] __asm__(".Lconst_d24");
+extern unsigned char Lconst_d2e[] __asm__(".Lconst_d2e");
+extern unsigned char Lconst_d38[] __asm__(".Lconst_d38");
+extern unsigned char Lconst_d42[] __asm__(".Lconst_d42");
+/* pooled literal (ldr rN, =0xd24, =0xd2e, =0xd38, =0xd42 in the original); .Lconst_<hex> naming as upstream map TUs, e.g. alpine_crossing.c */
+__asm__(".equ .Lconst_d24, 0xd24\n.equ .Lconst_d2e, 0xd2e\n.equ .Lconst_d38, 0xd38\n.equ .Lconst_d42, 0xd42");
 unsigned int Func_80b2884(unsigned int m)
 {
     signed char t = (*(unsigned char **)iwram_3001f2c__a1)[0x3aa];
     if (t == 1)
-        m += (int)Ls_d2e - (int)Ls_d24;
+        m += (int)Lconst_d2e - (int)Lconst_d24;
     if (t == 2)
-        m += (int)Ls_d38 - (int)Ls_d24;
+        m += (int)Lconst_d38 - (int)Lconst_d24;
     if (t == 3)
-        m += (int)Ls_d42 - (int)Ls_d24;
+        m += (int)Lconst_d42 - (int)Lconst_d24;
     return m;
 }
 
@@ -510,7 +512,8 @@ INCLUDE_ASM("asm/shop/shop/UI_Sanctum.s");
 INCLUDE_ASM("asm/shop/shop/Func_80b2b10.s");
 INCLUDE_ASM("asm/shop/shop/Func_80b2da8.s");
 INCLUDE_ASM("asm/shop/shop/Func_80b2e30.s");
-__asm__(".equ .Ls_d2c, 0xd2c\n.equ .Ls_d2d, 0xd2d");
+/* pooled literal (ldr rN, =0xd2c, =0xd2d in the original); .Lconst_<hex> naming as upstream map TUs, e.g. alpine_crossing.c */
+__asm__(".equ .Lconst_d2c, 0xd2c\n.equ .Lconst_d2d, 0xd2d");
 void Func_80b2ed8(int win, int item)
 {
     extern unsigned char *iwram_3001f2c__e8 __asm__("iwram_3001f2c");
@@ -519,17 +522,17 @@ void Func_80b2ed8(int win, int item)
     extern void _DrawSmallText(int, int, int, int);
     int k = *(signed char *)(iwram_3001f2c__e8 + 0x3aa);
     int price = Func_80b2778(item, k);
-    extern unsigned char Ls_d2c[] __asm__(".Ls_d2c");
-    extern unsigned char Ls_d2d[] __asm__(".Ls_d2d");
+    extern unsigned char Lconst_d2c[] __asm__(".Lconst_d2c");
+    extern unsigned char Lconst_d2d[] __asm__(".Lconst_d2d");
     int msg;
 
     if (win == 0)
         return;
     _Func_8016478(win);
     if (Func_80b27b0(item, k))
-        msg = (int)Ls_d2c;
+        msg = (int)Lconst_d2c;
     else
-        msg = (int)Ls_d2d;
+        msg = (int)Lconst_d2d;
     msg = Func_80b2884(msg);
     _Func_8019908(price, 5);
     _DrawSmallText(msg, win, 0, 0);
