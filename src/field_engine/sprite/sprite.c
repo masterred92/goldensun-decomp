@@ -50,10 +50,61 @@ unsigned char **GetCachedSpriteGFX(unsigned int spriteID)
 }
 
 INCLUDE_ASM("asm/field_engine/sprite/sprite/InitSprite.s");
-INCLUDE_ASM("asm/field_engine/sprite/sprite/InitSpriteLayer.s");
+extern void *_GetSpriteInfo(int id);
+void InitSpriteLayer(struct SpriteLayer *layer)
+{
+    struct SpriteInfo *info;
+    const u8 **gfx;
+
+    if (layer == 0)
+        return;
+    info = _GetSpriteInfo((short)layer->spriteID);
+    if (info->width == 0)
+        return;
+    gfx = info->gfx;
+    if (gfx == 0)
+        gfx = (const u8 **)GetCachedSpriteGFX((short)layer->spriteID);
+    layer->type = info->type;
+    layer->anims = info->anims;
+    layer->gfx = gfx;
+    layer->gfxFormat = info->gfxFormat;
+    layer->frameID = 0xff;
+    layer->curAnim = 0;
+    layer->animCmdIndex = 0;
+}
 INCLUDE_ASM("asm/field_engine/sprite/sprite/Sprite_AddLayer.s");
-INCLUDE_ASM("asm/field_engine/sprite/sprite/Sprite_DeleteLayer.s");
-INCLUDE_ASM("asm/field_engine/sprite/sprite/Sprite_DeleteLayerIndex.s");
+void DeleteSpriteLayer(struct SpriteLayer *layer);
+void Sprite_DeleteLayer(struct Sprite *sprite, struct SpriteLayer *layer)
+{
+    u32 i, j;
+    int n;
+    if (sprite == NULL || layer == NULL) return;
+    DeleteSpriteLayer(layer);
+    for (i = 0; i < 4; i++) {
+        if (layer == sprite->layers[i]) break;
+    }
+    if (i == 4) return;
+    sprite->layers[i] = NULL;
+    n = 0;
+    for (j = i + 1; j <= 3; j++) {
+        if (sprite->layers[j] != NULL) n++;
+    }
+    if (n == 0) sprite->numLayers = i;
+}
+void Sprite_DeleteLayerIndex(struct Sprite *sprite, u32 idx)
+{
+    u32 i;
+    int n;
+    if (sprite == NULL || idx > 3) return;
+    if (sprite->layers[idx] == NULL) return;
+    DeleteSpriteLayer(sprite->layers[idx]);
+    sprite->layers[idx] = NULL;
+    n = 0;
+    for (i = idx + 1; i <= 3; i++) {
+        if (sprite->layers[i] != NULL) n++;
+    }
+    if (n == 0) sprite->numLayers = idx;
+}
 
 extern void *_GetSpriteInfo(int id);
 
@@ -130,7 +181,38 @@ void Sprite_SetAnimSpeed(unsigned char *sprite, int speed) {
     } while (i != 0);
 }
 
-INCLUDE_ASM("asm/field_engine/sprite/sprite/InitSprites.s");
+extern void *galloc_ewram(int, int);
+extern void *galloc_iwram(int, int);
+extern void LoadSpritePalette(void);
+extern int UploadSpriteGFX(int, int, const void *);
+extern unsigned char L12f20[] __asm__(".L12f20");
+extern void Func_800a418(void);
+/* Size of the IWRAM-copied routine Func_800a418 (a link-time constant in the original). */
+__asm__(".equ .LFunc_800a418_size, 0x7c");
+extern unsigned char Func_800a418_size[] __asm__(".LFunc_800a418_size");
+void InitSprites(int mode)
+{
+    void *a;
+    void *b;
+    vu32 tmp;
+    unsigned int size;
+
+    if (mode == 3) {
+        a = galloc_ewram(4, 0xe00);
+        b = galloc_ewram(3, 0x600);
+    } else {
+        a = galloc_iwram(4, 0xe00);
+        b = galloc_iwram(3, 0x600);
+    }
+    LoadSpritePalette();
+    tmp = 0;
+    DMA3_SET((void *)&tmp, a, 0x85000380);
+    tmp = 0;
+    DMA3_SET((void *)&tmp, b, 0x85000180);
+    UploadSpriteGFX(0x5d, 0x80, L12f20);
+    size = (unsigned int)Func_800a418_size;
+    DMA3_SET(Func_800a418, galloc_iwram(0x35, size), 0x84000000 | (size >> 2));
+}
 INCLUDE_ASM("asm/field_engine/sprite/sprite/CreateSpriteLayer.s");
 
 void DeleteSpriteLayer(struct SpriteLayer *layer) {
@@ -140,7 +222,21 @@ void DeleteSpriteLayer(struct SpriteLayer *layer) {
 }
 
 INCLUDE_ASM("asm/field_engine/sprite/sprite/CreateSprite.s");
-INCLUDE_ASM("asm/field_engine/sprite/sprite/DeleteSprite.s");
+extern void Func_8003f3c(int slot);
+void DeleteSprite(struct Sprite *sprite)
+{
+    struct SpriteLayer **layers;
+    int i;
+
+    if (sprite == 0)
+        return;
+    if ((sprite->__unk1D & 1) == 0)
+        Func_8003f3c(sprite->slot);
+    layers = sprite->layers;
+    for (i = 3; i >= 0; i--)
+        DeleteSpriteLayer(*layers++);
+    DMA3_CLEAR(sprite, sizeof(struct Sprite));
+}
 INCLUDE_ASM("asm/field_engine/sprite/sprite/Func_800be20.s");
 
 INCLUDE_ASM("asm/field_engine/sprite/sprite/Func_800be70.s");

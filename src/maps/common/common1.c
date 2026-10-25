@@ -40,7 +40,17 @@ void OvlFunc_common1_0(void)
 }
 
 INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_78.s");
-INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_148.s");
+extern unsigned char iwram_3001ebc[];
+int __GetFlag(int);
+struct C1_148 { unsigned char pad[0x182]; short f; };
+void OvlFunc_common1_148(void)
+{
+    extern int gState_i148[] __asm__("gState");
+    unsigned char *b = *(unsigned char **)iwram_3001ebc;
+    int v = gState_i148[0x1f4 / 4];
+    if (v != 0 && *(short *)(b + 0x17e) >> 10 == v && __GetFlag(0x141))
+        ((struct C1_148 *)b)->f = 0x63;
+}
 #include "state/global_state.h"
 extern unsigned char iwram_3001ebc[];
 extern GlobalState gState;
@@ -313,7 +323,45 @@ INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_88c.s");
 INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_920.s");
 INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_e10.s");
 INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_ea0.s");
-INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_fac.s");
+void OvlFunc_common1_fac(int d)
+{
+    extern struct { unsigned char pad[0x1a]; unsigned short v; } Lc1_13__fac __asm__(".Lc1_13");
+    extern struct { unsigned char pad[0x1a]; unsigned short v; } Lc1_3__fac __asm__(".Lc1_3");
+    extern void OvlFunc_common1_88c(int);
+    extern int OvlFunc_common1_e10(int, int);
+    extern int __Func_80f954c(void);
+    int t;
+    int e;
+
+    API_PlaySound(0xf7);
+    API_MapTransitionIn();
+    API_WaitMapTransition();
+    Lc1_13__fac.v = t = d * 60;
+    Lc1_3__fac.v = (d < 0 ? -d : d) * 60;
+    if (d < 0) {
+        API_CutsceneWait(0x1e);
+        API_PlaySound(0x56);
+        OvlFunc_common1_88c(8);
+        OvlFunc_common1_e10(3, 1);
+        API_CutsceneWait(-d * 60 + 0x3c);
+        e = 0;
+    } else {
+        API_CutsceneWait(0x1e);
+        API_PlaySound(d + 0x5a);
+        OvlFunc_common1_88c(4);
+        OvlFunc_common1_e10(3, 0);
+        API_CutsceneWait(t + 0x3c);
+        e = 8;
+    }
+    API_MapActor_Emote(e, 0x105, 0);
+    while (__Func_80f954c())
+        API_WaitFrames(1);
+    API_PlaySound(0x13);
+    API_CutsceneWait(0x1e);
+    API_PlaySound(0x121);
+    API_MapTransitionOut();
+    API_WaitMapTransition();
+}
 INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_1078.s");
 INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_1254.s");
 
@@ -450,7 +498,37 @@ void OvlFunc_common1_1708(void) {
     }
 }
 
-INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_172c.s");
+extern unsigned char Lc1_7[] __asm__(".Lc1_7");
+extern int __Random(void);
+extern void __vec3_translate(int, int, int *);
+extern unsigned char *__CreateActor(int, int, int, int);
+extern void __Actor_SetSpriteFlags(void *, int);
+extern void __Actor_SetScript(void *, void *);
+extern void __Actor_SetAnim(void *, int);
+void OvlFunc_common1_172c(unsigned char *a)
+{
+    int v[3];
+    unsigned char *p;
+    int r;
+
+    if ((unsigned)(*(int *)(a + 0x28) + 0xff) <= 0x1fe)
+        a[0x55] = 0;
+    if ((unsigned)(__Random() * 100) >> 16 <= 9) {
+        v[0] = *(int *)(a + 8);
+        v[1] = *(int *)(a + 0xc);
+        v[2] = *(int *)(a + 0x10);
+        r = __Random();
+        __vec3_translate(r << 4, __Random(), v);
+        { int x = v[0], y = v[1], z = v[2]; p = __CreateActor(0x11d, x, y, z); }
+        if (p != 0) {
+            p[0x55] = 0;
+            __Actor_SetSpriteFlags(p, 0);
+            __Actor_SetScript(p, Lc1_7);
+            __Actor_SetAnim(p, 1);
+            __Actor_SetAnim(p, 0);
+        }
+    }
+}
 INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_17c0.s");
 INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_1814.s");
 INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_1928.s");
@@ -486,6 +564,178 @@ void OvlFunc_common1_2008(unsigned short arg0) {
     *((unsigned short *)(ptr + 0xdc)) = arg0;
 }
 
-INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_2018.s");
+struct ActorTableCommon1 {
+    unsigned char pad0[0x14];
+    int *actor[66];
+};
+int *OvlFunc_common1_2018(int *pos)
+{
+    extern struct ActorTableCommon1 *iwram_3001ebc__k2 __asm__("iwram_3001ebc");
+    struct ActorTableCommon1 *t = iwram_3001ebc__k2;
+    int x;
+    unsigned int i;
+
+    i = 8;
+    x = pos[0] >> 20;
+    for (; i <= 0x41; i++) {
+        int *a = t->actor[i];
+        if (x == a[2] >> 20 && pos[1] >> 20 == a[3] >> 20 && pos[2] >> 20 == a[4] >> 20)
+            return a;
+    }
+    return 0;
+}
 INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_2060.s");
-INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_21c8.s");
+int OvlFunc_common1_21c8(void)
+{
+    extern int *__MapActor_GetActor__21c8(int) __asm__("__MapActor_GetActor");
+    extern int *OvlFunc_common1_2018__21c8(int *, int *) __asm__("OvlFunc_common1_2018");
+    int *a;
+    int dir;
+    int v[3];
+    int r;
+    int off = 0xfa;
+
+    a = __MapActor_GetActor__21c8(*(int *)((char *)&gState + (off << 1)));
+    dir = (*(unsigned short *)((char *)a + 6) + 0x2000) & 0xc000;
+    v[0] = (a[2] & 0xfff00000) + 0x80000;
+    v[1] = a[3];
+    v[2] = (a[4] & 0xfff00000) + 0x80000;
+    __vec3_translate(0x100000, dir, v);
+    r = (int)OvlFunc_common1_2018__21c8(v, a);
+    if (r == 0) {
+        v[0] = (a[2] & 0xfff00000) + 0x80000;
+        v[1] = a[3];
+        v[2] = (a[4] & 0xfff00000) + 0x80000;
+        __vec3_translate(0x200000, dir, v);
+        r = (int)OvlFunc_common1_2018__21c8(v, a);
+    }
+    return r;
+}
+/* Data and bss that followed OvlFunc_common1_21c8 in its .s (#125 style). */
+__asm__(
+    "	.section .data\n"
+    "	.global .Lc1_4\n"
+    "	.global .Lc1_5\n"
+    "	.global .Lc1_7\n"
+    "	.global .Lc1_8\n"
+    "	.global .Lc1_1\n"
+    "	.global .Lc1_2\n"
+    "	.global .Lc1_3\n"
+    "	.global .Lc1_6\n"
+    "\n"
+    ".Lc1_1:\n"
+    "	.incbin \"build/usa/reference/overlays/rom_7db0c8/orig.bin\", 0x3e44, (0x3e4e-0x3e44)\n"
+    ".Lc1_2:\n"
+    "	.incbin \"build/usa/reference/overlays/rom_7db0c8/orig.bin\", 0x3e4e, (0x3e76-0x3e4e)\n"
+    ".Lc1_3:\n"
+    "	.incbin \"build/usa/reference/overlays/rom_7db0c8/orig.bin\", 0x3e76, (0x3ef4-0x3e76)\n"
+    ".Lc1_4:\n"
+    "	.incbin \"build/usa/reference/overlays/rom_7db0c8/orig.bin\", 0x3ef4, (0x3f14-0x3ef4)\n"
+    ".Lc1_5:\n"
+    "	.incbin \"build/usa/reference/overlays/rom_7db0c8/orig.bin\", 0x3f14, (0x3fd0-0x3f14)\n"
+    ".Lc1_6:\n"
+    "	.incbin \"build/usa/reference/overlays/rom_7db0c8/orig.bin\", 0x3fd0, (0x3fe4-0x3fd0)\n"
+    ".Lc1_7:\n"
+    "	.incbin \"build/usa/reference/overlays/rom_7db0c8/orig.bin\", 0x3fe4, (0x4008-0x3fe4)\n"
+    ".Lc1_8:\n"
+    "	.incbin \"build/usa/reference/overlays/rom_7db0c8/orig.bin\", 0x4008, (0x4010-0x4008)\n"
+    "	.word	OvlFunc_common1_172c\n"
+    "	.incbin \"build/usa/reference/overlays/rom_7db0c8/orig.bin\", 0x4014, (0x4154-0x4014)\n"
+    ".Lc1_9:\n"
+    "	.incbin \"build/usa/reference/overlays/rom_7db0c8/orig.bin\", 0x4154, (0x4194-0x4154)\n"
+    "\n"
+    "	.section .data1\n"
+    "	.global .Lc1_15\n"
+    "	.global .Lc1_16\n"
+    "	.global .Lc1_10\n"
+    "	.global .Lc1_11\n"
+    "	.global .Lc1_12\n"
+    "	.global .Lc1_13\n"
+    "	.global .Lc1_14\n"
+    "\n"
+    ".Lc1_10:\n"
+    "	.incbin \"build/usa/reference/overlays/rom_7db0c8/orig.bin\", 0x457c, (0x457e-0x457c)\n"
+    ".Lc1_11:\n"
+    "	.incbin \"build/usa/reference/overlays/rom_7db0c8/orig.bin\", 0x457e, (0x45aa-0x457e)\n"
+    ".Lc1_12:\n"
+    "	.incbin \"build/usa/reference/overlays/rom_7db0c8/orig.bin\", 0x45aa, (0x4628-0x45aa)\n"
+    ".Lc1_13:\n"
+    "	.incbin \"build/usa/reference/overlays/rom_7db0c8/orig.bin\", 0x4628, (0x46a6-0x4628)\n"
+    ".Lc1_14:\n"
+    "	.incbin \"build/usa/reference/overlays/rom_7db0c8/orig.bin\", 0x46a6, (0x46a8-0x46a6)\n"
+    ".Lc1_15:\n"
+    "	.incbin \"build/usa/reference/overlays/rom_7db0c8/orig.bin\", 0x46a8, (0x46c8-0x46a8)\n"
+    "	.word	OvlFunc_common1_17c0\n"
+    "	.incbin \"build/usa/reference/overlays/rom_7db0c8/orig.bin\", 0x46cc, (0x46fc-0x46cc)\n"
+    ".Lc1_16:\n"
+    "	.incbin \"build/usa/reference/overlays/rom_7db0c8/orig.bin\", 0x46fc, (0x471c-0x46fc)\n"
+    "	.word	OvlFunc_common1_17c0\n"
+    "	.incbin \"build/usa/reference/overlays/rom_7db0c8/orig.bin\", 0x4720\n"
+    "\n"
+    "	.section .bss\n"
+    "	.global .Lc1_17\n"
+    "	.global .Lc1_18\n"
+    "	.global .Lc1_19\n"
+    "	.global .Lc1_20\n"
+    "	.global .Lc1_21\n"
+    "	.global .Lc1_22\n"
+    "	.global .Lc1_23\n"
+    "	.global .Lc1_24\n"
+    "	.global .Lc1_25\n"
+    "	.global .Lc1_26\n"
+    "	.global .Lc1_27\n"
+    "	.global .Lc1_28\n"
+    "	.global .Lc1_29\n"
+    "	.global .Lc1_30\n"
+    "	.global .Lc1_31\n"
+    "	.global .Lc1_32\n"
+    "	.global .Lc1_33\n"
+    "	.global .Lc1_34\n"
+    "	.global .Lc1_35\n"
+    "	.global .Lc1_36\n"
+    "	.global .Lc1_37\n"
+    "	.global .Lc1_38\n"
+    "	.global .Lc1_39\n"
+    "	.global .Lc1_41\n"
+    "	.global .Lc1_42\n"
+    "	.global .Lc1_43\n"
+    "	.global .Lc1_44\n"
+    "	.global .Lc1_45\n"
+    "	.global .Lc1_46\n"
+    "	.global .Lc1_47\n"
+    "	.global .Lc1_48\n"
+    "	.global .Lc1_49\n"
+    "\n"
+    "	.lcomm	.Lc1_17, 4\n"
+    "	.lcomm	.Lc1_18, 4\n"
+    "	.lcomm	.Lc1_19, 4\n"
+    "	.lcomm	.Lc1_20, 4\n"
+    "	.lcomm	.Lc1_21, 4\n"
+    "	.lcomm	.Lc1_22, 4\n"
+    "	.lcomm	.Lc1_23, 4\n"
+    "	.lcomm	.Lc1_24, 4\n"
+    "	.lcomm	.Lc1_25, 4\n"
+    "	.lcomm	.Lc1_26, 4\n"
+    "	.lcomm	.Lc1_27, 4\n"
+    "	.lcomm	.Lc1_28, 4\n"
+    "	.lcomm	.Lc1_29, 4\n"
+    "	.lcomm	.Lc1_30, 4\n"
+    "	.lcomm	.Lc1_31, 4\n"
+    "	.lcomm	.Lc1_32, 4\n"
+    "	.lcomm	.Lc1_33, 4\n"
+    "	.lcomm	.Lc1_34, 4\n"
+    "	.lcomm	.Lc1_35, 4\n"
+    "	.lcomm	.Lc1_36, 4\n"
+    "	.lcomm	.Lc1_37, 4\n"
+    "	.lcomm	.Lc1_38, 4\n"
+    "	.lcomm	.Lc1_39, 4\n"
+    "	.lcomm	.Lc1_41, 0xc\n"
+    "	.lcomm	.Lc1_42, 4\n"
+    "	.lcomm	.Lc1_43, 0x30\n"
+    "	.lcomm	.Lc1_44, 4\n"
+    "	.lcomm	.Lc1_45, 4\n"
+    "	.lcomm	.Lc1_46, 4\n"
+    "	.lcomm	.Lc1_47, 4\n"
+    "	.lcomm	.Lc1_48, 4\n"
+    "	.lcomm	.Lc1_49, 4\n"
+    "\t.text\n");

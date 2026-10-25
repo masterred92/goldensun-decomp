@@ -40,10 +40,37 @@ void Func_80b5e10(void) {}
 
 INCLUDE_ASM("asm/battle/battle/Func_80b5e14.s");
 INCLUDE_ASM("asm/battle/battle/Func_80b5f0c.s");
-INCLUDE_ASM("asm/battle/battle/Func_80b606c.s");
+int Func_80b606c(int a0, int a1, unsigned short *src)
+{
+    char buf[8];
+    int i;
+
+    for (i = 0; i < 4; i++) {
+        buf[i] = src[i];
+        if (buf[i] == 0)
+            buf[i] = 0x5f;
+    }
+    buf[4] = 0;
+}
 INCLUDE_ASM("asm/battle/battle/Func_80b60a0.s");
 INCLUDE_ASM("asm/battle/battle/Func_80b6148.s");
-INCLUDE_ASM("asm/battle/battle/Func_80b6378.s");
+extern unsigned int iwram_3001e74;
+extern int Func_80b6a60(unsigned short *units);
+
+/* Returns no value, but the epilogue (pop {r1}) shows a non-void function. */
+int Func_80b6378(void)
+{
+    unsigned short units[8];
+    unsigned char *base = *(unsigned char **)&iwram_3001e74;
+    int count;
+    int i;
+
+    count = Func_80b6a60(units);
+    for (i = 0; i < count; i++) {
+        int idx = units[i] + 0x48;
+        base[idx] = i - 0x80;
+    }
+}
 void *Func_80b63b0(void)
 {
     void *(*clear)(void *, unsigned int) = Func_80008d4;
@@ -55,15 +82,44 @@ INCLUDE_ASM("asm/battle/battle/BattleMain.s");
 INCLUDE_ASM("asm/battle/battle/Func_80b6a60.s");
 INCLUDE_ASM("asm/battle/battle/Func_80b6ae0.s");
 INCLUDE_ASM("asm/battle/battle/Func_80b6b40.s");
-INCLUDE_ASM("asm/battle/battle/Func_80b6c08.s");
+struct S80b6c08 { char pad[0x58]; short a[7]; short b[1]; };
+int Func_80b6c08(int mask, short *out)
+{
+    extern struct S80b6c08 *iwram_3001e74__6c08 __asm__("iwram_3001e74");
+    struct S80b6c08 *s = iwram_3001e74__6c08;
+    int n = 0;
+    int i;
 
-extern void Func_80b6c08(int, unsigned int *);
+    if (mask & 1) {
+        for (i = 0; s->a[i] != 0xff; i++) {
+            if (s->a[i] != 0xfe) {
+                if (out != 0)
+                    *out++ = s->a[i];
+                n++;
+            }
+        }
+    }
+    if (mask & 2) {
+        for (i = 0; s->b[i] != 0xff; i++) {
+            if (s->b[i] != 0xfe) {
+                if (out != 0)
+                    *out++ = s->b[i];
+                n++;
+            }
+        }
+    }
+    if (out != 0)
+        *out = 0xff;
+    return n;
+}
+
+extern int Func_80b6c08(int side, short *units);
 extern void CreateBattleSpriteOverlays(unsigned int *, int);
 
 void Func_80b6c90(void)
 {
   unsigned char buf[0x1c];
-  Func_80b6c08(3, (unsigned int *)buf);
+  Func_80b6c08(3, (short *)buf);
   CreateBattleSpriteOverlays((unsigned int *)buf, 1);
 }
 
@@ -71,7 +127,7 @@ void Func_80b6c90(void)
 void Func_80b6cb0(void)
 {
     unsigned char buf[0x1c];
-    Func_80b6c08(3, (unsigned int *)buf);
+    Func_80b6c08(3, (short *)buf);
     CreateBattleSpriteOverlays((unsigned int *)buf, 0);
 }
 

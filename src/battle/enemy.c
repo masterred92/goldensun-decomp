@@ -4,7 +4,49 @@ INCLUDE_ASM("asm/battle/enemy/Func_80c1a34.s");
 INCLUDE_ASM("asm/battle/enemy/Func_80c1afc.s");
 INCLUDE_ASM("asm/battle/enemy/Func_80c1c54.s");
 INCLUDE_ASM("asm/battle/enemy/Func_80c1df4.s");
-INCLUDE_ASM("asm/battle/enemy/Func_80c1ebc.s");
+struct S80c1ebc {
+    unsigned char pad0[0x10];
+    unsigned short ids[6];
+    unsigned int masks[9];
+    unsigned char count;
+};
+struct U80c1ebc {
+    unsigned char name[0x128];
+    unsigned char id;
+    unsigned char flag;
+};
+/* int return type with no value: the original returns via pop {r1}. */
+int Func_80c1ebc(int unit)
+{
+    extern struct S80c1ebc *iwram_3001e74__1ebc __asm__("iwram_3001e74");
+    extern struct U80c1ebc *_GetUnit__1ebc(int) __asm__("_GetUnit");
+    struct S80c1ebc *s = iwram_3001e74__1ebc;
+    int n = s->count;
+    struct U80c1ebc *u = _GetUnit__1ebc(unit);
+    int i, len, bit;
+
+    if (u->flag != 0)
+        return;
+    {
+        unsigned int key = u->id;
+        for (i = 0; i < n && s->ids[i] != key; i++)
+            ;
+    }
+    if (i == n)
+        return;
+    if (s->masks[i] == 0)
+        return;
+    len = 0;
+    if (u->name[0] != 0) {
+        do
+            len++;
+        while (len <= 0xd && u->name[len] != 0);
+    }
+    bit = 0x20;
+    if (len > 0)
+        bit = u->name[len - 1] - 0x31;
+    s->masks[i] &= ~(1 << bit);
+}
 INCLUDE_ASM("asm/battle/enemy/Func_80c1f50.s");
 INCLUDE_ASM("asm/battle/enemy/Func_80c1fa8.s");
 INCLUDE_ASM("asm/battle/enemy/LoadEnemyGroup.s");
@@ -146,7 +188,21 @@ unsigned int Func_80c2470(unsigned int arg0) {
 	return r5;
 }
 
-INCLUDE_ASM("asm/battle/enemy/Func_80c24b0.s");
+extern unsigned char *iwram_3001e74__k1 __asm__("iwram_3001e74");
+extern short gState__k4[] __asm__("gState");
+void Func_80c24b0(void)
+{
+    unsigned char *base = iwram_3001e74__k1;
+    int *p = (int *)(base + 0x530);
+    int i;
+
+    gState__k4[0x11e] = 0;
+    p[0] = 0;
+    p[1] = 0;
+    p[2] = 0;
+    for (i = 3; i >= 0; i--)
+        ((unsigned short *)(base + 0x53c))[i] = 0;
+}
 INCLUDE_ASM("asm/battle/enemy/Func_80c24f0.s");
 INCLUDE_ASM("asm/battle/enemy/Func_80c2724.s");
 

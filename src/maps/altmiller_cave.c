@@ -9,6 +9,10 @@
 extern unsigned int Lm957_3eb4[] __asm__(".Lm957_3eb4");
 
 INCLUDE_ASM("asm/maps/altmiller_cave/exports.s");
+extern unsigned char Lc957_97[] __asm__(".Lc957_97");
+__asm__(".equ .Lc957_97, 0x97");
+extern short gState_s957[] __asm__("gState");
+static inline void API_Func_8092950(int a, int b) { extern void __Func_8092950(int, int); __Func_8092950(a, b); }
 
 extern int OvlFunc_957_20082a8();
 extern void OvlFunc_957_2008abc();
@@ -508,8 +512,44 @@ void OvlFunc_957_2008b24(void) {
 }
 
 INCLUDE_ASM("asm/maps/altmiller_cave/OvlFunc_957_2008b30.s");
-INCLUDE_ASM("asm/maps/altmiller_cave/OvlFunc_957_2008bc8.s");
-INCLUDE_ASM("asm/maps/altmiller_cave/OvlFunc_957_2008c2c.s");
+extern void __Func_8092950(int, int);
+extern short gState_sbc8[] __asm__("gState");
+extern char Lbc8_92[] __asm__(".Lbc8_92");
+extern char Lbc8_97[] __asm__(".Lbc8_97");
+__asm__(".equ .Lbc8_92, 0x92\n.equ .Lbc8_97, 0x97");
+
+void OvlFunc_957_2008bc8(void)
+{
+    if (gState_sbc8[0xe0] == (int)Lbc8_92) {
+        int c = 0x1000;
+        REG_BLDALPHA = c;
+    }
+    if (gState_sbc8[0xe0] == (int)Lbc8_97) {
+        __Func_8092950(0x10, 1);
+        __Func_8092950(0x11, 4);
+        __Func_8092950(0x12, 0xb);
+        __Func_8092950(0x13, 2);
+        __Func_8092950(0x14, 3);
+    }
+}
+
+extern unsigned char iwram_3001f30__c[] __asm__("iwram_3001f30");
+extern void OvlFunc_957_2008b30();
+void OvlFunc_957_2008c2c(void)
+{
+    unsigned char *p = *(unsigned char **)iwram_3001f30__c;
+    if (__GetFlag(0x200)) {
+        OvlFunc_957_2008b30();
+        p[0x34] = 1;
+    }
+    if (gState_s957[0xe0] == (int)Lc957_97) {
+        API_Func_8092950(0x10, 6);
+        API_Func_8092950(0x11, 6);
+        API_Func_8092950(0x12, 6);
+        API_Func_8092950(0x13, 6);
+        API_Func_8092950(0x14, 6);
+    }
+}
 void OvlFunc_957_2008c98(void)
 {
     /* This function needs the array view of iwram_3001f30. */
@@ -602,7 +642,50 @@ void OvlFunc_957_2008d90(void)
   }
 }
 
-INCLUDE_ASM("asm/maps/altmiller_cave/OvlFunc_957_2008de8.s");
+void OvlFunc_957_2008de8(void)
+{
+    extern int gState_i957[] __asm__("gState");
+    extern void __vec3_translate(int dist, int angle, int *vec);
+    extern void __CutsceneStart(void);
+    extern void __CutsceneEnd(void);
+    extern void __WaitFrames(int);
+    extern void __PlaySound(int);
+    extern void __Actor_SetAnim(struct Actor *, int);
+    extern void __Actor_SetSpriteFlags(struct Actor *, int);
+    extern void __MapActor_TravelToWait(int, int, int);
+    struct Actor *actor;
+    u8 saved;
+    int buf[3];
+    int *v;
+
+    actor = (struct Actor *)__MapActor_GetActor(gState_i957[0x1f4 / 4]);
+    saved = actor->__unk55;
+    v = buf;
+    v[0] = actor->pos.x;
+    v[1] = actor->pos.y;
+    v[2] = actor->pos.z;
+    {
+        int ang = actor->facing & 0xf000;
+        __vec3_translate(0x80 << 14, ang, v);
+    }
+    if (!__TestCollision(actor, (int *)v)) {
+        __CutsceneStart();
+        __Actor_SetAnim(actor, 6);
+        __WaitFrames(6);
+        __PlaySound(0x98);
+        __Actor_SetAnim(actor, 7);
+        actor->speed = 0xc0 << 10;
+        actor->accel = 0x80 << 10;
+        actor->motion.y = 0x80 << 11;
+        actor->__unk55 &= 0x7e;
+        __Actor_SetSpriteFlags(actor, 0);
+        __MapActor_TravelToWait(0, ((short *)v)[1], ((short *)v)[5]);
+        __Actor_SetAnim(actor, 6);
+        __Actor_SetSpriteFlags(actor, 1);
+        actor->__unk55 = saved;
+        __CutsceneEnd();
+    }
+}
 
 void OvlFunc_957_2008eac(void) {
     struct Pk buf;
@@ -615,7 +698,19 @@ void OvlFunc_957_2008eac(void) {
 }
 
 INCLUDE_ASM("asm/maps/altmiller_cave/OvlFunc_957_2008ee0.s");
-INCLUDE_ASM("asm/maps/altmiller_cave/OvlFunc_957_2008f10.s");
+extern void __vec3_translate(int dist, int angle, int *vec);
+void OvlFunc_957_2008f10(int id, int dist, int angle)
+{
+    int v[3];
+    int x = 0x1f80000, z = 0x180000, h = 0x900000;
+    struct Actor *a = __MapActor_GetActor(id);
+    v[0] = x;
+    v[2] = z;
+    __vec3_translate(dist, angle, v);
+    a->pos.x = v[0];
+    a->pos.y = v[2];
+    a->pos.z = h;
+}
 
 extern void OvlFunc_957_2008f10(int a, int b, int c);
 
