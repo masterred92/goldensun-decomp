@@ -756,7 +756,7 @@ int Func_80912a8(int arg0) {
 
 INCLUDE_ASM("asm/field/map/Func_80912b8.s");
 extern void *galloc_iwram(int, int);
-extern void UploadSpriteGFX(int, int, void *);
+extern u32 UploadSpriteGFX(int, int, void *);
 extern void Func_80912b8(void);
 void Func_8091494(void *actor)
 {

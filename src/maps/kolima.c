@@ -22,7 +22,7 @@ unsigned int OvlFunc_911_2008030(unsigned int arg0)
 unsigned int OvlFunc_911_2008050(unsigned int arg0)
 {
     extern unsigned int __Random(void);
-    extern int __Func_80929d8(int a, int b);
+    extern void __Func_80929d8(int a, int b);
     short *counter = (short *)(arg0 + 0x64);
     int zero;
 

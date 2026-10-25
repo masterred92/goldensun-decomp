@@ -392,8 +392,8 @@ INCLUDE_ASM("asm/battle/mechanics/Func_80ba918.s");
 
 INCLUDE_ASM("asm/battle/mechanics/Func_80ba978.s");
 
-extern void _Func_802281c(short *);
-extern void Func_80ba918(void *, int);
+extern int _Func_802281c(short *);
+extern int Func_80ba918(void *, int);
 extern int GetUnitDefaultColor(int);
 extern void _Func_801f200(int);
 void Func_80babdc(int id)
@@ -548,7 +548,7 @@ void Func_80bdfec(void) {
     *(unsigned int *)((char *)r2 + 0x824) = 0;
 }
 
-extern void StopTask(void *task);
+extern s32 StopTask(void *task);
 
 /* Returns no value, but the epilogue (pop {r1}) shows a non-void function. */
 int Func_80be02c(void)
@@ -817,7 +817,7 @@ INCLUDE_ASM("asm/battle/mechanics/Func_80bfba4.s");
 
 INCLUDE_ASM("asm/battle/mechanics/Func_80bffb8.s");
 
-extern void Func_80008d8(unsigned int *, int, int);
+extern void *Func_80008d8(unsigned int *, int, int);
 void Func_80c0098(unsigned int *p)
 {
     void (*f)(unsigned int *, int, int);

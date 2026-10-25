@@ -74,7 +74,7 @@ void Func_808c30c(int amount, int pct)
     extern void Func_8091254(int);
     extern void _PlaySound(int);
     extern unsigned char *_GetUnit(int);
-    extern void _ModifyHP(int, int);
+    extern int _ModifyHP(int, int);
     extern unsigned char gState[];
     int n;
     int i;
@@ -113,7 +113,7 @@ int UpdatePoison(void)
     extern void Func_8091254(int);
     extern void _PlaySound(int);
     extern unsigned char *_GetUnit(int);
-    extern void _ModifyHP(int, int);
+    extern int _ModifyHP(int, int);
     int ret = 0;
     int n = _GetPartySize();
     int i;

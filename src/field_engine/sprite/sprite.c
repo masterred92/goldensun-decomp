@@ -222,7 +222,7 @@ void DeleteSpriteLayer(struct SpriteLayer *layer) {
 }
 
 INCLUDE_ASM("asm/field_engine/sprite/sprite/CreateSprite.s");
-extern void Func_8003f3c(int slot);
+extern s32 Func_8003f3c(int slot);
 void DeleteSprite(struct Sprite *sprite)
 {
     struct SpriteLayer **layers;

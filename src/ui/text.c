@@ -276,7 +276,7 @@ unsigned int Func_801f704(void) {
 
 extern int Func_80056cc(void);
 
-extern void Func_8005cf8(void);
+extern int Func_8005cf8(void);
 int Func_801f730(int a)
 {
     int busy = Func_80056cc();
@@ -300,10 +300,10 @@ int Func_801f730(int a)
 INCLUDE_ASM("asm/ui/text/Func_801f77c.s");
 INCLUDE_ASM("asm/ui/text/PrepareSaveHeader.s");
 extern int Func_80056cc(void);
-extern int Func_801776c(int, int);
+extern void Func_801776c(int, int);
 extern int SomethingSaveHeader(unsigned int, int);
-extern void Func_8005cf8(void);
-extern void PrepareSaveHeader();
+extern int Func_8005cf8(void);
+extern int PrepareSaveHeader();
 extern int _MSG_0a;
 extern int _MSG_0b;
 extern unsigned char ewram_2000000[];
@@ -337,9 +337,9 @@ int Func_801f9b4(void)
 }
 
 extern int Func_80056cc(void);
-extern int Func_801776c(int, int);
+extern void Func_801776c(int, int);
 extern int SomethingSaveHeader(unsigned int, int);
-extern void Func_8005cf8(void);
+extern int Func_8005cf8(void);
 extern int _MSG_0a;
 extern int _MSG_0b;
 extern unsigned char ewram_2000000[];

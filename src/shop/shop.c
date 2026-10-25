@@ -41,9 +41,9 @@ int Debug_TestEquipAndStatus(void)
 {
     extern struct { int pad[4]; int money; unsigned char p2[0x108]; unsigned char x; } gState__s __asm__("gState");
     extern int _GiveItemTo(int, int);
-    extern void _EquipItem(int, int);
+    extern int _EquipItem(int, int);
     extern unsigned char *_GetUnit(unsigned int unitID);
-    extern void Func_80b0278(int, int);
+    extern int Func_80b0278(int, int);
 
     gState__s.money = 200000;
     gState__s.x = 0x1c;
@@ -74,7 +74,7 @@ __asm__(".equ .Lmsg_c9b, 0xc9b\n.equ .Lmsg_cc6, 0xcc6\n.equ .Lmsg_cf1, 0xcf1\n.e
 void Func_80b04dc(int msg)
 {
     extern int _GetSpriteVoice(int);
-    extern void _Func_8017658(int, int, int, int);
+    extern unsigned int _Func_8017658(int, int, int, int);
     extern int _Func_8017364(void);
     unsigned char *base = (unsigned char *)iwram_3001f2c;
     int voice = _GetSpriteVoice(*(unsigned short *)(base + 0x3a4));
@@ -270,11 +270,11 @@ extern void *_GetItemInfo__s(unsigned int) __asm__("_GetItemInfo");
 extern int _GetEquippedItem(int, int);
 extern void _PlaySound(int);
 extern int _GiveItemTo(int, int);
-extern void _AddCoins(int);
-extern void _AddCoinsSpent(int);
+extern int _AddCoins(int);
+extern unsigned int _AddCoinsSpent(int);
 extern void Func_80b0574(int);
 extern int Func_80b1868(int, int);
-extern void Func_80b196c(int, int);
+extern int Func_80b196c(int, int);
 void Func_80b17e4(int unit, int item, int count)
 {
     short *info = _GetItemInfo__s(item);

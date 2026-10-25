@@ -70,7 +70,7 @@ void Func_801b148(void)
     extern unsigned char *iwram_3001e98__b148 __asm__("iwram_3001e98");
     extern void Func_801a97c(void);
     extern void Func_801c21c(void);
-    extern void Func_8003f3c(int);
+    extern s32 Func_8003f3c(int);
     extern void CloseUIBox__b148(int, int) __asm__("CloseUIBox");
     extern void WaitFrames(unsigned int);
     unsigned char *s = iwram_3001e98__b148;
@@ -198,8 +198,8 @@ int UploadIcon(int type, int id)
 {
     extern void LoadOldUIIcon(int, int, int *, int *, int);
     extern int AllocSpriteSlot(void);
-    extern void LoadInventoryIcon(int, int, int);
-    extern void LoadUIBanner(int, int, int);
+    extern int LoadInventoryIcon(int, int, int);
+    extern int LoadUIBanner(int, int, int);
     extern void LoadMoveIcon(int, int, int *, int *, int);
     int tmp;
     int slot = -1;
@@ -231,10 +231,10 @@ int Func_801bcd4(int type, int id, int slot, int arg3)
 {
     extern void LoadOldUIIcon(int, int, int *, int *, int);
     extern int AllocSpriteSlot(void);
-    extern void LoadInventoryIcon(int, int, int);
-    extern void LoadUIBanner(int, int, int);
+    extern int LoadInventoryIcon(int, int, int);
+    extern int LoadUIBanner(int, int, int);
     extern void LoadMoveIcon(int, int, int *, int *, int);
-    extern void LoadStatusIcon(int, int, int);
+    extern int LoadStatusIcon(int, int, int);
     int tmp;
     int orig = slot;
 
@@ -315,7 +315,7 @@ struct MenuGfx801c188 {
 void Func_801c188(void)
 {
     extern void *galloc_iwram(int, int);
-    extern void DecompressLZ1(void *, void *);
+    extern u32 DecompressLZ1(void *, void *);
     extern int AllocSpriteSlot(void);
     extern int UploadSpriteGFX(int, int, void *);
     extern void gfree(int);
@@ -464,7 +464,7 @@ int Func_801c304(unsigned short param_1)
 
 extern short gState_s801c[] __asm__("gState");
 extern int _GetLocationName(int, int);
-extern void TextBox(int, int *, int *, int *, int *);
+extern int TextBox(int, int *, int *, int *, int *);
 extern void *CreateUIBox(int a, int b, int c, int d, int e);
 extern void DrawSmallText(int, void *, int, int);
 struct V801c34c { char pad[0x234]; unsigned short timer; };

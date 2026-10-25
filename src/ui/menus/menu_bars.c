@@ -12,8 +12,8 @@ extern unsigned int Func_8028574(unsigned int arg0);
 extern void *alloc_iwram(int);
 extern unsigned char *GetFile(int);
 extern unsigned char _FILE_f1[];
-extern void DecompressLZ1(void *, void *);
-extern void UploadSpriteGFX(int, int, void *);
+extern unsigned int DecompressLZ1(void *, void *);
+extern unsigned int UploadSpriteGFX(int, int, void *);
 extern void free(void *);
 void LoadUIIcon(int dst, int idx)
 {

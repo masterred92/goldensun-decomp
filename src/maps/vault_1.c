@@ -306,7 +306,7 @@ void OvlFunc_898_20087b8(void)
   __CutsceneEnd();
 }
 
-extern int __WaitFrames(int);
+extern void __WaitFrames(int);
 void OvlFunc_898_20087ec(void)
 {
     unsigned char *a = __MapActor_GetActor(0xe);

@@ -713,7 +713,7 @@ void *Func_8019da8(int portrait, int arg1, int x, int y)
     extern unsigned char *iwram_3001e8c__9da8 __asm__("iwram_3001e8c");
     extern int GetPortrait(int);
     extern void *CreateUIBox__9da8(int, int, int, int, int) __asm__("CreateUIBox");
-    extern void Func_801ec6c(int, int, int, void *, int, int);
+    extern int Func_801ec6c(int, int, int, void *, int, int);
     unsigned char *ui = iwram_3001e8c__9da8;
     void *box;
     int dy;

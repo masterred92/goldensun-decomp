@@ -193,7 +193,7 @@ static inline void ModifyHP_974(int pc, int amount) { extern int __ModifyHP(int,
 void OvlFunc_974_2008b10(void)
 {
     extern void __Func_801776c(int, int);
-    extern void __ModifyPP(int, int);
+    extern int __ModifyPP(int, int);
     extern unsigned char *__GetUnit(int);
     extern void __CalcStats(int);
     unsigned char *u;

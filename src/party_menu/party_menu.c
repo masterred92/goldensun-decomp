@@ -560,7 +560,7 @@ struct PM80a3c08 {
 void Func_80a3c08(void)
 {
     extern int _CanEquipItem(int, int);
-    extern void _Sprite_SetAnim(unsigned char *sprite, unsigned int animID);
+    extern int _Sprite_SetAnim(unsigned char *sprite, unsigned int animID);
     extern unsigned int iwram_3001e40;
     struct PM80a3c08 *s = (struct PM80a3c08 *)iwram_3001f2c;
     signed char i;
@@ -574,7 +574,7 @@ void Func_80a3c08(void)
         }
     }
 }
-extern void _Sprite_SetAnim(unsigned char *sprite, unsigned int animID);
+extern int _Sprite_SetAnim(unsigned char *sprite, unsigned int animID);
 extern void Func_80a3c08(void);
 void Func_80a3c98(void)
 {
@@ -926,7 +926,7 @@ void Func_80a6874(void)
     _CloseUIBox(*(unsigned int *)r5, 1);
 }
 
-extern void _Func_801bcd4();
+extern int _Func_801bcd4();
 void Func_80a68a8(unsigned short *ids)
 {
     struct MenuCursor **cursors = (struct MenuCursor **)(iwram_3001f2c + 0x48);
@@ -1218,7 +1218,7 @@ void Func_80aa448(void) {
 }
 
 extern unsigned char *_GetMoveInfo(int);
-extern void Func_80a2438__a(int) __asm__("Func_80a2438");
+extern unsigned int Func_80a2438__a(int) __asm__("Func_80a2438");
 void Func_80aa460(int id)
 {
     unsigned char *m = _GetMoveInfo(id);
@@ -1370,7 +1370,7 @@ void Func_80ad5f4(unsigned int arg0, unsigned int arg1)
 extern unsigned char iwram_3001f2c__b1[] __asm__("iwram_3001f2c");   /* @ 0x03001F2C */
 extern unsigned int Laf304[] __asm__(".Laf304");
 extern void *_CreateSprite(unsigned int id);
-extern void _Sprite_SetAnim(unsigned char *sprite, unsigned int animID);
+extern int _Sprite_SetAnim(unsigned char *sprite, unsigned int animID);
 
 unsigned int Func_80ad608(unsigned int arg0, unsigned int arg1, unsigned int arg2)
 {

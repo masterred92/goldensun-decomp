@@ -23,7 +23,7 @@ void LoadOldMoveIcon(unsigned int move, unsigned int a, unsigned int b, unsigned
 }
 INCLUDE_ASM("asm/ui/icon/LoadItemIconID.s");
 INCLUDE_ASM("asm/ui/icon/DrawInventoryIcon.s");
-extern void DrawInventoryIcon(int, int);
+extern int DrawInventoryIcon(int, int);
 int LoadInventoryIcon(int item, int a1, int slot)
 {
     unsigned char *buf;

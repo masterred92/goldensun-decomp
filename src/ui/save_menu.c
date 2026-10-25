@@ -558,7 +558,7 @@ void *Func_80284dc(void) {
 extern unsigned char *iwram_3001f38;
 extern void Func_8028194(void);
 extern void CloseUIBox(void *, int);
-extern void Func_8003f3c(int);
+extern s32 Func_8003f3c(int);
 void Func_802851c(void)
 {
     unsigned char *b = iwram_3001f38;

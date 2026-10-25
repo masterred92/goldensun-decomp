@@ -429,7 +429,7 @@ void OvlFunc_896_200c328(void)
     extern int __FindEmptyInventorySlot(int);
     extern int __UI_SellMenu(int *, int *);
     extern void __Func_8078948(int, int);
-    extern void __GiveItem(int);
+    extern int __GiveItem(int);
     short *base = iwram_3001ebc;
     short saved = base[0xec];
     int a, b;

@@ -234,7 +234,7 @@ extern void __Actor_SetSpriteFlags(int, int);
 extern void __Func_8092b08(int, int);
 extern int __GetFlag(int);
 extern void __CutsceneStart(void);
-extern void __GiveItemTo(int, int);
+extern int __GiveItemTo(int, int);
 extern void __Func_8091e9c(int);
 extern int OvlFunc_969_20084bc(void);
 extern void OvlFunc_969_20088b4(void);
