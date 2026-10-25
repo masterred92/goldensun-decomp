@@ -323,45 +323,7 @@ INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_88c.s");
 INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_920.s");
 INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_e10.s");
 INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_ea0.s");
-void OvlFunc_common1_fac(int d)
-{
-    extern struct { unsigned char pad[0x1a]; unsigned short v; } Lc1_13__fac __asm__(".Lc1_13");
-    extern struct { unsigned char pad[0x1a]; unsigned short v; } Lc1_3__fac __asm__(".Lc1_3");
-    extern void OvlFunc_common1_88c(int);
-    extern int OvlFunc_common1_e10(int, int);
-    extern int __Func_80f954c(void);
-    int t;
-    int e;
-
-    API_PlaySound(0xf7);
-    API_MapTransitionIn();
-    API_WaitMapTransition();
-    Lc1_13__fac.v = t = d * 60;
-    Lc1_3__fac.v = (d < 0 ? -d : d) * 60;
-    if (d < 0) {
-        API_CutsceneWait(0x1e);
-        API_PlaySound(0x56);
-        OvlFunc_common1_88c(8);
-        OvlFunc_common1_e10(3, 1);
-        API_CutsceneWait(-d * 60 + 0x3c);
-        e = 0;
-    } else {
-        API_CutsceneWait(0x1e);
-        API_PlaySound(d + 0x5a);
-        OvlFunc_common1_88c(4);
-        OvlFunc_common1_e10(3, 0);
-        API_CutsceneWait(t + 0x3c);
-        e = 8;
-    }
-    API_MapActor_Emote(e, 0x105, 0);
-    while (__Func_80f954c())
-        API_WaitFrames(1);
-    API_PlaySound(0x13);
-    API_CutsceneWait(0x1e);
-    API_PlaySound(0x121);
-    API_MapTransitionOut();
-    API_WaitMapTransition();
-}
+INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_fac.s");
 INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_1078.s");
 INCLUDE_ASM("asm/maps/common/common1/OvlFunc_common1_1254.s");
 

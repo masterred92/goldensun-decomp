@@ -467,7 +467,7 @@ extern unsigned int iwram_3001e40;
 void OvlFunc_923_2008d98(void)
 {
     extern unsigned int _umodsi3_RAM(unsigned int, unsigned int);
-    extern int _divsi3_RAM__c(int, int) __asm__("_divsi3_RAM") __attribute__((const));
+    extern int _divsi3_RAM(int, int);
     volatile unsigned short c = 0;
     unsigned int i;
     int v, hi;
@@ -478,7 +478,7 @@ void OvlFunc_923_2008d98(void)
             c = ((unsigned short *)0x5000000)[0x6e - i] & 0x1f;
             v = c;
             if (i <= 2)
-                v -= _divsi3_RAM__c(v * 4, 10);
+                v -= _divsi3_RAM(v * 4, 10);
             { unsigned short *d = &((unsigned short *)0x5000000)[0x6f - i];
             hi = (Lm923_2924 << 10) | (gOvl_0200a920 << 5);
             *d = v | hi; }

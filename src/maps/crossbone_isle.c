@@ -537,22 +537,8 @@ void *CrossboneIsle_GetActors(void)
     if (ev <= (int)_EVENT_86 && ev >= (int)_EVENT_7e) return Lm946_3850;
     return gOvl_0200b5f8;
 }
-void OvlFunc_946_2008da4(struct Actor *actor)
-{
-    extern int _divsi3_RAM__c(int, int) __asm__("_divsi3_RAM") __attribute__((const));
-    int *a = (int *)actor;
-    int vx = a[0x44 / 4];
-    int vz;
-    a[2] += vx;
-    a[3] += a[0x48 / 4];
-    vz = a[0x4c / 4];
-    a[4] += vz;
-    a[0x44 / 4] = vx - _divsi3_RAM__c(vx, 18);
-    a[0x4c / 4] = vz - vz / 16;
-    a[6] += a[0xc];
-    a[7] += a[0xd];
-    *(unsigned short *)(*(unsigned char **)(a + 0x14) + 0x1e) += *(unsigned short *)((unsigned char *)a + 0x64);
-}
+INCLUDE_ASM("asm/maps/crossbone_isle/OvlFunc_946_2008da4.s");
+extern void OvlFunc_946_2008da4();
 extern int __cos(int);
 extern int __sin(int);
 void OvlFunc_946_2008e00(unsigned int actorId)
