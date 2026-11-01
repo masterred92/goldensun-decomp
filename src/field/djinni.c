@@ -1,6 +1,7 @@
 /* Djinni-get table and supporting field tasks. */
 #include "nonmatching.h"
 #include "actor.h"
+extern void _DeleteActor();
 
 INCLUDE_ASM("asm/field/djinni/Func_8095938.s");
 INCLUDE_ASM("asm/field/djinni/GetJupiterDjinni.s");
@@ -15,7 +16,6 @@ void Func_8095b8c(struct Actor *actor)
     actor->scale.y = scale;
 }
 
-extern void _DeleteActor(void);
 
 void Func_8095bac(unsigned int arg0)
 {
@@ -68,7 +68,26 @@ void Func_8095f9c(unsigned char *p)
         _DeleteActor();
 }
 
-INCLUDE_ASM("asm/field/djinni/Func_8095fcc.s");
+void Func_8095fcc(struct Actor *a)
+{
+    extern int gState_i[] __asm__("gState");
+    extern unsigned char *MapActor_GetActor(int);
+    extern void vec3_translate(int, int, int *);
+    struct Actor *o = (struct Actor *)MapActor_GetActor(gState_i[0x7d]);
+    short t = --a->waveCounter;
+    int v[3];
+    int y;
+
+    v[0] = o->pos.x;
+    v[2] = o->pos.z;
+    vec3_translate(t * 0x6666, (t << 11) + a->__unk66, v);
+    a->pos.x = v[0];
+    a->pos.z = v[2];
+    y = a->pos.y - 0x10000;
+    a->pos.y = y;
+    if (y < o->pos.y + 0x140000)
+        _DeleteActor(a);
+}
 INCLUDE_ASM("asm/field/djinni/Func_8096048.s");
 INCLUDE_ASM("asm/field/djinni/GetVenusDjinni.s");
 INCLUDE_ASM("asm/field/djinni/Func_809641c.s");

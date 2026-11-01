@@ -1,4 +1,5 @@
 #include "nonmatching.h"
+#include "actor.h"
 
 extern unsigned char iwram_3001e40[];
 extern void _Actor_SetColorswap(unsigned int, unsigned int);
@@ -34,10 +35,63 @@ void Func_8099040(void *arg0)
   }
 }
 
-INCLUDE_ASM("asm/field/moves/frost/Func_8099070.s");
+extern void vec3_translate(int, int, int *);
+void Func_8099070(struct Actor *a)
+{
+    int v[3];
+    short t;
 
-INCLUDE_ASM("asm/field/moves/frost/Func_80990cc.s");
+    if (a != 0) {
+        t = --a->waveCounter;
+        if (t != 0) {
+            v[0] = a->prevPos.x;
+            v[1] = a->prevPos.y;
+            v[2] = a->prevPos.z;
+            vec3_translate(t << 17, a->__unk66 + (t << 11), v);
+            a->pos.x = v[0];
+            a->pos.y = v[1];
+            a->pos.z = v[2];
+        } else {
+            a->update = (actorfun_t)Func_8099040;
+        }
+    }
+}
 
-INCLUDE_ASM("asm/field/moves/frost/Field_Frost_Target.s");
+void Func_80990cc(struct Actor *a)
+{
+    int v[3];
+    short t;
+
+    if (a != 0) {
+        t = --a->waveCounter;
+        if (t != 0) {
+            v[0] = a->prevPos.x;
+            v[1] = a->prevPos.y;
+            v[2] = a->prevPos.z;
+            vec3_translate(t << 17, a->__unk66 - (t << 11), v);
+            a->pos.x = v[0];
+            a->pos.y = v[1];
+            a->pos.z = v[2];
+        } else {
+            a->update = (actorfun_t)Func_8099040;
+        }
+    }
+}
+
+extern unsigned char *iwram_3001f30__k1 __asm__("iwram_3001f30");
+extern void Field_Frost(void);
+
+void Field_Frost_Target(void)
+{
+    unsigned char *s = iwram_3001f30__k1;
+    struct Actor *t = *(struct Actor **)(s + 0x14);
+
+    if (t != 0) {
+        if (*(signed char *)(s + 0x35) != 0)
+            s[0x20] = 1;
+        t->flags |= 2;
+        Field_Frost();
+    }
+}
 
 INCLUDE_ASM("asm/field/moves/frost/Field_Frost.s");

@@ -1,4 +1,5 @@
 #include "nonmatching.h"
+#include "rpg.h"
 
 extern unsigned char *GetUnit(unsigned int unit);
 
@@ -18,27 +19,6 @@ unsigned int Func_80797ec(unsigned int arg0, unsigned int arg1)
     return L88db8[(arg0 << 2) + arg1];
 }
 
-INCLUDE_ASM("asm/rpg/summon/Func_80797fc.s");
-
-extern int Func_80797fc(unsigned int a, unsigned char *b, unsigned char *c);
-
-int Func_807987c(unsigned int arg0, int arg1)
-{
-    unsigned char *p;
-    int buf[4];
-    int ret;
-
-    p = (unsigned char *)GetUnit(arg0);
-    ret = 0;
-    if (arg1 <= 3) {
-        Func_80797fc(*(unsigned char *)(p + 0x128), p + 0xf8, (unsigned char *)buf);
-        ret = buf[arg1] / 0xa;
-    }
-    return ret;
-}
-
-extern unsigned int GetEnemyInfo(int param);
-
 struct EnemyElemStats {
     unsigned int base;       // 0x00
     unsigned char unk04[4];  // 0x04
@@ -46,6 +26,55 @@ struct EnemyElemStats {
 };                            // 0x18
 
 extern struct EnemyElemStats L88e38[] __asm__("X88e38");
+
+extern unsigned int GetEnemyInfo(int param);
+struct PCStats80797fc {
+    unsigned char pad[0x92];
+    unsigned char baseElemStats[4];
+};
+extern struct PCStats80797fc *GetPCBaseStats(int id);
+
+int Func_80797fc(int id, unsigned char *djinn, int *out)
+{
+    unsigned int k;
+    int *p;
+    int i;
+
+    if (id > 7) {
+        k = ((unsigned char *)GetEnemyInfo(id))[0x34];
+        if (k > 0x2b)
+            k = 0;
+        for (i = 0, p = out; i < 4; i++)
+            *p++ = L88e38[k].unk04[i] * 10;
+    } else {
+        p = out;
+        for (i = 0; i < 4; i++)
+            *p++ = djinn[0x24 + i] * 10;
+        if (id <= 7) {
+            for (i = 0; i < 4; i++)
+                *out++ += GetPCBaseStats(id)->baseElemStats[i];
+        }
+    }
+    return 0;
+}
+
+extern int Func_80797fc(int a, unsigned char *b, int *c);
+
+int Func_807987c(unsigned int arg0, int arg1)
+{
+    struct Unit *p;
+    int buf[4];
+    int ret;
+
+    p = (struct Unit *)GetUnit(arg0);
+    ret = 0;
+    if (arg1 <= 3) {
+        Func_80797fc(p->pcID, (unsigned char *)p->djinn, buf);
+        ret = buf[arg1] / 0xa;
+    }
+    return ret;
+}
+
 
 unsigned int Func_80798b4(unsigned char *unit)
 {

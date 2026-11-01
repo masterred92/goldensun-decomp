@@ -2,8 +2,13 @@
 
 #include "nonmatching.h"
 #include "api.h"
+#include "actor.h"
 
 #include "state/global_state.h"
+extern void *__MapActor_GetActor(int);
+extern void __SetFlag(int);
+extern void __Actor_SetSpriteFlags(void *, int);
+
 extern GlobalState gState;
 extern unsigned char Lm941_1cc0[] __asm__(".Lm941_1cc0");
 extern unsigned char Lm941_1cd8[] __asm__(".Lm941_1cd8");
@@ -52,7 +57,7 @@ unsigned int WestLunpaCave_GetEvents(void) {
 
 void OvlFunc_941_200807c(void)
 {
-    unsigned int actor;
+    struct Actor *actor;
 
     actor = __MapActor_GetActor(8);
     if (actor != 0) {
@@ -60,7 +65,17 @@ void OvlFunc_941_200807c(void)
     }
 }
 
-INCLUDE_ASM("asm/maps/west_lunpa_cave/OvlFunc_941_2008094.s");
+void OvlFunc_941_2008094(void)
+{
+    struct Actor *a = (struct Actor *)__MapActor_GetActor(9);
+
+    if (a != 0) {
+        a->flags = 1;
+        a->__unk55 = 0;
+    }
+    API_Func_8010704(7, 0x20, 1, 1, 8, 0x20);
+    API_SetFlag(0x204);
+}
 void OvlFunc_941_20080d4(void)
 {
     unsigned char *actor;
@@ -85,10 +100,6 @@ void OvlFunc_941_20080d4(void)
     API_Func_8010704(0x13, 0x11, 1, 1, 0x15, 0xe);
 }
 
-struct Actor {
-unsigned char pad[0x23];
-unsigned char unk23;
-};
 void OvlFunc_941_20080d4(void);
 
 static inline int GetFlag(int flag)
@@ -104,7 +115,7 @@ void OvlFunc_941_20081b0(void) {
     __SetFlag(0x80 << 2);
     if (actor != 0) {
         __Actor_SetSpriteFlags(actor, 0);
-        actor->unk23 = 1;
+        actor->flags = 1;
     }
 
     if (GetFlag(0x202) == 0) {
@@ -115,7 +126,6 @@ void OvlFunc_941_20081b0(void) {
     }
 }
 
-extern void __SetFlag(int);
 
 void OvlFunc_941_2008200(void) {
     __SetFlag(0x203);
@@ -160,7 +170,20 @@ void OvlFunc_941_200833c(void) {
     API_ClearFlag(0x202);
 }
 
-INCLUDE_ASM("asm/maps/west_lunpa_cave/OvlFunc_941_2008384.s");
+void OvlFunc_941_2008384(void)
+{
+    API_Func_80105d4(0x29, 0x57, 2, 5, 0x15, 0x3b);
+    API_WaitFrames(4);
+    API_Func_80105d4(2, 0x5d, 1, 1, 0x18, 0x3e);
+    API_Func_80105d4(2, 0x5e, 1, 1, 0x15, 0x37);
+    API_Func_80105d4(0x2b, 0x57, 2, 5, 0x15, 0x3a);
+    API_WaitFrames(4);
+    API_Func_80105d4(3, 0x5d, 1, 1, 0x18, 0x3e);
+    API_Func_80105d4(1, 0x5e, 1, 1, 0x15, 0x37);
+    API_Func_80105d4(0x29, 0x57, 2, 5, 0x15, 0x3a);
+    API_Func_8010704(0x15, 0xb, 2, 2, 0x15, 0xd);
+    API_Func_8010704(0x13, 0x11, 1, 1, 0x15, 0xe);
+}
 
 void OvlFunc_941_2008460(void) {
 	if (API_GetFlag(0x80 << 2) != 0) {
@@ -252,8 +275,6 @@ unsigned int OvlFunc_941_200941c(void)
 INCLUDE_ASM("asm/maps/west_lunpa_cave/OvlFunc_941_2009448.s");
 INCLUDE_ASM("asm/maps/west_lunpa_cave/OvlFunc_941_2009760.s");
 extern void *iwram_3001ebc;
-extern void *__MapActor_GetActor(int);
-extern void __Actor_SetSpriteFlags(void *, int);
 extern int __GetFlag(int);
 extern void __MapActor_SetAnim(int, int);
 extern void OvlFunc_941_2008210(void);

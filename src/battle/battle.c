@@ -23,7 +23,6 @@ int Func_80b5ad4(void)
     return (int)clear(BattleClearStart, 20);
 }
 
-#define REG_BG0VOFS (*(volatile unsigned short *)0x04000012)
 
 void ResetBG0VOFS(void) {
     unsigned short value = 0;
@@ -40,9 +39,25 @@ void Func_80b5e10(void) {}
 
 INCLUDE_ASM("asm/battle/battle/Func_80b5e14.s");
 INCLUDE_ASM("asm/battle/battle/Func_80b5f0c.s");
-INCLUDE_ASM("asm/battle/battle/Func_80b606c.s");
+
+int Func_80b606c(int arg0, int arg1, unsigned short *arg2)
+{
+    unsigned char buf[8];
+    int i;
+
+    for (i = 0; i < 4; i++) {
+        buf[i] = arg2[i];
+        if (buf[i] == 0)
+            buf[i] = '_';
+    }
+    buf[4] = 0;
+}
+
 INCLUDE_ASM("asm/battle/battle/Func_80b60a0.s");
 INCLUDE_ASM("asm/battle/battle/Func_80b6148.s");
+extern unsigned int iwram_3001e74;
+extern int Func_80b6a60(unsigned short *units);
+
 INCLUDE_ASM("asm/battle/battle/Func_80b6378.s");
 void *Func_80b63b0(void)
 {
@@ -55,15 +70,44 @@ INCLUDE_ASM("asm/battle/battle/BattleMain.s");
 INCLUDE_ASM("asm/battle/battle/Func_80b6a60.s");
 INCLUDE_ASM("asm/battle/battle/Func_80b6ae0.s");
 INCLUDE_ASM("asm/battle/battle/Func_80b6b40.s");
-INCLUDE_ASM("asm/battle/battle/Func_80b6c08.s");
+struct S80b6c08 { char pad[0x58]; short a[7]; short b[1]; };
+int Func_80b6c08(int mask, short *out)
+{
+    extern struct S80b6c08 *iwram_3001e74__6c08 __asm__("iwram_3001e74");
+    struct S80b6c08 *s = iwram_3001e74__6c08;
+    int n = 0;
+    int i;
 
-extern void Func_80b6c08(int, unsigned int *);
+    if (mask & 1) {
+        for (i = 0; s->a[i] != 0xff; i++) {
+            if (s->a[i] != 0xfe) {
+                if (out != 0)
+                    *out++ = s->a[i];
+                n++;
+            }
+        }
+    }
+    if (mask & 2) {
+        for (i = 0; s->b[i] != 0xff; i++) {
+            if (s->b[i] != 0xfe) {
+                if (out != 0)
+                    *out++ = s->b[i];
+                n++;
+            }
+        }
+    }
+    if (out != 0)
+        *out = 0xff;
+    return n;
+}
+
+extern int Func_80b6c08(int side, short *units);
 extern void CreateBattleSpriteOverlays(unsigned int *, int);
 
 void Func_80b6c90(void)
 {
   unsigned char buf[0x1c];
-  Func_80b6c08(3, (unsigned int *)buf);
+  Func_80b6c08(3, (short *)buf);
   CreateBattleSpriteOverlays((unsigned int *)buf, 1);
 }
 
@@ -71,7 +115,7 @@ void Func_80b6c90(void)
 void Func_80b6cb0(void)
 {
     unsigned char buf[0x1c];
-    Func_80b6c08(3, (unsigned int *)buf);
+    Func_80b6c08(3, (short *)buf);
     CreateBattleSpriteOverlays((unsigned int *)buf, 0);
 }
 
@@ -89,7 +133,30 @@ INCLUDE_ASM("asm/battle/battle/Func_80b6cdc.s");
 INCLUDE_ASM("asm/battle/battle/Func_80b6d30.s");
 INCLUDE_ASM("asm/battle/battle/Func_80b6e30.s");
 
-INCLUDE_ASM("asm/battle/battle/GetWeaponType.s");
+extern unsigned short Lc593c[] __asm__(".Lc593c");
+
+unsigned int GetWeaponType(unsigned int weaponID)
+{
+    int i;
+    unsigned int ret;
+
+    while (1) {
+        i = 0;
+    loop:
+        if (weaponID == (Lc593c[i] & 0x1ff)) {
+            unsigned int v = Lc593c[i];
+            ret = v >> 9;
+        } else if ((short)Lc593c[i++] != -1) {
+            goto loop;
+        } else {
+            ret = 6;
+        }
+        break;
+    }
+    return ret;
+}
+
+INCLUDE_ASM("asm/battle/battle/rodata.s");
 
 INCLUDE_ASM("asm/battle/battle/GetWeaponSpriteID.s");
 

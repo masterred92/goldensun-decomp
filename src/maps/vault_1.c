@@ -2,6 +2,11 @@
 
 #include "nonmatching.h"
 #include "api.h"
+#include "actor.h"
+
+extern unsigned char *__MapActor_GetActor(int);
+extern void __WaitFrames(int);
+void OvlFunc_898_2009724(unsigned int arg0, unsigned int arg1);
 
 extern void OvlFunc_898_200973c();
 extern void OvlFunc_898_200890c();
@@ -13,7 +18,30 @@ extern void __CutsceneWait();
 extern unsigned int iwram_3001e8c;
 extern unsigned int OvlFunc_898_2009674(unsigned char *arg0, unsigned int arg1, unsigned int arg2, unsigned int arg3);
 
-INCLUDE_ASM("asm/maps/vault_1/OvlFunc_898_2008314.s");
+int OvlFunc_898_2008314(struct Actor *a)
+{
+    unsigned char *b = (unsigned char *)iwram_3001e8c;
+    unsigned char *c = *(unsigned char **)((char *)&iwram_3001e8c + 0x30);
+    int e = 0;
+    int d = 0x12;
+    int id;
+    unsigned char *p;
+
+    if (a->waveCounter & 1)
+        p = __MapActor_GetActor(0xf);
+    else
+        p = __MapActor_GetActor(0xe);
+    if (OvlFunc_898_2009674(a, (unsigned int)p, 0x20, 0) == 0) {
+        p = __MapActor_GetActor(0);
+        if (*(short *)(c + 0x178) != 0 || b[0xea4] != 0) {
+            d = 0x1a;
+            if (a->waveCounter & 2)
+                e = 1;
+        }
+        OvlFunc_898_2009674((unsigned char *)a, (unsigned int)p, d, e);
+    }
+    return 0;
+}
 
 
 unsigned int OvlFunc_898_20083ac(unsigned char *arg0)
@@ -31,7 +59,7 @@ unsigned int OvlFunc_898_20083ac(unsigned char *arg0)
     if (*(int *)(arg0 + 0x38) == (0x80 << 24)) {
         return 0;
     }
-    actor = __MapActor_GetActor(0);
+    actor = (unsigned int)__MapActor_GetActor(0);
     if ((*(short *)(p1 + 0x178) != 0) || (*(unsigned char *)(p0 + 0xea4) != 0)) {
         iVar3 = 0x1a;
         iVar4 = 1;
@@ -96,7 +124,51 @@ unsigned int OvlFunc_898_2008464(void) {
     }
 }
 
-INCLUDE_ASM("asm/maps/vault_1/OvlFunc_898_20084a0.s");
+extern unsigned char *iwram_3001ebc;
+extern void __Func_8091890(int);
+
+void OvlFunc_898_20084a0(void)
+{
+    unsigned char *base;
+    struct Actor *actor;
+
+    base = iwram_3001ebc;
+    if (API_GetFlag(0x855) || !API_GetFlag(0x856)) {
+        API_Func_8091e9c(*(short *)(base + (0xb6 << 1)) - 0x13);
+        return;
+    }
+
+    API_CutsceneStart();
+    actor = (struct Actor *)__MapActor_GetActor(0);
+    if (actor != 0) {
+        API_MapActor_SetPos(2, actor->pos.x, actor->pos.z);
+    }
+    API_MapActor_SetSpeed(2, 0xcccc, 0x6666);
+    if (*(short *)(base + (0xb6 << 1)) == 0x14) {
+        API_MapActor_TravelToAnimWait(2, 0xc8 << 1, 0xe0 << 1);
+    } else {
+        API_Func_80933d4(0xcccc, 0x1999);
+        API_Func_80933f8(0xe0 << 16, -1, 0xa2 << 16, 1);
+        API_MapActor_TravelToAnimWait(2, 0xe0, 0xa2);
+        API_Func_8093530();
+    }
+    API_MapActor_TurnToFaceActor(0, 2, 0);
+    API_CutsceneWait(0x14);
+    API_MessageID(0x1327);
+    API_ActorMessage_Wait(0x9002, 0, 0x14);
+    API_MapActor_DoAnim(0, 3);
+    if (OvlFunc_898_2008450() != 0) {
+        API_MessageID(0x132a);
+        API_ActorMessage(2, 0);
+        OvlFunc_898_2008464();
+        API_WaitFrames(0x14);
+    }
+    __Func_8091890(2);
+    API_Func_8091e9c(*(short *)(base + (0xb6 << 1)) - 0x13);
+    API_MapTransitionOut();
+    API_WaitMapTransition();
+    API_CutsceneEnd();
+}
 
 extern void __CutsceneStart();
 extern void __Func_801776c();
@@ -239,8 +311,40 @@ void OvlFunc_898_20087b8(void)
   __CutsceneEnd();
 }
 
-INCLUDE_ASM("asm/maps/vault_1/OvlFunc_898_20087ec.s");
-INCLUDE_ASM("asm/maps/vault_1/OvlFunc_898_200885c.s");
+void OvlFunc_898_20087ec(void)
+{
+    struct Actor *a = (struct Actor *)__MapActor_GetActor(0xe);
+    short facing = a->facing;
+    int flags = 2 | (u16)a->waveCounter;
+
+    a->waveCounter = flags;
+    __CutsceneStart();
+    __MessageID(0x122c);
+    __MapActor_SetAnim(0xe, 0);
+    OvlFunc_898_200973c(0xe, 0, 2);
+    OvlFunc_898_2009724(0xe, 0xa);
+    a->facing = facing;
+    __WaitFrames(1);
+    __CutsceneEnd();
+    a->waveCounter &= 1;
+}
+void OvlFunc_898_200885c(void)
+{
+    struct Actor *a = (struct Actor *)__MapActor_GetActor(0xf);
+    short facing = a->facing;
+    int flags = 2 | (u16)a->waveCounter;
+
+    a->waveCounter = flags;
+    __CutsceneStart();
+    __MessageID(0x122d);
+    __MapActor_SetAnim(0xf, 0);
+    OvlFunc_898_200973c(0xf, 0, 2);
+    OvlFunc_898_2009724(0xf, 0xa);
+    a->facing = facing;
+    __WaitFrames(1);
+    __CutsceneEnd();
+    a->waveCounter &= 1;
+}
 
 extern int _MSG_12c0;
 
@@ -337,8 +441,45 @@ void OvlFunc_898_2008a2c(void) {
     __CutsceneEnd();
 }
 
-INCLUDE_ASM("asm/maps/vault_1/OvlFunc_898_2008a4c.s");
-INCLUDE_ASM("asm/maps/vault_1/OvlFunc_898_2008acc.s");
+extern void __WaitFrames(int);
+extern int __GetFlag(int);
+extern unsigned char *iwram_3001ebc;
+void OvlFunc_898_2008a4c(void)
+{
+    struct Actor *a = (struct Actor *)__MapActor_GetActor(0xe);
+    short facing = a->facing;
+    int flags = 2 | (u16)a->waveCounter;
+
+    a->waveCounter = flags;
+    __CutsceneStart();
+    __MessageID(0x1339);
+    if (__GetFlag(2))
+        (*(unsigned short *)(iwram_3001ebc + 0x1d8))++;
+    __MapActor_SetAnim(0xe, 0);
+    OvlFunc_898_200973c(0xe, 0, 2);
+    OvlFunc_898_2009724(0xe, 0xa);
+    a->facing = facing;
+    __WaitFrames(1);
+    __CutsceneEnd();
+    a->waveCounter &= 1;
+}
+void OvlFunc_898_2008acc(void)
+{
+    struct Actor *a = (struct Actor *)__MapActor_GetActor(0xf);
+    short facing = a->facing;
+    int flags = 2 | (u16)a->waveCounter;
+
+    a->waveCounter = flags;
+    __CutsceneStart();
+    __MessageID(0x133b);
+    __MapActor_SetAnim(0xf, 0);
+    OvlFunc_898_200973c(0xf, 0, 2);
+    OvlFunc_898_2009724(0xf, 0xa);
+    a->facing = facing;
+    __WaitFrames(1);
+    __CutsceneEnd();
+    a->waveCounter &= 1;
+}
 
 extern unsigned int iwram_3001ebc__a6 __asm__("iwram_3001ebc");
 
@@ -466,8 +607,53 @@ void OvlFunc_898_2008cc4(void)
     __CutsceneEnd();
 }
 
-INCLUDE_ASM("asm/maps/vault_1/OvlFunc_898_2008cfc.s");
-INCLUDE_ASM("asm/maps/vault_1/OvlFunc_898_2008d78.s");
+extern void OvlFunc_898_2008938(int);
+
+void OvlFunc_898_2008cfc(void) {
+    unsigned char *m;
+    unsigned char *b;
+    int v;
+
+    m = (unsigned char *)__MapActor_GetActor(0xe);
+    m += 0x64;
+    v = *(unsigned short *)m | 2;
+    *(unsigned short *)m = v;
+    __CutsceneStart();
+    if (__GetFlag(0x855) == 0) {
+        __MessageID(0x123c);
+    } else {
+        __MessageID(0x1349);
+        if (__GetFlag(2) != 0) {
+            b = iwram_3001ebc;
+            b += 0xec << 1;
+            *(unsigned short *)b = *(unsigned short *)b + 1;
+        }
+    }
+    OvlFunc_898_2008938(0xe);
+    __CutsceneEnd();
+    m = (unsigned char *)__MapActor_GetActor(0xe);
+    m += 0x64;
+    *(unsigned short *)m &= 1;
+}
+void OvlFunc_898_2008d78(void)
+{
+    unsigned short *p;
+    int v;
+
+    p = (unsigned short *)((unsigned char *)__MapActor_GetActor(0xf) + 0x64);
+    v = *p | 2;
+    *p = v;
+    __CutsceneStart();
+    if (__GetFlag(0x855) == 0) {
+        __MessageID(0x123d);
+    } else {
+        __MessageID(0x134b);
+    }
+    OvlFunc_898_2008938(0xf);
+    __CutsceneEnd();
+    p = (unsigned short *)((unsigned char *)__MapActor_GetActor(0xf) + 0x64);
+    *p &= 1;
+}
 
 
 void OvlFunc_898_2008dd4(void)
@@ -587,7 +773,7 @@ void OvlFunc_898_2008fb4(void)
   unsigned int s1;
   unsigned int s2;
 
-  actor = __MapActor_GetActor(0);
+  actor = (unsigned int)__MapActor_GetActor(0);
   sprite = *(unsigned char **)(actor + 0x50);
   __PlaySound(0x9e);
   __Func_8010560(L286a, 0x36, 0xd);
@@ -723,7 +909,147 @@ void OvlFunc_898_20092c0(void) {
     API_SetFlag(0x858);
     __CutsceneEnd();
 }
-INCLUDE_ASM("asm/maps/vault_1/Vault1_MapInit.s");
+
+struct CS898_StateLayout { unsigned char pad[0x1c2]; short room; };
+
+int Vault1_MapInit(void)
+{
+    extern unsigned int OvlFunc_898_20083ac(unsigned char *);
+    extern struct CS898_StateLayout CS898_State __asm__("gState");
+    extern void OvlFunc_common0_70(int, int, int, int);
+    int flagValue1;
+    int flagValue2;
+    int flagValue3;
+    int flagValue4;
+    int flagValue5;
+    int flagValue6;
+    int flagValue7;
+    int flagValue8;
+    int flagValue9;
+    int flagValue10;
+    int flagValue11;
+    int flagValue12;
+    int flagValue13;
+    struct Actor *actor;
+    short *room;
+    unsigned int stateBase;
+    int zero;
+
+    flagValue1 = API_GetFlag(0x87a);
+    if (flagValue1 != 0) {
+        API_Func_8091e9c(14);
+    }
+    flagValue2 = API_GetFlag(0x200);
+    if (flagValue2 != 0) {
+        API_Func_8010704(0x37, 26, 4, 2, 23, 26);
+    }
+    OvlFunc_common0_70(0x800000, 0, 0x1a40000, 0xdf);
+    actor = ((struct Actor *)__MapActor_GetActor(14));
+    actor->waveCounter = 1;
+    *(int *)((char *)actor + 0x6c) = (int)OvlFunc_898_2008314;
+    actor = ((struct Actor *)__MapActor_GetActor(15));
+    zero = 0;
+    actor->waveCounter = zero;
+    *(int *)((char *)actor + 0x6c) = (int)OvlFunc_898_2008314;
+    flagValue3 = API_GetFlag(0x858);
+    if (flagValue3 != 0) {
+        API_MapActor_SetPos(19, 0xd80000, 0x1880000);
+    }
+    flagValue4 = API_GetFlag(0x853);
+    flagValue5 = API_GetFlag(0x855);
+    if (flagValue5 == 0) {
+        if ((1 & flagValue4) != 0) {
+            actor = ((struct Actor *)__MapActor_GetActor(21));
+            *(int *)((char *)actor + 0x6c) = (int)OvlFunc_898_20083ac;
+        }
+    }
+    stateBase = (unsigned int)&CS898_State;
+    room = (short *)(stateBase + 0x1c2);
+    if (*room <= 2) {
+        flagValue6 = API_GetFlag(0x109);
+        if (flagValue6 == 0) {
+            API_ClearFlag(0x867);
+            flagValue7 = API_GetFlag(0x855);
+            if (flagValue7 == 0) {
+                flagValue8 = API_GetFlag(0x856);
+                if (flagValue8 != 0) {
+                    API_CutsceneStart();
+                    actor = ((struct Actor *)__MapActor_GetActor(0));
+                    if (actor != 0) {
+                        API_MapActor_SetPos(2, actor->pos.x, actor->pos.z);
+                    }
+                    if (*room == 1) {
+                        API_MapActor_SetPos(2, 0x1900000, 0x1c00000);
+                    } else {
+                        API_MapActor_SetPos(2, 0xe00000, 0xa20000);
+                    }
+                    API_MapActor_TurnToFaceActor(2, 0, 0);
+                    API_MapTransitionIn();
+                    API_WaitMapTransition();
+                    API_CutsceneWait(30);
+                    API_Func_80925cc(2, 2);
+                    API_MessageID(0x1328);
+                    API_ActorMessage_Wait(2, 0, 20);
+                    API_MapActor_DoAnim(0, 3);
+                    API_MapActor_SetSpeed(2, 0xcccc, 0x6666);
+                    API_MapActor_SetAnim(2, 2);
+                    actor = ((struct Actor *)__MapActor_GetActor(0));
+                    if (actor != 0) {
+                        API_MapActor_TravelTo(2, *(short *)((char *)actor + 0xa), *(short *)((char *)actor + 0x12));
+                    }
+                    API_MapActor_WaitMovement(2);
+                    API_MapActor_SetPos(2, 0, 0);
+                    API_Func_80917d0(2, 0);
+                    API_CutsceneEnd();
+                }
+            }
+        }
+    }
+    flagValue9 = API_GetFlag(0x867);
+    if (flagValue9 != 0) {
+        API_MapActor_SetPos(23, 0x1980000, 0x780000);
+    }
+    if (CS898_State.room == 11) {
+        flagValue10 = API_GetFlag(0x855);
+        if (flagValue10 == 0) {
+            flagValue11 = API_GetFlag(0x856);
+            if (flagValue11 != 0) {
+                flagValue12 = API_GetFlag(2);
+                if (flagValue12 == 0) {
+                    API_CutsceneStart();
+                    API_MapActor_SetPos(2, 0x280000, 0x1360000);
+                    API_MapActor_TurnToFaceActor(2, 0, 0);
+                    API_MapTransitionIn();
+                    API_WaitMapTransition();
+                    API_CutsceneWait(30);
+                    API_Func_80925cc(2, 2);
+                    API_MessageID(0x1328);
+                    API_ActorMessage_Wait(2, 0, 20);
+                    API_MapActor_DoAnim(0, 3);
+                    API_MapActor_SetSpeed(2, 0xcccc, 0x6666);
+                    API_MapActor_SetAnim(2, 2);
+                    actor = ((struct Actor *)__MapActor_GetActor(0));
+                    if (actor != 0) {
+                        API_MapActor_TravelTo(2, *(short *)((char *)actor + 0xa), *(short *)((char *)actor + 0x12));
+                    }
+                    API_MapActor_WaitMovement(2);
+                    API_MapActor_SetPos(2, 0, 0);
+                    API_Func_80917d0(2, 0);
+                    API_CutsceneEnd();
+                }
+            }
+        }
+        API_ClearFlag(0x12f);
+    } else {
+        if (CS898_State.room == 13) {
+            flagValue13 = API_GetFlag(0x855);
+            if (flagValue13 != 0) {
+                API_MapActor_SetPos(20, 0, 0);
+            }
+        }
+    }
+    return 0;
+}
 
 extern int Func_8000948(int);
 
@@ -792,7 +1118,6 @@ void OvlFunc_898_200973c(unsigned int arg0, unsigned int arg1, unsigned int arg2
 	__CutsceneWait(arg2);
 }
 
-#include "actor.h"
 
 void OvlFunc_898_2009754(struct Actor *actor)
 {

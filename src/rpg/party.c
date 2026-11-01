@@ -1,4 +1,5 @@
 #include "nonmatching.h"
+#include "rpg.h"
 
 #include "nonmatching.h"
 
@@ -20,7 +21,22 @@ void *Func_8077330(int r0) {
     return ewram_200024c;
 }
 
-INCLUDE_ASM("asm/rpg/party/Func_8077348.s");
+extern int GetPartySize(void);
+struct PartyOrder_q { unsigned char pad[0x1f8]; unsigned char members[8]; };
+extern struct PartyOrder_q gState__q __asm__("gState");
+int Func_8077348(void)
+{
+    int sum = 0;
+    int n = GetPartySize();
+    int i;
+
+    if (n == 0)
+        return 0;
+    for (i = 0; i < n; i++)
+        sum += ((unsigned char *)GetUnit(gState__q.members[i]))[0xf];
+    sum /= n;
+    return sum;
+}
 
 SECTION(".text.party_2");
 
@@ -158,12 +174,50 @@ label_0x6c:
     return;
 }
 
-INCLUDE_ASM_SECTION("asm/rpg/party/Func_80782a0.s", ".text.party_2");
+static inline int Clamp_(int value, int min, int max) {
+    if (value > max)
+        return max;
+    if (value < min)
+        return min;
+    return value;
+}
+void Func_80782a0(struct Unit *u, int hp)
+{
+    short v;
+
+    v = u->HP = Clamp_(hp, 0, u->maxHP);
+    v = u->percentHP = Clamp_((v << 16 >> 2) / u->maxHP, 0, 0x4000);
+    if (v == 0 && u->HP != 0)
+        u->percentHP = v = 1;
+    v = u->percentPP = Clamp_((u->PP << 14) / u->maxPP, 0, 0x4000);
+    if (v == 0 && u->PP != 0)
+        u->percentPP = v = 1;
+}
 
 INCLUDE_ASM_SECTION("asm/rpg/party/Func_8078320.s", ".text.party_2");
 
-INCLUDE_ASM_SECTION("asm/rpg/party/ModifyHP.s", ".text.party_2");
+static inline int Clamp(int value, int min, int max) {
+    if (value > max)
+        return max;
+    if (value < min)
+        return min;
+    return value;
+}
 
-INCLUDE_ASM_SECTION("asm/rpg/party/ModifyPP.s", ".text.party_2");
+int ModifyHP(int unit, int amount) {
+    struct Unit *u = GetUnit(unit);
+
+    u->HP = Clamp(u->HP + amount, 0, u->maxHP);
+    UpdateStatBarPercent(unit);
+    return u->HP;
+}
+
+int ModifyPP(int unit, int amount) {
+    struct Unit *u = GetUnit(unit);
+
+    u->PP = Clamp(u->PP + amount, 0, u->maxPP);
+    UpdateStatBarPercent(unit);
+    return u->PP;
+}
 
 INCLUDE_ASM_SECTION("asm/rpg/party/rodata.s", ".text.party_2");
